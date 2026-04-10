@@ -1,37 +1,58 @@
-﻿# 文档导航
+# Superpowers + OpenSpec Team Skills
 
-这份导航页用于统一说明本仓库中 `OpenSpec + Superpowers` 团队 skills 与流程文档的入口、作用、使用方式和使用前条件。
+Portable workflow skills for teams that want to combine Superpowers-style discovery and disciplined implementation with OpenSpec change artifacts.
 
-## 一、先看什么
+This repository is documentation-first: it packages reusable `SKILL.md` workflows, lightweight agent metadata, and usage guides that can be copied into a Codex-compatible skill runtime.
 
-1. [TEAM-SKILLS.cn.md](D:/syz/project/designMode/TEAM-SKILLS.cn.md)
-2. [docs/team-skills/README.cn.md](D:/syz/project/designMode/docs/team-skills/README.cn.md)
-3. [docs/team-skills/INSTALL.cn.md](D:/syz/project/designMode/docs/team-skills/INSTALL.cn.md)
-4. [docs/diagrams/process-explanation.cn.md](D:/syz/project/designMode/docs/diagrams/process-explanation.cn.md)
-5. [docs/diagrams/index.cn.md](D:/syz/project/designMode/docs/diagrams/index.cn.md)
+## What Is Included
 
-## 二、Skill 总览
+- [OpenSpec + Superpowers Workflow](team-skills/openspec-superpowers-workflow/README.md): full feature flow from clarification to verified delivery.
+- [Superpowers -> OpenSpec -> Superpowers Workflow](team-skills/superpowers-openspec-execution-workflow/README.md): explore first, formalize with OpenSpec, then execute and archive.
+- [Superpowers Feature Workflow](team-skills/superpowers-feature-workflow/README.md): design, plan, worktree, TDD, and verification without OpenSpec artifacts.
+- [OpenSpec Feature Workflow](team-skills/openspec-feature-workflow/README.md): create and complete OpenSpec proposal, design, specs, and tasks.
 
-所有团队 skill 包统一放在 [docs/team-skills](D:/syz/project/designMode/docs/team-skills)：
+Chinese workflow introductions are available next to each package as `readme_cn.md`.
 
-- `openspec-superpowers-workflow`：一个完整流程总控入口。
-- `superpowers-openspec-execution-workflow`：先 Superpowers 探索，再 OpenSpec 锁规范，最后回到 Superpowers 执行、测试、验证和归档。
-- `superpowers-feature-workflow`：负责 brainstorm、设计、计划、worktree、TDD、verify。
-- `openspec-feature-workflow`：负责 change 创建与 `proposal / design / specs / tasks`。
+## Quick Start
 
-## 三、团队使用建议
+1. Read the package overview: [team-skills/README.md](team-skills/README.md)
+2. Read installation guidance: [team-skills/INSTALL.md](team-skills/INSTALL.md)
+3. Copy the workflow folder you need into your runtime skill directory, such as `.codex/skills/`
+4. Invoke the workflow in your agent prompt:
 
-- 如果你只想要一个总控入口，使用 `openspec-superpowers-workflow`。
-- 如果你想明确采用“先探索、再锁规范、再执行”的三段式节奏，使用 `superpowers-openspec-execution-workflow`。
-- 如果你只需要设计、计划、实现与验证纪律，使用 `superpowers-feature-workflow`。
-- 如果你只需要补齐 OpenSpec 变更产物，使用 `openspec-feature-workflow`。
+```text
+Use $openspec-superpowers-workflow to run this feature from clarification through verification.
+```
 
-## 四、核心文档
+## Repository Layout
 
-- [TEAM-SKILLS.cn.md](D:/syz/project/designMode/TEAM-SKILLS.cn.md)
-- [TEAM-SKILLS.md](D:/syz/project/designMode/TEAM-SKILLS.md)
-- [docs/team-skills/README.cn.md](D:/syz/project/designMode/docs/team-skills/README.cn.md)
-- [docs/team-skills/README.md](D:/syz/project/designMode/docs/team-skills/README.md)
-- [docs/team-skills/INSTALL.cn.md](D:/syz/project/designMode/docs/team-skills/INSTALL.cn.md)
-- [docs/team-skills/INSTALL.md](D:/syz/project/designMode/docs/team-skills/INSTALL.md)
-- [docs/diagrams/process-explanation.cn.md](D:/syz/project/designMode/docs/diagrams/process-explanation.cn.md)
+```text
+team-skills/
+  README.md
+  README.cn.md
+  INSTALL.md
+  INSTALL.cn.md
+  openspec-superpowers-workflow/
+  superpowers-openspec-execution-workflow/
+  superpowers-feature-workflow/
+  openspec-feature-workflow/
+```
+
+## Requirements
+
+- A skill-capable agent runtime, such as Codex.
+- OpenSpec CLI when using workflows that create or inspect OpenSpec changes.
+- A repository where generated design docs, plans, OpenSpec changes, code, tests, and verification output can be stored.
+
+## Recommended Entry Points
+
+- Use `openspec-superpowers-workflow` when you want one complete workflow for non-trivial feature delivery.
+- Use `superpowers-openspec-execution-workflow` when the team wants exploration before formal OpenSpec artifacts.
+- Use `superpowers-feature-workflow` when OpenSpec is unnecessary but disciplined planning and verification still matter.
+- Use `openspec-feature-workflow` when you only need OpenSpec change artifacts before implementation.
+
+## Chinese Documentation
+
+- [中文首页](README.cn.md)
+- [团队技能包说明](team-skills/README.cn.md)
+- [安装与使用说明](team-skills/INSTALL.cn.md)

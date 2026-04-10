@@ -6,10 +6,10 @@
 
 当前 skill 包位于：
 
-- [openspec-superpowers-workflow](D:/syz/project/designMode/docs/team-skills/openspec-superpowers-workflow)
-- [superpowers-openspec-execution-workflow](D:/syz/project/designMode/docs/team-skills/superpowers-openspec-execution-workflow)
-- [superpowers-feature-workflow](D:/syz/project/designMode/docs/team-skills/superpowers-feature-workflow)
-- [openspec-feature-workflow](D:/syz/project/designMode/docs/team-skills/openspec-feature-workflow)
+- [openspec-superpowers-workflow](openspec-superpowers-workflow/README.md)
+- [superpowers-openspec-execution-workflow](superpowers-openspec-execution-workflow/README.md)
+- [superpowers-feature-workflow](superpowers-feature-workflow/README.md)
+- [openspec-feature-workflow](openspec-feature-workflow/README.md)
 
 ## 使用前需要满足的条件
 
@@ -37,4 +37,4 @@ Use $superpowers-openspec-execution-workflow for this feature: first explore wit
 
 ## 统一 skill 目录
 
-所有团队 skill 包都放在 [docs/team-skills](D:/syz/project/designMode/docs/team-skills) 下，方便团队统一查看、安装和分发。
+所有团队 skill 包都放在当前仓库的 `team-skills/` 下，方便团队统一查看、安装和分发。

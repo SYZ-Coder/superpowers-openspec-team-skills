@@ -15,10 +15,10 @@ If the team later wants automatic skill discovery, copy the needed folders into 
 
 ## Packages
 
-- [openspec-superpowers-workflow](D:/syz/project/designMode/docs/team-skills/openspec-superpowers-workflow)
-- [superpowers-openspec-execution-workflow](D:/syz/project/designMode/docs/team-skills/superpowers-openspec-execution-workflow)
-- [superpowers-feature-workflow](D:/syz/project/designMode/docs/team-skills/superpowers-feature-workflow)
-- [openspec-feature-workflow](D:/syz/project/designMode/docs/team-skills/openspec-feature-workflow)
+- [openspec-superpowers-workflow](openspec-superpowers-workflow/README.md) ([中文](openspec-superpowers-workflow/readme_cn.md))
+- [superpowers-openspec-execution-workflow](superpowers-openspec-execution-workflow/README.md) ([中文](superpowers-openspec-execution-workflow/readme_cn.md))
+- [superpowers-feature-workflow](superpowers-feature-workflow/README.md) ([中文](superpowers-feature-workflow/readme_cn.md))
+- [openspec-feature-workflow](openspec-feature-workflow/README.md) ([中文](openspec-feature-workflow/readme_cn.md))
 
 ## Recommended Use
 
@@ -29,5 +29,5 @@ If the team later wants automatic skill discovery, copy the needed folders into 
 
 ## Documentation
 
-- [INSTALL.md](D:/syz/project/designMode/docs/team-skills/INSTALL.md)
-- [INSTALL.cn.md](D:/syz/project/designMode/docs/team-skills/INSTALL.cn.md)
+- [INSTALL.md](INSTALL.md)
+- [INSTALL.cn.md](INSTALL.cn.md)
