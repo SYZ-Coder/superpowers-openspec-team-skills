@@ -1,0 +1,4 @@
+interface:
+  display_name: "OpenSpec Feature Workflow"
+  short_description: "Create and complete OpenSpec change artifacts for features"
+  default_prompt: "Use $openspec-feature-workflow to create and complete the OpenSpec change for a feature."

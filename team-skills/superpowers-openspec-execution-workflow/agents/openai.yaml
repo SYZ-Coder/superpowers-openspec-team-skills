@@ -1,0 +1,4 @@
+﻿interface:
+  display_name: "Superpowers -> OpenSpec -> Superpowers"
+  short_description: "Explore, lock specs, execute, verify, archive"
+  default_prompt: "Use $superpowers-openspec-execution-workflow to explore a feature, lock it with OpenSpec, then execute and complete it."

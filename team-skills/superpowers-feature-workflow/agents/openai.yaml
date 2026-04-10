@@ -1,0 +1,4 @@
+interface:
+  display_name: "Superpowers Feature Workflow"
+  short_description: "Run feature design, planning, worktree, TDD, and verify"
+  default_prompt: "Use $superpowers-feature-workflow to drive the Superpowers stages for a feature request."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "OpenSpec + Superpowers Workflow"
+  short_description: "Guide full feature flow with OpenSpec and Superpowers"
+  default_prompt: "Use $openspec-superpowers-workflow to run a feature from clarification through verification."
