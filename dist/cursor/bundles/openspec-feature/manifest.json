@@ -1,0 +1,13 @@
+{
+  "name": "openspec-feature",
+  "tool": "cursor",
+  "type": "bundle",
+  "installTarget": "project-root",
+  "runtimeRequirements": [
+    "openspec-cli"
+  ],
+  "contents": [
+    ".cursor/rules/openspec-feature-workflow.mdc",
+    "AGENTS.md"
+  ]
+}

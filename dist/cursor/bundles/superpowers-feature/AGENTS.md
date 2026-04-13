@@ -1,0 +1,9 @@
+# Agent Workflow
+
+For feature work without OpenSpec artifacts:
+
+1. Clarify and compare approaches.
+2. Write and confirm a design.
+3. Write the implementation plan.
+4. Implement with TDD.
+5. Run fresh verification before completion.

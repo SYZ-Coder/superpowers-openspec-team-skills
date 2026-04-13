@@ -1,0 +1,25 @@
+name: openspec-superpowers-workflow
+type: orchestrator
+standalone: false
+description: Full feature flow from clarification through OpenSpec artifacts, implementation, and verification.
+tool_support:
+  - codex
+  - cursor
+  - claude-code
+dependencies:
+  workflows:
+    - superpowers-feature-workflow
+    - openspec-feature-workflow
+  external_skills:
+    - openspec-archive-change
+    - brainstorming
+    - writing-plans
+    - using-git-worktrees
+    - test-driven-development
+    - verification-before-completion
+runtime_requirements:
+  - openspec-cli
+outputs:
+  - docs/superpowers/specs/
+  - docs/superpowers/plans/
+  - openspec/changes/<change-name>/

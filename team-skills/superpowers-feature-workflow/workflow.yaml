@@ -1,0 +1,19 @@
+name: superpowers-feature-workflow
+type: workflow
+standalone: false
+description: Design, plan, implement with TDD, and verify without OpenSpec artifact generation.
+tool_support:
+  - codex
+  - cursor
+  - claude-code
+dependencies:
+  external_skills:
+    - brainstorming
+    - writing-plans
+    - using-git-worktrees
+    - test-driven-development
+    - verification-before-completion
+runtime_requirements: []
+outputs:
+  - docs/superpowers/specs/
+  - docs/superpowers/plans/

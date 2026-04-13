@@ -1,0 +1,13 @@
+{
+  "name": "openspec-feature",
+  "tool": "claude-code",
+  "type": "bundle",
+  "installTarget": "project-root",
+  "runtimeRequirements": [
+    "openspec-cli"
+  ],
+  "contents": [
+    ".claude/commands/openspec-feature-workflow.md",
+    "CLAUDE.md"
+  ]
+}

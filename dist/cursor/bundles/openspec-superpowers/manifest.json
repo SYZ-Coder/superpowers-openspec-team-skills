@@ -1,0 +1,13 @@
+{
+  "name": "openspec-superpowers",
+  "tool": "cursor",
+  "type": "bundle",
+  "installTarget": "project-root",
+  "runtimeRequirements": [
+    "openspec-cli"
+  ],
+  "contents": [
+    ".cursor/rules/openspec-superpowers-workflow.mdc",
+    "AGENTS.md"
+  ]
+}

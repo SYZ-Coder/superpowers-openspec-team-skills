@@ -1,0 +1,13 @@
+{
+  "name": "openspec-feature",
+  "tool": "codex",
+  "type": "bundle",
+  "description": "Standalone Codex skill bundle for OpenSpec proposal, design, specs, and tasks.",
+  "installTarget": ".codex/skills",
+  "contents": [
+    "skills/openspec-feature-workflow"
+  ],
+  "runtimeRequirements": [
+    "openspec-cli"
+  ]
+}

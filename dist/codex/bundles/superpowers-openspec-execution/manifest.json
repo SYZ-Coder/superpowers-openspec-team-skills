@@ -1,0 +1,13 @@
+{
+  "name": "superpowers-openspec-execution",
+  "tool": "codex",
+  "type": "bundle",
+  "description": "Standalone Codex skill bundle for Superpowers exploration, OpenSpec locking, Superpowers execution, and OpenSpec archive.",
+  "installTarget": ".codex/skills",
+  "contents": [
+    "skills/superpowers-openspec-execution-workflow"
+  ],
+  "runtimeRequirements": [
+    "openspec-cli"
+  ]
+}

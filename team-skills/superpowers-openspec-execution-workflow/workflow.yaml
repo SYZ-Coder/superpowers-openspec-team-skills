@@ -1,0 +1,25 @@
+name: superpowers-openspec-execution-workflow
+type: orchestrator
+standalone: false
+description: Explore with Superpowers, lock behavior with OpenSpec, then implement and verify.
+tool_support:
+  - codex
+  - cursor
+  - claude-code
+dependencies:
+  workflows:
+    - superpowers-feature-workflow
+    - openspec-feature-workflow
+  external_skills:
+    - openspec-archive-change
+    - brainstorming
+    - writing-plans
+    - using-git-worktrees
+    - test-driven-development
+    - verification-before-completion
+runtime_requirements:
+  - openspec-cli
+outputs:
+  - docs/superpowers/specs/
+  - docs/superpowers/plans/
+  - openspec/changes/<change-name>/

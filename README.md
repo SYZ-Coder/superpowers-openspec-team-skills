@@ -1,192 +1,212 @@
 # Superpowers + OpenSpec Team Skills
 
-Portable workflow skills for teams that want to combine Superpowers-style discovery and disciplined implementation with OpenSpec change artifacts.
+Portable workflow packs for teams that want AI coding agents to follow a disciplined path instead of jumping straight into code.
 
-This repository is documentation-first: it packages reusable `SKILL.md` workflows, lightweight agent metadata, and usage guides that can be copied into a Codex-compatible skill runtime.
+This repository now has two layers:
+
+- `team-skills/`: source workflow definitions maintained by the project
+- `dist/`: pre-adapted bundles for specific tools such as Codex, Cursor, and Claude Code
+
+If you are a user of this repository, start with `dist/` and `scripts/`. Do not copy a single orchestrator workflow from `team-skills/` unless you are intentionally extending or adapting the source definitions yourself.
 
 ## What Is Included
 
-- [OpenSpec + Superpowers Workflow](team-skills/openspec-superpowers-workflow/README.md): full feature flow from clarification to verified delivery.
-- [Superpowers -> OpenSpec -> Superpowers Workflow](team-skills/superpowers-openspec-execution-workflow/README.md): explore first, formalize with OpenSpec, then execute and archive.
-- [Superpowers Feature Workflow](team-skills/superpowers-feature-workflow/README.md): design, plan, worktree, TDD, and verification without OpenSpec artifacts.
-- [OpenSpec Feature Workflow](team-skills/openspec-feature-workflow/README.md): create and complete OpenSpec proposal, design, specs, and tasks.
+Source workflows:
 
-Chinese workflow introductions are available next to each package as `readme_cn.md`.
+- [OpenSpec + Superpowers Workflow](team-skills/openspec-superpowers-workflow/README.md)
+- [Superpowers -> OpenSpec -> Superpowers Workflow](team-skills/superpowers-openspec-execution-workflow/README.md)
+- [Superpowers Feature Workflow](team-skills/superpowers-feature-workflow/README.md)
+- [OpenSpec Feature Workflow](team-skills/openspec-feature-workflow/README.md)
 
-## Quick Start
-
-1. Read the package overview: [team-skills/README.md](team-skills/README.md)
-2. Read installation guidance: [team-skills/INSTALL.md](team-skills/INSTALL.md)
-3. Copy the workflow folder you need into your runtime skill directory, such as `.codex/skills/`
-4. Invoke the workflow in your agent prompt:
-
-```text
-Use $openspec-superpowers-workflow to run this feature from clarification through verification.
-```
+Each source workflow now also includes a machine-readable `workflow.yaml` file for dependency and tool metadata.
 
 ## Repository Layout
 
 ```text
-team-skills/
-  README.md
-  README.cn.md
-  INSTALL.md
-  INSTALL.cn.md
-  openspec-superpowers-workflow/
-  superpowers-openspec-execution-workflow/
-  superpowers-feature-workflow/
-  openspec-feature-workflow/
+team-skills/   source workflow definitions
+dist/          prebuilt bundles for specific tools
+scripts/       install scripts for supported tools
 ```
 
-## Requirements
+## Quick Start
 
-- A skill-capable agent runtime, such as Codex.
-- OpenSpec CLI when using workflows that create or inspect OpenSpec changes.
-- A repository where generated design docs, plans, OpenSpec changes, code, tests, and verification output can be stored.
+Before running any install script, either:
 
-## Using This Skill Pack In Different Tools
+- change into the repository root first, or
+- invoke the script by absolute path
 
-Different coding agents expose reusable instructions in different ways. Some support skills directly, while others use repository rules, command files, or agent instruction files.
+Example:
+
+```powershell
+cd <repo-root>
+.\scripts\install-codex.ps1 -Bundle openspec-superpowers
+```
+
+or:
+
+```powershell
+& "<repo-root>\scripts\install-codex.ps1" -Bundle openspec-superpowers
+```
 
 ### Codex
 
-Codex has native support for skills. This is the best fit for this repository.
+Install a prebuilt Codex bundle instead of copying a source workflow manually.
 
-Typical setup:
+PowerShell:
 
-1. Copy one or more workflow folders from `team-skills/` into your Codex skill directory, such as `.codex/skills/`
-2. Restart or reload Codex
-3. Invoke the workflow explicitly in chat
+```powershell
+.\scripts\install-codex.ps1 -Bundle openspec-superpowers
+```
 
-Example:
+Useful options:
+
+```powershell
+.\scripts\install-codex.ps1 -Bundle openspec-superpowers -DryRun
+.\scripts\install-codex.ps1 -Bundle openspec-superpowers -Backup
+.\scripts\install-codex.ps1 -Bundle openspec-superpowers -Backup -Force
+.\scripts\install-codex.ps1 -Bundle openspec-superpowers -CheckDependencies
+```
+
+- `-DryRun`: show what would be installed without copying files
+- `-Backup`: back up existing same-name skill directories before overwrite
+- `-Force`: skip overwrite confirmation
+- `-CheckDependencies`: check runtime requirements such as `openspec` without installing files
+
+Then restart or refresh Codex and invoke:
 
 ```text
 Use $openspec-superpowers-workflow to run this feature from clarification through verification.
 ```
 
-Codex can use skills in the app, CLI, and IDE extension. For team usage, you can also check skill folders into a repository and share them through team config.
+Available Codex bundles:
 
-### Claude Code
-
-Claude Code does not use Codex-style skills directly, but it supports reusable project commands and project instructions.
-
-Recommended setup:
-
-1. Keep this repository as the source of truth for workflow definitions
-2. Convert the workflow you need into a project command under `.claude/commands/`
-3. Optionally mirror high-level workflow rules into `CLAUDE.md`
-
-Suggested mapping:
-
-- One workflow directory in `team-skills/` -> one command file in `.claude/commands/`
-- `SKILL.md` content -> command prompt body
-- Workflow name -> slash command name
-
-Example command:
-
-```text
-.claude/commands/openspec-superpowers-workflow.md
-```
-
-Then invoke:
-
-```text
-/openspec-superpowers-workflow
-```
-
-This works especially well when your team wants shared, repo-local commands without requiring Codex.
+- `openspec-superpowers`
+- `superpowers-openspec-execution`
+- `superpowers-feature`
+- `openspec-feature`
 
 ### Cursor
 
-Cursor does not currently expose Codex-style skills as a first-class feature. The closest equivalent is project rules plus agent instructions.
+Install a Cursor bundle into the target repository root:
 
-Recommended setup:
+```powershell
+.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
+```
 
-1. Put stable workflow guidance into `.cursor/rules/`
-2. Add a top-level `AGENTS.md` for agent-oriented instructions
-3. Keep this repository's workflow docs as the canonical source, and adapt the chosen workflow into Cursor rules
+This writes `.cursor/rules/` files plus an `AGENTS.md` workflow guide.
 
-Suggested mapping:
+Useful options:
 
-- Workflow overview and guardrails -> `.cursor/rules/<workflow-name>.mdc` or project rule file
-- Repo-wide behavior -> `AGENTS.md`
-- Prompt examples from this repo -> reusable chat starters in Cursor
+```powershell
+.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -DryRun
+.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup
+.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup -Force
+.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
+```
 
-Good fit in Cursor:
+You can also install the three-stage execution bundle:
 
-- `superpowers-feature-workflow` as a design-and-verify rule
-- `openspec-feature-workflow` as an OpenSpec change-management rule
+```powershell
+.\scripts\install-cursor.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
+```
 
-### GitHub Copilot
+### Claude Code
 
-GitHub Copilot does not use Codex skills directly, but it supports repository custom instructions and agent instruction files.
+Install a Claude Code bundle into the target repository root:
 
-Recommended setup:
+```powershell
+.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
+```
 
-1. Add repository-wide guidance in `.github/copilot-instructions.md`
-2. Add path-specific instructions in `.github/instructions/*.instructions.md` if needed
-3. Add `AGENTS.md` for agent-style workflows
-4. Port the workflow steps from this repository into those instruction files
+This writes `.claude/commands/` files plus a `CLAUDE.md` project guide.
 
-Suggested mapping:
+Useful options:
 
-- General workflow expectations -> `.github/copilot-instructions.md`
-- Path- or stack-specific workflow rules -> `.github/instructions/`
-- Long-form agent workflow -> `AGENTS.md`
+```powershell
+.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -DryRun
+.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup
+.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup -Force
+.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
+```
 
-This works well if your team already uses Copilot in VS Code, JetBrains, GitHub, or Copilot CLI.
+You can also install the three-stage execution bundle:
 
-### Gemini CLI
+```powershell
+.\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
+```
 
-Gemini CLI is another good candidate, but it uses a different extension model.
+Bundles that rely on OpenSpec will install even if `openspec` is missing, but the scripts now warn you before install and can explicitly check dependencies first.
 
-Recommended setup:
+## Bundle Model
 
-1. Put persistent repository behavior into `GEMINI.md`
-2. Convert frequently-used workflows into custom slash commands under `.gemini/commands/`
-3. Use this repository as the source material for those commands and instructions
+This repository distributes user-facing workflow packs as bundles, not as single folders copied from the source tree.
 
-Suggested mapping:
+Current bundle families:
 
-- Workflow policy and behavioral rules -> `GEMINI.md`
-- Reusable workflow entrypoints -> `.gemini/commands/<workflow-name>.toml`
+- `dist/codex/bundles/`
+- `dist/cursor/bundles/`
+- `dist/claude-code/bundles/`
 
-This is a practical way to reuse the same workflow ideas without rewriting them from scratch every session.
+Each bundle contains only the files that the target tool expects.
 
-### Other Agent Runtimes
+## Build vs Install
 
-If a tool supports any of the following, you can usually adapt this skill pack successfully:
+There are now two different script roles in this repository:
 
-- repository instruction files
-- reusable slash commands
-- agent memory files such as `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md`
-- MCP prompts or prompt libraries
+- `install-*.ps1`: for end users installing a bundle into Codex, Cursor, or Claude Code
+- `build-dist.ps1`: for maintainers refreshing and validating the distributable layer under `dist/`
 
-The main idea is consistent:
+Example maintainer command:
 
-1. keep `team-skills/*/SKILL.md` as the source workflow
-2. map each workflow into the tool's native instruction format
-3. preserve the same stage order, guardrails, and prompt examples
+```powershell
+.\scripts\build-dist.ps1
+```
 
-### Portability Recommendation
+Use `build-dist.ps1` after changing source workflows in `team-skills/`, metadata in `workflow.yaml`, or bundle structure conventions. It does not install anything into an AI tool. It is part of the release and maintenance workflow.
 
-For the least duplication, use this repository as the canonical workflow source and maintain thin adapters for each tool:
+## Why This Changed
 
-- Codex: copy workflow folders as skills
-- Claude Code: create `.claude/commands/` wrappers
-- Cursor: create `.cursor/rules/` plus `AGENTS.md`
-- GitHub Copilot: create `.github/copilot-instructions.md` plus `AGENTS.md`
-- Gemini CLI: create `GEMINI.md` plus `.gemini/commands/`
+The original source workflows are modular and reusable, but some entry workflows depend on other workflows or external skills. That is good for maintenance, but it is not a good installation experience.
+
+The new structure fixes that by making a clear distinction:
+
+- source workflows are for maintainers
+- bundles are for end users
+
+## Tool Support
+
+### Codex
+
+Codex is the best current fit because it supports skills directly. Use the prebuilt bundle under `dist/codex/bundles/` or the installer script under `scripts/install-codex.ps1`.
+
+### Cursor
+
+Cursor uses repository rules and agent instructions rather than Codex-style skills. Use the bundles under `dist/cursor/bundles/`.
+
+### Claude Code
+
+Claude Code uses command files and project instructions rather than Codex-style skills. Use the bundles under `dist/claude-code/bundles/`.
+
+### Other Tools
+
+The repository is designed so that other agent runtimes can be supported later by adding new bundle adapters under `dist/`.
+
+## Requirements
+
+- OpenSpec CLI when using workflows that create or inspect OpenSpec changes
+- A project repository where the agent can write design docs, plans, OpenSpec changes, code, tests, and verification output
 
 ## Recommended Entry Points
 
-- Use `openspec-superpowers-workflow` when you want one complete workflow for non-trivial feature delivery.
-- Use `superpowers-openspec-execution-workflow` when the team wants exploration before formal OpenSpec artifacts.
-- Use `superpowers-feature-workflow` when OpenSpec is unnecessary but disciplined planning and verification still matter.
-- Use `openspec-feature-workflow` when you only need OpenSpec change artifacts before implementation.
+- `openspec-superpowers`: full feature flow from clarification through verification
+- `superpowers-openspec-execution`: Superpowers exploration, OpenSpec locking, Superpowers execution and verification, then OpenSpec archive
+- `superpowers-feature`: design, planning, TDD, and verification without OpenSpec artifact generation
+- `openspec-feature`: OpenSpec proposal, design, specs, and tasks before implementation
 
-## Chinese Documentation
+## Documentation
 
-- [中文首页](README.cn.md)
-- [团队技能包说明](team-skills/README.cn.md)
-- [安装与使用说明](team-skills/INSTALL.cn.md)
+- [Chinese README](README.cn.md)
+- [Verification guide](VERIFY.md)
+- [Chinese verification guide](VERIFY.cn.md)
+- [Source workflow overview](team-skills/README.md)
+- [Source workflow installation notes](team-skills/INSTALL.md)

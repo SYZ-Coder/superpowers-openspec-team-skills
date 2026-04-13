@@ -1,0 +1,13 @@
+{
+  "name": "openspec-superpowers",
+  "tool": "codex",
+  "type": "bundle",
+  "description": "Standalone Codex skill bundle for the full OpenSpec + Superpowers workflow.",
+  "installTarget": ".codex/skills",
+  "contents": [
+    "skills/openspec-superpowers-workflow"
+  ],
+  "runtimeRequirements": [
+    "openspec-cli"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "superpowers-feature",
+  "tool": "cursor",
+  "type": "bundle",
+  "installTarget": "project-root",
+  "runtimeRequirements": [],
+  "contents": [
+    ".cursor/rules/superpowers-feature-workflow.mdc",
+    "AGENTS.md"
+  ]
+}

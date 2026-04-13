@@ -1,0 +1,13 @@
+{
+  "name": "superpowers-openspec-execution",
+  "tool": "claude-code",
+  "type": "bundle",
+  "installTarget": "project-root",
+  "runtimeRequirements": [
+    "openspec-cli"
+  ],
+  "contents": [
+    ".claude/commands/superpowers-openspec-execution-workflow.md",
+    "CLAUDE.md"
+  ]
+}
