@@ -9,6 +9,8 @@ description: Use when feature work needs the Superpowers stages before or during
 
 Use this skill for the Superpowers half of feature delivery. It covers clarification, design, plan, worktree, TDD, and verification, but it does not manage OpenSpec artifacts.
 
+This is an explicit opt-in workflow. Do not use it by default. Only use it when the user explicitly asks for this workflow, names this skill, or a repository policy explicitly requires it.
+
 ## Workflow
 
 1. Explore project context before proposing solutions.
@@ -23,10 +25,10 @@ Use this skill for the Superpowers half of feature delivery. It covers clarifica
 
 ## When to Use
 
-- The request explicitly asks to brainstorm first
-- The user wants a plan before coding
-- The implementation should use worktrees, TDD, or explicit verification
-- The feature needs structured design review before code changes
+- The user explicitly asks to brainstorm first
+- The user explicitly names `$superpowers-feature-workflow`
+- The user explicitly asks for a written plan, TDD, or verification workflow
+- A repository policy explicitly requires this workflow
 
 ## Outputs
 

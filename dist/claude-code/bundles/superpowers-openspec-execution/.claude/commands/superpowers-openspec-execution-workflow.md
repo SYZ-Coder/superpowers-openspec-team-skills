@@ -1,4 +1,4 @@
-Use this workflow when a feature should follow this sequence:
+Use this workflow only when the user explicitly asks for this sequence or explicitly invokes this command:
 
 1. Explore and converge with Superpowers
 2. Lock the confirmed behavior with OpenSpec

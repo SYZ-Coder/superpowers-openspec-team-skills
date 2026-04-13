@@ -9,6 +9,16 @@
 
 如果你是使用者，请优先使用 `dist/` 和 `scripts/`。不要再像以前那样，直接从 `team-skills/` 里复制单个入口 workflow 到目标工具目录，否则很容易因为依赖不完整而无法使用。
 
+重要说明：这些 workflow 都是“显式启用型”流程，不应该变成 AI 工具的默认后台行为。只有当用户明确要求、明确点名某个 workflow，或者仓库策略明确要求时，才应该启用。
+
+如果你希望 Codex 默认忽略这些 workflow，那就只安装 bundle，但只有在对话中明确点名 workflow 时才调用它。
+
+例如：
+
+```text
+Use $superpowers-openspec-execution-workflow for this feature.
+```
+
 ## 包含内容
 
 源码层 workflow：
@@ -78,6 +88,8 @@ PowerShell：
 Use $openspec-superpowers-workflow to run this feature from clarification through verification.
 ```
 
+如果用户没有明确要求某个 workflow，Codex 应该保持正常默认行为，而不是自动假设要使用 Superpowers 或 OpenSpec 流程。
+
 当前可用的 Codex bundle：
 
 - `openspec-superpowers`
@@ -95,6 +107,8 @@ Use $openspec-superpowers-workflow to run this feature from clarification throug
 
 这会写入 `.cursor/rules/` 和 `AGENTS.md`。
 
+重要说明：对 Cursor 来说，这些 workflow bundle 也应该按“显式启用”来使用。可以安装到项目里，但只有在对话中明确点名 workflow 时，才让 Cursor 按它执行。
+
 常用参数：
 
 ```powershell
@@ -110,6 +124,12 @@ Use $openspec-superpowers-workflow to run this feature from clarification throug
 .\scripts\install-cursor.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
 ```
 
+推荐显式启用方式：
+
+```text
+Use the superpowers-openspec-execution workflow for this feature.
+```
+
 ### Claude Code
 
 将 Claude Code bundle 安装到目标项目根目录：
@@ -119,6 +139,8 @@ Use $openspec-superpowers-workflow to run this feature from clarification throug
 ```
 
 这会写入 `.claude/commands/` 和 `CLAUDE.md`。
+
+重要说明：对 Claude Code 来说，安装 bundle 以后，也应该只在你明确调用命令或明确要求该 workflow 时才启用。
 
 常用参数：
 
@@ -133,6 +155,12 @@ Use $openspec-superpowers-workflow to run this feature from clarification throug
 
 ```powershell
 .\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
+```
+
+推荐显式启用方式：
+
+```text
+/superpowers-openspec-execution-workflow
 ```
 
 如果某个 bundle 依赖 OpenSpec，脚本现在会在安装前做提示；你也可以先用 `-CheckDependencies` 单独检查环境是否满足。
@@ -202,6 +230,28 @@ Claude Code 更适合使用命令文件和项目说明，因此请使用 `dist/c
 - `superpowers-openspec-execution`：先 Superpowers 探索，再 OpenSpec 固化，再回到 Superpowers 实现验证，最后归档 OpenSpec change
 - `superpowers-feature`：不生成 OpenSpec 产物，只做设计、计划、TDD、验证
 - `openspec-feature`：只做 OpenSpec proposal、design、specs、tasks
+
+## 显式启用规则
+
+这些 workflow 只应在下面几种情况下启用：
+
+- 用户明确点名某个 workflow
+- 用户明确要求按这种流程来做
+- 仓库策略文件明确要求必须使用该 workflow
+
+它们不应该被当成所有编码任务的默认后台流程。
+
+对于 Codex 用户，最稳妥的使用方式是：
+
+1. 先安装 bundle
+2. 平时保持正常的编码提问方式
+3. 只有在你真的想启用该流程时，才明确点名 workflow
+
+对于 Cursor 和 Claude Code 用户，也建议使用同样的原则：
+
+1. 先把 bundle 安装到项目里
+2. 平时保持正常提问
+3. 只有在你确实想启用该流程时，才明确点名 workflow
 
 ## 相关文档
 

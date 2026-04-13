@@ -169,7 +169,55 @@ True
 
 如果文件在，但行为没变，那只是安装成功了，不代表运行时真的启用了这个 workflow。
 
-## 5. 推荐验证顺序
+## 5. 验证“默认不会自动启用”
+
+安装完成后，还要再验证反向场景：如果用户没有明确调用 workflow，它应该保持不启用。
+
+### Codex
+
+发一个普通的编码请求，不要点名任何 workflow，例如：
+
+```text
+Implement this small feature and keep the change minimal.
+```
+
+预期行为：
+
+- Codex 按正常方式响应
+- 不会自动宣布或默认进入 Superpowers / OpenSpec workflow
+- 不会在用户没有明确要求时强行进入分阶段流程
+
+### Cursor
+
+发一个普通请求，不要点名 workflow：
+
+```text
+Please help implement this small change.
+```
+
+预期行为：
+
+- Cursor 应该像普通编码助手一样工作
+- 不应该自动切换到已安装的 workflow
+
+### Claude Code
+
+安装完成后，打开项目，但不要调用任何 workflow 命令。
+
+然后发送一个普通请求，例如：
+
+```text
+Help me make this small change.
+```
+
+预期行为：
+
+- Claude Code 应该保持正常行为
+- 不应该像 `/superpowers-openspec-execution-workflow` 已经被调用了一样工作
+
+如果工具在你没有明确要求的情况下，仍然表现得像 workflow 已经启用，那就说明“显式启用”规则还没有真正生效。
+
+## 6. 推荐验证顺序
 
 对任何工具，都推荐按这个顺序检查：
 
@@ -179,3 +227,5 @@ True
 4. 重启或刷新工具
 5. 发起一次明确的 workflow 调用
 6. 观察工具行为是否符合 workflow 分阶段要求
+7. 再发一次不点名 workflow 的普通请求
+8. 确认 workflow 不会自动启用

@@ -9,6 +9,8 @@ description: Use when a feature request must follow the full OpenSpec plus Super
 
 Use this skill as the team entrypoint for feature delivery. It coordinates the order of work; it does not replace the detailed OpenSpec or Superpowers sub-skills.
 
+This is an explicit opt-in workflow. Do not use it by default. Only use it when the user explicitly asks for this workflow, names this skill, or a repository policy explicitly requires it.
+
 ## Required Order
 
 1. Run `$superpowers-feature-workflow` to clarify the request, compare approaches, confirm the design, and prepare implementation.
@@ -19,9 +21,9 @@ Use this skill as the team entrypoint for feature delivery. It coordinates the o
 ## When to Use
 
 - The user explicitly asks for `OpenSpec + Superpowers`
-- The request explicitly asks for brainstorm, then proposal/design/tasks, then implementation, then verification
-- The repo policy requires OpenSpec before non-trivial feature work
-- The work changes behavior and needs durable specs plus disciplined implementation
+- The user explicitly names `$openspec-superpowers-workflow`
+- The user explicitly asks for brainstorm, then proposal/design/tasks, then implementation, then verification
+- A repository policy explicitly requires this workflow
 
 ## Deliverables
 

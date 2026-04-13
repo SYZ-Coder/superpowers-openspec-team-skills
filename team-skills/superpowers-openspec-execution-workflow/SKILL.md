@@ -15,6 +15,8 @@ Use this skill when the team wants a three-stage delivery path:
 
 This skill is an orchestrator. It should delegate detail work to the existing workflow skills instead of duplicating them.
 
+This is an explicit opt-in workflow. Do not use it by default. Only use it when the user explicitly asks for this workflow, names this skill, or a repository policy explicitly requires it.
+
 ## Required Order
 
 1. Start with `$superpowers-feature-workflow`.
@@ -34,10 +36,10 @@ This skill is an orchestrator. It should delegate detail work to the existing wo
 
 ## When to Use
 
-- The team wants "explore first, spec second, execute third"
-- The request needs exploratory planning before formal requirements are locked
-- The feature changes behavior and needs both durable change artifacts and disciplined implementation
-- The team wants a single entry skill for this three-stage workflow
+- The user explicitly asks for "explore first, spec second, execute third"
+- The user explicitly names `$superpowers-openspec-execution-workflow`
+- The user explicitly asks for Superpowers exploration, OpenSpec locking, then Superpowers execution and archive
+- A repository policy explicitly requires this workflow
 
 ## Deliverables
 

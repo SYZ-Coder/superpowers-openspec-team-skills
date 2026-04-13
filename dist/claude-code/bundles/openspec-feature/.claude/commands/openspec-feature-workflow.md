@@ -1,4 +1,4 @@
-Use this workflow when a feature needs OpenSpec artifacts before implementation.
+Use this workflow only when the user explicitly asks for it or explicitly invokes this command.
 
 Required order:
 

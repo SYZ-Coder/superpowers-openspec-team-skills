@@ -1,5 +1,7 @@
 # Superpowers Feature Workflow
 
+Only apply this rule when the user explicitly asks for this workflow or explicitly names it. Do not treat it as default background behavior.
+
 Use this rule when the feature needs design, planning, TDD, and verification without OpenSpec change authoring.
 
 Required order:

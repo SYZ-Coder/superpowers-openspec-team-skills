@@ -169,7 +169,55 @@ The real signal is behavior:
 
 If the files are present but the agent still behaves as if nothing changed, installation succeeded but runtime activation did not.
 
-## 5. Recommended Verification Sequence
+## 5. Verify That Workflows Do Not Auto-Activate
+
+After installation, also verify the opposite case: the workflow should stay inactive unless explicitly invoked.
+
+### Codex
+
+Send a normal coding request without naming any workflow, for example:
+
+```text
+Implement this small feature and keep the change minimal.
+```
+
+Expected behavior:
+
+- Codex should respond normally
+- it should not automatically announce or assume a Superpowers or OpenSpec workflow
+- it should not force staged workflow behavior unless the user explicitly asked for it
+
+### Cursor
+
+Send a normal request without naming a workflow:
+
+```text
+Please help implement this small change.
+```
+
+Expected behavior:
+
+- Cursor should behave like a normal coding assistant
+- it should not automatically switch into the installed workflow
+
+### Claude Code
+
+Open the project after installation, but do not invoke any workflow command.
+
+Then send a normal request such as:
+
+```text
+Help me make this small change.
+```
+
+Expected behavior:
+
+- Claude Code should behave normally
+- it should not automatically act as if `/superpowers-openspec-execution-workflow` had been invoked
+
+If the tool behaves as if the workflow is active even when you did not explicitly request it, the explicit opt-in rule is not working correctly.
+
+## 6. Recommended Verification Sequence
 
 For any tool:
 
@@ -179,3 +227,5 @@ For any tool:
 4. restart or reload the tool
 5. run one explicit workflow invocation
 6. confirm behavior follows the workflow stages
+7. run one normal request without naming a workflow
+8. confirm the workflow does not auto-activate

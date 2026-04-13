@@ -9,6 +9,8 @@ description: Use when a feature needs an OpenSpec change with proposal, design, 
 
 Use this skill for the OpenSpec half of feature delivery. It creates and completes the change artifacts needed before implementation.
 
+This is an explicit opt-in workflow. Do not use it by default. Only use it when the user explicitly asks for this workflow, names this skill, or a repository policy explicitly requires it.
+
 ## Workflow
 
 1. Derive or confirm a kebab-case change name.
@@ -24,9 +26,9 @@ Use this skill for the OpenSpec half of feature delivery. It creates and complet
 
 ## When to Use
 
-- The request explicitly asks for proposal/design/tasks before coding
-- `AGENTS.md` or team policy requires OpenSpec before feature implementation
-- The work changes behavior and needs a tracked change record
+- The user explicitly asks for proposal/design/tasks before coding
+- The user explicitly names `$openspec-feature-workflow`
+- `AGENTS.md` or team policy explicitly requires this workflow
 
 ## Artifact Expectations
 

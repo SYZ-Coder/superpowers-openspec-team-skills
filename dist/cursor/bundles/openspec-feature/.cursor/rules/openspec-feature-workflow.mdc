@@ -1,5 +1,7 @@
 # OpenSpec Feature Workflow
 
+Only apply this rule when the user explicitly asks for this workflow or explicitly names it. Do not treat it as default background behavior.
+
 Use this rule when a feature needs OpenSpec proposal, design, specs, and tasks before implementation.
 
 Required order:

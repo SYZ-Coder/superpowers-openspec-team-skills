@@ -12,6 +12,8 @@ Use this standalone skill when feature delivery should follow this sequence:
 3. Return to Superpowers for implementation, testing, and verification
 4. Archive the OpenSpec change when everything is aligned
 
+This is an explicit opt-in workflow. Do not use it by default. Only use it when the user explicitly asks for it, names `$superpowers-openspec-execution-workflow`, or a repository policy explicitly requires it.
+
 ## Workflow
 
 1. Explore the repository context before proposing solutions.

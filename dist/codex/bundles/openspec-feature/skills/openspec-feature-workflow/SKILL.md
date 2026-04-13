@@ -7,6 +7,8 @@ description: Standalone Codex workflow for OpenSpec proposal, design, specs, and
 
 Use this standalone skill when the feature needs OpenSpec artifacts before implementation.
 
+This is an explicit opt-in workflow. Do not use it by default. Only use it when the user explicitly asks for it, names `$openspec-feature-workflow`, or a repository policy explicitly requires it.
+
 ## Workflow
 
 1. Derive or confirm a kebab-case change name.

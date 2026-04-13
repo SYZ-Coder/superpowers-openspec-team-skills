@@ -1,5 +1,7 @@
 # OpenSpec + Superpowers Workflow
 
+Only apply this rule when the user explicitly asks for this workflow or explicitly names it. Do not treat it as default background behavior.
+
 Use this rule when a non-trivial feature needs clarification, OpenSpec artifacts, implementation planning, TDD, and verification.
 
 Required order:

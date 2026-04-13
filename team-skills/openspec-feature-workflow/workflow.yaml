@@ -6,6 +6,12 @@ tool_support:
   - codex
   - cursor
   - claude-code
+activation:
+  mode: explicit-only
+  triggers:
+    - user-explicit-skill-name
+    - user-explicit-workflow-request
+    - repo-policy-explicit-requirement
 dependencies:
   external_skills: []
 runtime_requirements:

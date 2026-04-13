@@ -9,6 +9,16 @@ This repository now has two layers:
 
 If you are a user of this repository, start with `dist/` and `scripts/`. Do not copy a single orchestrator workflow from `team-skills/` unless you are intentionally extending or adapting the source definitions yourself.
 
+Important: these workflows are explicit opt-in workflows. They are not intended to become the default background behavior of your AI tool. Users should turn them on by explicit request, by naming the workflow, or because a repository policy explicitly requires them.
+
+If you want Codex to ignore these workflows unless explicitly invoked, install the bundle and only activate it by workflow name in the conversation.
+
+Example:
+
+```text
+Use $superpowers-openspec-execution-workflow for this feature.
+```
+
 ## What Is Included
 
 Source workflows:
@@ -78,6 +88,8 @@ Then restart or refresh Codex and invoke:
 Use $openspec-superpowers-workflow to run this feature from clarification through verification.
 ```
 
+If you do not explicitly ask for one of these workflows, Codex should continue behaving normally and should not assume Superpowers or OpenSpec workflow usage by default.
+
 Available Codex bundles:
 
 - `openspec-superpowers`
@@ -95,6 +107,8 @@ Install a Cursor bundle into the target repository root:
 
 This writes `.cursor/rules/` files plus an `AGENTS.md` workflow guide.
 
+Important: for Cursor, these workflow bundles are also intended to be explicit opt-in. Install them into the project, but only ask Cursor to follow them when you explicitly name the workflow in chat.
+
 Useful options:
 
 ```powershell
@@ -110,6 +124,12 @@ You can also install the three-stage execution bundle:
 .\scripts\install-cursor.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
 ```
 
+Recommended explicit activation pattern:
+
+```text
+Use the superpowers-openspec-execution workflow for this feature.
+```
+
 ### Claude Code
 
 Install a Claude Code bundle into the target repository root:
@@ -119,6 +139,8 @@ Install a Claude Code bundle into the target repository root:
 ```
 
 This writes `.claude/commands/` files plus a `CLAUDE.md` project guide.
+
+Important: for Claude Code, install the bundle but only activate the workflow when you explicitly invoke the command or explicitly ask for the workflow style.
 
 Useful options:
 
@@ -133,6 +155,12 @@ You can also install the three-stage execution bundle:
 
 ```powershell
 .\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
+```
+
+Recommended explicit activation pattern:
+
+```text
+/superpowers-openspec-execution-workflow
 ```
 
 Bundles that rely on OpenSpec will install even if `openspec` is missing, but the scripts now warn you before install and can explicitly check dependencies first.
@@ -202,6 +230,28 @@ The repository is designed so that other agent runtimes can be supported later b
 - `superpowers-openspec-execution`: Superpowers exploration, OpenSpec locking, Superpowers execution and verification, then OpenSpec archive
 - `superpowers-feature`: design, planning, TDD, and verification without OpenSpec artifact generation
 - `openspec-feature`: OpenSpec proposal, design, specs, and tasks before implementation
+
+## Explicit Activation
+
+These workflows should only activate when one of the following is true:
+
+- the user explicitly names the workflow
+- the user explicitly asks for the workflow style
+- the repository policy explicitly requires the workflow
+
+They should not be treated as default background behavior for every coding request.
+
+For Codex users, the safest pattern is:
+
+1. install the bundle
+2. keep normal coding prompts unchanged
+3. explicitly name the workflow only when you want it
+
+For Cursor and Claude Code users, follow the same rule:
+
+1. install the bundle into the project
+2. keep normal prompts unchanged
+3. explicitly ask for the workflow by name only when you want it
 
 ## Documentation
 

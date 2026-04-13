@@ -1,4 +1,4 @@
-Use this workflow when feature work needs design, planning, TDD, and verification without OpenSpec artifacts.
+Use this workflow only when the user explicitly asks for it or explicitly invokes this command.
 
 Required order:
 

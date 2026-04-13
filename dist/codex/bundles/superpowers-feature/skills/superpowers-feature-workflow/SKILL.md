@@ -7,6 +7,8 @@ description: Standalone Codex workflow for clarification, design, planning, TDD,
 
 Use this standalone skill when you want disciplined feature delivery without OpenSpec artifact generation.
 
+This is an explicit opt-in workflow. Do not use it by default. Only use it when the user explicitly asks for it, names `$superpowers-feature-workflow`, or a repository policy explicitly requires it.
+
 ## Workflow
 
 1. Explore project context first.

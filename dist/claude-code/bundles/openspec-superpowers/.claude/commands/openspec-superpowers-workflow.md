@@ -1,4 +1,4 @@
-Use this workflow when a feature should follow the full OpenSpec + Superpowers path.
+Use this workflow only when the user explicitly asks for the full OpenSpec + Superpowers path or explicitly invokes this command.
 
 Required order:
 
