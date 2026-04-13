@@ -1,6 +1,6 @@
 # Superpowers + OpenSpec Team Skills
 
-Portable workflow packs for teams that want AI coding agents to follow a disciplined path instead of jumping straight into code.
+Portable workflow packs for teams that want AI coding agents to follow a disciplined path instead of jumping straight into code.Users can combine Superpowers and OpenSpec as needed.
 
 This repository now has two layers:
 
