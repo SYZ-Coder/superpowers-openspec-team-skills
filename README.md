@@ -19,6 +19,36 @@ Example:
 Use $superpowers-openspec-execution-workflow for this feature.
 ```
 
+## Start Here
+
+### Why This Skill Pack Exists
+
+This repository is for teams that want AI coding tools to stop jumping straight into code and instead follow a clearer delivery path:
+
+- clarify before implementation
+- lock agreed behavior before risky changes
+- implement with tests and verification
+- keep a clean closeout path for completed work
+
+### Requirements
+
+- OpenSpec CLI when using workflows that create or inspect OpenSpec changes
+- A real project repository where the agent can write design docs, plans, OpenSpec changes, code, tests, and verification output
+
+### Recommended Entry Points
+
+- `openspec-superpowers`: full feature flow from clarification through verification
+- `superpowers-openspec-execution`: Superpowers exploration, OpenSpec locking, Superpowers execution and verification, then OpenSpec archive
+- `superpowers-feature`: design, planning, TDD, and verification without OpenSpec artifact generation
+- `openspec-feature`: OpenSpec proposal, design, specs, and tasks before implementation
+
+### How To Choose
+
+- Use `openspec-superpowers` when you want one end-to-end entry point and do not want to decide the step order yourself. It is the general full-flow option from clarification through verification.
+- Use `superpowers-openspec-execution` when you want a fixed four-step path: Superpowers exploration, OpenSpec locking, Superpowers execution, and OpenSpec archive.
+- Use `superpowers-feature` when you only want the Superpowers engineering discipline without OpenSpec change artifacts.
+- Use `openspec-feature` when you only want to create or complete OpenSpec change artifacts before implementation.
+
 ## What Is Included
 
 Source workflows:
@@ -218,25 +248,6 @@ Claude Code uses command files and project instructions rather than Codex-style 
 ### Other Tools
 
 The repository is designed so that other agent runtimes can be supported later by adding new bundle adapters under `dist/`.
-
-## Requirements
-
-- OpenSpec CLI when using workflows that create or inspect OpenSpec changes
-- A project repository where the agent can write design docs, plans, OpenSpec changes, code, tests, and verification output
-
-## Recommended Entry Points
-
-- `openspec-superpowers`: full feature flow from clarification through verification
-- `superpowers-openspec-execution`: Superpowers exploration, OpenSpec locking, Superpowers execution and verification, then OpenSpec archive
-- `superpowers-feature`: design, planning, TDD, and verification without OpenSpec artifact generation
-- `openspec-feature`: OpenSpec proposal, design, specs, and tasks before implementation
-
-## How To Choose
-
-- Use `openspec-superpowers` when you want one end-to-end entry point and do not want to decide the step order yourself. It is the general full-flow option from clarification through verification.
-- Use `superpowers-openspec-execution` when you want a fixed four-step path: Superpowers exploration, OpenSpec locking, Superpowers execution, and OpenSpec archive.
-- Use `superpowers-feature` when you only want the Superpowers engineering discipline without OpenSpec change artifacts.
-- Use `openspec-feature` when you only want to create or complete OpenSpec change artifacts before implementation.
 
 ## Explicit Activation
 

@@ -19,6 +19,36 @@
 Use $superpowers-openspec-execution-workflow for this feature.
 ```
 
+## 开始前先看
+
+### 这套技能库的价值
+
+这个仓库适合希望 AI 编程工具别一上来就直接写代码，而是按更稳的交付路径做事的团队：
+
+- 先澄清，再实现
+- 先确认行为，再改动代码
+- 实现时带上测试和验证
+- 完成后有清晰的归档收尾
+
+### 运行要求
+
+- 使用 OpenSpec 相关 workflow 时，需要安装 OpenSpec CLI
+- 需要一个实际项目仓库来保存设计文档、计划、OpenSpec change、代码、测试和验证结果
+
+### 推荐入口
+
+- `openspec-superpowers`：完整功能交付流程
+- `superpowers-openspec-execution`：先 Superpowers 探索，再 OpenSpec 固化，再回到 Superpowers 实现验证，最后归档 OpenSpec change
+- `superpowers-feature`：不生成 OpenSpec 产物，只做设计、计划、TDD、验证
+- `openspec-feature`：只做 OpenSpec proposal、design、specs、tasks
+
+### 怎么选择
+
+- `openspec-superpowers`：适合想要一个从需求澄清一路带到实现验证的统一入口，不想自己判断每一步先后顺序的场景。
+- `superpowers-openspec-execution`：适合已经明确要按四步走的场景，也就是先 Superpowers 探索，再 OpenSpec 固化，再回到 Superpowers 执行实现验证，最后归档 OpenSpec change。
+- `superpowers-feature`：适合只想使用 Superpowers 的设计、计划、TDD、验证纪律，不需要 OpenSpec change 产物的场景。
+- `openspec-feature`：适合只想先把 OpenSpec proposal、design、specs、tasks 补齐，再决定后续实现怎么推进的场景。
+
 ## 包含内容
 
 源码层 workflow：
@@ -218,25 +248,6 @@ Claude Code 更适合使用命令文件和项目说明，因此请使用 `dist/c
 ### 其他工具
 
 这个仓库后续可以继续扩展其他适配层，只需要在 `dist/` 下增加新的工具 bundle 即可。
-
-## 运行要求
-
-- 使用 OpenSpec 相关 workflow 时，需要安装 OpenSpec CLI
-- 需要一个实际项目仓库来保存设计文档、计划、OpenSpec change、代码、测试和验证结果
-
-## 推荐入口
-
-- `openspec-superpowers`：完整功能交付流程
-- `superpowers-openspec-execution`：先 Superpowers 探索，再 OpenSpec 固化，再回到 Superpowers 实现验证，最后归档 OpenSpec change
-- `superpowers-feature`：不生成 OpenSpec 产物，只做设计、计划、TDD、验证
-- `openspec-feature`：只做 OpenSpec proposal、design、specs、tasks
-
-## 怎么选择
-
-- `openspec-superpowers`：适合想要一个从需求澄清一路带到实现验证的统一入口，不想自己判断每一步先后顺序的场景。
-- `superpowers-openspec-execution`：适合已经明确要按四步走的场景，也就是先 Superpowers 探索，再 OpenSpec 固化，再回到 Superpowers 执行实现验证，最后归档 OpenSpec change。
-- `superpowers-feature`：适合只想使用 Superpowers 的设计、计划、TDD、验证纪律，不需要 OpenSpec change 产物的场景。
-- `openspec-feature`：适合只想先把 OpenSpec proposal、design、specs、tasks 补齐，再决定后续实现怎么推进的场景。
 
 ## 显式启用规则
 
