@@ -23,9 +23,16 @@ If the team later wants automatic skill discovery, copy the needed folders into 
 ## Recommended Use
 
 - Use `openspec-superpowers-workflow` for a single full-flow entry.
-- Use `superpowers-openspec-execution-workflow` when the team wants Superpowers exploration, OpenSpec locking, then Superpowers execution plus archive.
+- Use `superpowers-openspec-execution-workflow` when the team wants four explicit steps: Superpowers exploration, OpenSpec locking, Superpowers execution, then OpenSpec archive.
 - Use `superpowers-feature-workflow` when you only need design, planning, worktree, TDD, and verification discipline.
 - Use `openspec-feature-workflow` when you only need to create or complete change artifacts.
+
+## How To Choose
+
+- Choose `openspec-superpowers-workflow` when you want one general entry point from clarification through implementation and verification.
+- Choose `superpowers-openspec-execution-workflow` when you want a fixed four-step sequence and want that sequence to stay explicit.
+- Choose `superpowers-feature-workflow` when you only want the Superpowers engineering workflow.
+- Choose `openspec-feature-workflow` when you only want OpenSpec change artifacts.
 
 ## Documentation
 

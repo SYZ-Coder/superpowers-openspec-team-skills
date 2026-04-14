@@ -1,17 +1,18 @@
 ﻿---
 name: superpowers-openspec-execution-workflow
-description: Use when a non-trivial feature should combine exploratory planning, formal OpenSpec change artifacts, and disciplined implementation with testing and final change completion.
+description: Use when a feature should follow four explicit steps: Superpowers exploration, OpenSpec locking, Superpowers execution, and OpenSpec archive.
 ---
 
 # Superpowers -> OpenSpec -> Superpowers Workflow
 
 ## Overview
 
-Use this skill when the team wants a three-stage delivery path:
+Use this skill when the team wants this four-step delivery path:
 
 1. Explore with Superpowers
 2. Lock the change with OpenSpec
-3. Execute with Superpowers and finish with verification plus change completion
+3. Execute with Superpowers and finish with implementation, testing, and verification
+4. Archive the completed OpenSpec change
 
 This skill is an orchestrator. It should delegate detail work to the existing workflow skills instead of duplicating them.
 

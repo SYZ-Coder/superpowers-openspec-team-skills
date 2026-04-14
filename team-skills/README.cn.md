@@ -23,9 +23,16 @@
 ## 推荐用法
 
 - 使用 `openspec-superpowers-workflow` 作为一个完整流程入口。
-- 如果想明确按“先探索、再锁规范、再执行”的三段式节奏，使用 `superpowers-openspec-execution-workflow`。
+- 如果想明确按“先探索、再锁规范、再执行、最后归档”的四步节奏，使用 `superpowers-openspec-execution-workflow`。
 - 如果只需要设计、计划、worktree、TDD、验证，使用 `superpowers-feature-workflow`。
 - 如果只需要补齐 change 产物，使用 `openspec-feature-workflow`。
+
+## 怎么选择
+
+- 如果你想要一个从需求澄清一路带到实现和验证的统一入口，用 `openspec-superpowers-workflow`。
+- 如果你已经明确要按四步顺序推进，并且希望这个顺序保持清晰可见，用 `superpowers-openspec-execution-workflow`。
+- 如果你只想用 Superpowers 的工程纪律，用 `superpowers-feature-workflow`。
+- 如果你只想先补齐 OpenSpec change 产物，用 `openspec-feature-workflow`。
 
 ## 配套文档
 

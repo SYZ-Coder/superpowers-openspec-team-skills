@@ -231,6 +231,13 @@ The repository is designed so that other agent runtimes can be supported later b
 - `superpowers-feature`: design, planning, TDD, and verification without OpenSpec artifact generation
 - `openspec-feature`: OpenSpec proposal, design, specs, and tasks before implementation
 
+## How To Choose
+
+- Use `openspec-superpowers` when you want one end-to-end entry point and do not want to decide the step order yourself. It is the general full-flow option from clarification through verification.
+- Use `superpowers-openspec-execution` when you want a fixed four-step path: Superpowers exploration, OpenSpec locking, Superpowers execution, and OpenSpec archive.
+- Use `superpowers-feature` when you only want the Superpowers engineering discipline without OpenSpec change artifacts.
+- Use `openspec-feature` when you only want to create or complete OpenSpec change artifacts before implementation.
+
 ## Explicit Activation
 
 These workflows should only activate when one of the following is true:

@@ -231,6 +231,13 @@ Claude Code 更适合使用命令文件和项目说明，因此请使用 `dist/c
 - `superpowers-feature`：不生成 OpenSpec 产物，只做设计、计划、TDD、验证
 - `openspec-feature`：只做 OpenSpec proposal、design、specs、tasks
 
+## 怎么选择
+
+- `openspec-superpowers`：适合想要一个从需求澄清一路带到实现验证的统一入口，不想自己判断每一步先后顺序的场景。
+- `superpowers-openspec-execution`：适合已经明确要按四步走的场景，也就是先 Superpowers 探索，再 OpenSpec 固化，再回到 Superpowers 执行实现验证，最后归档 OpenSpec change。
+- `superpowers-feature`：适合只想使用 Superpowers 的设计、计划、TDD、验证纪律，不需要 OpenSpec change 产物的场景。
+- `openspec-feature`：适合只想先把 OpenSpec proposal、design、specs、tasks 补齐，再决定后续实现怎么推进的场景。
+
 ## 显式启用规则
 
 这些 workflow 只应在下面几种情况下启用：

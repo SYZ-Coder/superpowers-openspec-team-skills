@@ -1,7 +1,7 @@
 name: superpowers-openspec-execution-workflow
 type: orchestrator
 standalone: false
-description: Explore with Superpowers, lock behavior with OpenSpec, then implement and verify.
+description: Explore with Superpowers, lock behavior with OpenSpec, return to Superpowers for execution, then archive the OpenSpec change.
 tool_support:
   - codex
   - cursor
