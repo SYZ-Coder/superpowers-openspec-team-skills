@@ -29,11 +29,26 @@ This repository is for teams that want AI coding tools to stop jumping straight 
 - lock agreed behavior before risky changes
 - implement with tests and verification
 - keep a clean closeout path for completed work
+- preserve project context in the repository so new sessions do not start from scratch
+
+### Project Memory
+
+This repository now includes an optional repo-persisted memory pattern for Superpowers-based workflows.
+
+When a project contains `.superpowers-memory/`, Superpowers workflows should:
+
+- read `PROJECT_CONTEXT.md` for stable project facts
+- read `CURRENT_STATE.md` for the latest working context
+- read recent entries under `session-journal/`
+- update `CURRENT_STATE.md` and add a short journal entry before ending the session
+
+This gives AI a lightweight cross-session memory without requiring a separate memory service.
 
 ### Requirements
 
 - OpenSpec CLI when using workflows that create or inspect OpenSpec changes
 - A real project repository where the agent can write design docs, plans, OpenSpec changes, code, tests, and verification output
+- Optional for cross-session memory: a `.superpowers-memory/` folder in the target project
 
 ### Recommended Entry Points
 
@@ -86,6 +101,18 @@ or:
 
 ```powershell
 & "<repo-root>\scripts\install-codex.ps1" -Bundle openspec-superpowers
+```
+
+Optional memory scaffold for any target project:
+
+```powershell
+.\scripts\install-superpowers-memory.ps1 -ProjectRoot <project-root>
+```
+
+Optional project-level memory integration for Codex, Cursor, and Claude Code:
+
+```powershell
+.\scripts\install-superpowers-memory-integration.ps1 -Tool all -ProjectRoot <project-root>
 ```
 
 ### Codex
@@ -274,6 +301,8 @@ For Cursor and Claude Code users, follow the same rule:
 ## Documentation
 
 - [Chinese README](README.cn.md)
+- [Memory guide](MEMORY.md)
+- [Chinese memory guide](MEMORY.cn.md)
 - [Verification guide](VERIFY.md)
 - [Chinese verification guide](VERIFY.cn.md)
 - [Source workflow overview](team-skills/README.md)

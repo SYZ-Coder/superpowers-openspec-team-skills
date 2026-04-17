@@ -1,0 +1,13 @@
+# Superpowers Memory
+
+If `.superpowers-memory/` exists in this repository, read it at the start of a new session before asking for project background.
+
+Read in this order:
+
+1. `.superpowers-memory/PROJECT_CONTEXT.md`
+2. `.superpowers-memory/CURRENT_STATE.md`
+3. The newest files under `.superpowers-memory/session-journal/`
+
+When a meaningful Superpowers-related session ends, update `CURRENT_STATE.md` and add a short session journal entry.
+
+This memory rule does not auto-enable any Superpowers workflow. Workflows still require explicit user opt-in.

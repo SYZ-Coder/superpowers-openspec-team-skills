@@ -11,7 +11,7 @@ This is an explicit opt-in workflow. Do not use it by default. Only use it when 
 
 ## Workflow
 
-1. Explore project context first.
+1. Explore project context first. If `.superpowers-memory/` exists, read `PROJECT_CONTEXT.md`, `CURRENT_STATE.md`, and the latest session journal entries before asking questions.
 2. Clarify requirements one question at a time.
 3. Present 2-3 approaches and recommend one.
 4. Write the approved design to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`.
@@ -20,9 +20,11 @@ This is an explicit opt-in workflow. Do not use it by default. Only use it when 
 7. Prefer a repo-local worktree for non-trivial work.
 8. Implement with TDD: failing test, minimal code, green test.
 9. Run fresh verification before claiming completion.
+10. If `.superpowers-memory/` exists, update `CURRENT_STATE.md` and add a short session journal entry before ending the session.
 
 ## Guardrails
 
 - No production code before design approval.
 - No skipping the failing test for new behavior.
 - No completion claim without fresh command output.
+- Do not mix stable project facts with temporary session notes inside the same memory file.

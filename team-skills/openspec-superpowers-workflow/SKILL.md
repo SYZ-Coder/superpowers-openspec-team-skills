@@ -11,12 +11,15 @@ Use this skill as the team entrypoint for feature delivery. It coordinates the o
 
 This is an explicit opt-in workflow. Do not use it by default. Only use it when the user explicitly asks for this workflow, names this skill, or a repository policy explicitly requires it.
 
+If `.superpowers-memory/` exists in the repository, treat it as shared project memory: read it before planning and update it before closing the workflow.
+
 ## Required Order
 
 1. Run `$superpowers-feature-workflow` to clarify the request, compare approaches, confirm the design, and prepare implementation.
 2. Run `$openspec-feature-workflow` to create the change and complete `proposal`, `design`, `specs`, and `tasks`.
 3. Return to the Superpowers track for plan execution, worktree setup, TDD, and verification.
 4. Do not claim completion until verification evidence exists.
+5. If `.superpowers-memory/` exists, update `CURRENT_STATE.md` and add a short journal entry for the session outcome.
 
 ## When to Use
 
@@ -31,6 +34,7 @@ This is an explicit opt-in workflow. Do not use it by default. Only use it when 
 - OpenSpec change artifacts in `openspec/changes/<change-name>/`
 - Implementation plan in `docs/superpowers/plans/`
 - Code, tests, and fresh verification output
+- Updated Superpowers memory when `.superpowers-memory/` is present
 
 ## Guardrails
 

@@ -9,6 +9,8 @@ Use this standalone skill when a feature should follow a disciplined path from c
 
 This is an explicit opt-in workflow. Do not use it by default. Only use it when the user explicitly asks for it, names `$openspec-superpowers-workflow`, or a repository policy explicitly requires it.
 
+If `.superpowers-memory/` exists in the repository, read it before planning and update it before closing the workflow.
+
 ## Workflow
 
 1. Explore the repository context before proposing a solution.

@@ -14,6 +14,8 @@ Use this standalone skill when feature delivery should follow this sequence:
 
 This is an explicit opt-in workflow. Do not use it by default. Only use it when the user explicitly asks for it, names `$superpowers-openspec-execution-workflow`, or a repository policy explicitly requires it.
 
+If `.superpowers-memory/` exists in the repository, read it at the start and update it before the session ends.
+
 ## Workflow
 
 1. Explore the repository context before proposing solutions.
@@ -39,6 +41,7 @@ This is an explicit opt-in workflow. Do not use it by default. Only use it when 
    - run tests again to confirm success
 14. Run fresh verification commands before any completion claim.
 15. If code, specs, and verification are aligned, archive the change with the OpenSpec archive flow.
+16. If `.superpowers-memory/` exists, update `CURRENT_STATE.md` and add a short session journal entry.
 
 ## Guardrails
 

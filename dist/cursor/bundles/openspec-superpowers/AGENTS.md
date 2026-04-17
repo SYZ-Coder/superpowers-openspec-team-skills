@@ -2,6 +2,8 @@
 
 This workflow is explicit opt-in. Do not apply it by default. Only apply it when the user explicitly asks for this workflow or names it in chat.
 
+If `.superpowers-memory/` exists in the repository, treat it as shared project memory and keep it up to date during the workflow.
+
 When the user asks for OpenSpec + Superpowers feature delivery, follow this order:
 
 1. Clarify requirements and compare approaches.

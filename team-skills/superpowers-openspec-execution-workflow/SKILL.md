@@ -18,6 +18,8 @@ This skill is an orchestrator. It should delegate detail work to the existing wo
 
 This is an explicit opt-in workflow. Do not use it by default. Only use it when the user explicitly asks for this workflow, names this skill, or a repository policy explicitly requires it.
 
+If `.superpowers-memory/` exists in the repository, read it at the start and update it before final archive so the next session can resume with real context.
+
 ## Required Order
 
 1. Start with `$superpowers-feature-workflow`.
@@ -27,6 +29,7 @@ This is an explicit opt-in workflow. Do not use it by default. Only use it when 
 3. Return to `$superpowers-feature-workflow`.
    Use it to write the implementation plan, prefer a worktree, execute with TDD, and run fresh verification.
 4. If implementation and specs are aligned after verification, use `$openspec-archive-change` to archive the completed change.
+5. If `.superpowers-memory/` exists, update `CURRENT_STATE.md` and add a short session journal entry after verification and archive decisions are complete.
 
 ## Decision Gates
 

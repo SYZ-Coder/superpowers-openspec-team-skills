@@ -21,6 +21,14 @@ If you want to install the workflows into a tool, use the prebuilt bundles and i
 - Cursor: `dist/cursor/bundles/` or `scripts/install-cursor.ps1`
 - Claude Code: `dist/claude-code/bundles/` or `scripts/install-claude-code.ps1`
 
+Optional memory scaffold for Superpowers workflows:
+
+- `scripts/install-superpowers-memory.ps1 -ProjectRoot <project-root>`
+- `scripts/install-superpowers-memory-integration.ps1 -Tool all -ProjectRoot <project-root>`
+
+This creates `.superpowers-memory/` in the target project so Superpowers-based workflows can read stable project context and persist session summaries for future sessions.
+It can also update project-level tool instructions so Codex, Cursor, and Claude Code read that memory at the start of new sessions.
+
 ## Why Not Copy Source Workflows Directly
 
 Some source workflows are orchestrators. They are designed for maintainability and may depend on other workflows or external skills.

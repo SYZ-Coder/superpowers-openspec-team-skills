@@ -29,3 +29,4 @@ outputs:
   - docs/superpowers/specs/
   - docs/superpowers/plans/
   - openspec/changes/<change-name>/
+  - .superpowers-memory/

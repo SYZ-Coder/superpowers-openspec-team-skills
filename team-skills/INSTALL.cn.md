@@ -21,6 +21,14 @@
 - Cursor：`dist/cursor/bundles/` 或 `scripts/install-cursor.ps1`
 - Claude Code：`dist/claude-code/bundles/` 或 `scripts/install-claude-code.ps1`
 
+如果你还想给 Superpowers 相关 workflow 增加跨会话记忆，可以额外运行：
+
+- `scripts/install-superpowers-memory.ps1 -ProjectRoot <project-root>`
+- `scripts/install-superpowers-memory-integration.ps1 -Tool all -ProjectRoot <project-root>`
+
+它会在目标项目里创建 `.superpowers-memory/`，让 Superpowers workflow 读取稳定项目背景，并把当前会话摘要写回仓库。
+同时也可以把这套记忆接入项目级工具指令里，让 Codex、Cursor、Claude Code 在新会话开始时更容易自动带上这些上下文。
+
 ## 为什么不再推荐直接复制源码 workflow
 
 因为部分源码 workflow 是编排型 workflow，本身会依赖其他 workflow 或外部 skills。

@@ -42,6 +42,12 @@ Test-Path "$env:USERPROFILE\.codex\skills\superpowers-openspec-execution-workflo
 True
 ```
 
+如果你还安装了 Codex 的 Superpowers 记忆集成，也额外检查：
+
+```powershell
+Select-String -Path "<project-root>\AGENTS.md" -Pattern "superpowers-memory:start"
+```
+
 ### 第四步：重启或刷新 Codex
 
 Codex 需要重新发现刚安装的 skill。
@@ -92,6 +98,12 @@ True
 True
 ```
 
+如果你还安装了 Cursor 的 Superpowers 记忆集成，也额外检查：
+
+```powershell
+Test-Path "<project-root>\.cursor\rules\superpowers-memory.mdc"
+```
+
 ### 第四步：重新打开项目
 
 让 Cursor 重新加载项目规则文件。
@@ -136,6 +148,12 @@ Test-Path "<project-root>\CLAUDE.md"
 ```text
 True
 True
+```
+
+如果你还安装了 Claude Code 的 Superpowers 记忆集成，也额外检查：
+
+```powershell
+Select-String -Path "<project-root>\CLAUDE.md" -Pattern "superpowers-memory:start"
 ```
 
 ### 第四步：重新打开项目

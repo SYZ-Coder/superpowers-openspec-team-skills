@@ -9,3 +9,5 @@ For feature work without OpenSpec artifacts:
 3. Write the implementation plan.
 4. Implement with TDD.
 5. Run fresh verification before completion.
+
+If `.superpowers-memory/` exists in the repository, read it before planning and update it before ending the session.

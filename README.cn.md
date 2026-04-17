@@ -29,11 +29,26 @@ Use $superpowers-openspec-execution-workflow for this feature.
 - 先确认行为，再改动代码
 - 实现时带上测试和验证
 - 完成后有清晰的归档收尾
+- 把项目上下文持续记在仓库里，让新会话不是从空白开始
+
+### 项目记忆
+
+这个仓库现在额外支持一套可选的、持久化到仓库里的 Superpowers 记忆模式。
+
+当目标项目中存在 `.superpowers-memory/` 时，Superpowers workflow 应该：
+
+- 先读取 `PROJECT_CONTEXT.md`，了解稳定的项目背景
+- 读取 `CURRENT_STATE.md`，了解当前工作状态
+- 阅读 `session-journal/` 里的最近记录
+- 在会话结束前更新 `CURRENT_STATE.md`，并补一条新的 session journal
+
+这样不用单独部署记忆服务，也能让 AI 在跨会话时接上之前的上下文。
 
 ### 运行要求
 
 - 使用 OpenSpec 相关 workflow 时，需要安装 OpenSpec CLI
 - 需要一个实际项目仓库来保存设计文档、计划、OpenSpec change、代码、测试和验证结果
+- 如果想启用跨会话记忆，目标项目里还需要有 `.superpowers-memory/` 目录
 
 ### 推荐入口
 
@@ -86,6 +101,18 @@ cd <repo-root>
 
 ```powershell
 & "<repo-root>\scripts\install-codex.ps1" -Bundle openspec-superpowers
+```
+
+如果你还想给目标项目安装 Superpowers 记忆骨架，可以运行：
+
+```powershell
+.\scripts\install-superpowers-memory.ps1 -ProjectRoot <project-root>
+```
+
+如果你还想把这套记忆接到 Codex、Cursor、Claude Code 的项目级指令里，可以继续运行：
+
+```powershell
+.\scripts\install-superpowers-memory-integration.ps1 -Tool all -ProjectRoot <project-root>
 ```
 
 ### Codex
@@ -274,6 +301,8 @@ Claude Code 更适合使用命令文件和项目说明，因此请使用 `dist/c
 ## 相关文档
 
 - [English README](README.md)
+- [记忆指南](MEMORY.cn.md)
+- [English memory guide](MEMORY.md)
 - [验证指南](VERIFY.md)
 - [中文验证指南](VERIFY.cn.md)
 - [源码层 workflow 总览](team-skills/README.cn.md)

@@ -42,6 +42,12 @@ Expected result:
 True
 ```
 
+If you installed Superpowers memory integration for Codex, also verify:
+
+```powershell
+Select-String -Path "<project-root>\AGENTS.md" -Pattern "superpowers-memory:start"
+```
+
 ### Step 4: Restart or refresh Codex
 
 Codex must rediscover the installed skill before it can use it.
@@ -92,6 +98,12 @@ True
 True
 ```
 
+If you installed Superpowers memory integration for Cursor, also verify:
+
+```powershell
+Test-Path "<project-root>\.cursor\rules\superpowers-memory.mdc"
+```
+
 ### Step 4: Reopen the project in Cursor
 
 Cursor should reload the project rules after the files are written.
@@ -136,6 +148,12 @@ Expected result:
 ```text
 True
 True
+```
+
+If you installed Superpowers memory integration for Claude Code, also verify:
+
+```powershell
+Select-String -Path "<project-root>\CLAUDE.md" -Pattern "superpowers-memory:start"
 ```
 
 ### Step 4: Reopen the project in Claude Code
