@@ -58,6 +58,7 @@ This gives AI a lightweight cross-session memory without requiring a separate me
 
 - OpenSpec CLI when using workflows that create or inspect OpenSpec changes
 - A real project repository where the agent can write design docs, plans, OpenSpec changes, code, tests, and verification output
+- PowerShell 7 (`pwsh`) on macOS or Linux when using the provided installer scripts
 - Optional for cross-session memory: a `.superpowers-memory/` folder in the target project
 
 ### Recommended Entry Points
@@ -124,16 +125,35 @@ or:
 & "<repo-root>\scripts\install-codex.ps1" -Bundle openspec-superpowers
 ```
 
+macOS or Linux:
+
+```bash
+cd <repo-root>
+pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex"
+```
+
 Optional memory scaffold for any target project:
 
 ```powershell
 .\scripts\install-superpowers-memory.ps1 -ProjectRoot <project-root>
 ```
 
+macOS or Linux:
+
+```bash
+pwsh -File ./scripts/install-superpowers-memory.ps1 -ProjectRoot <project-root>
+```
+
 Optional project-level memory integration for Codex, Cursor, and Claude Code:
 
 ```powershell
 .\scripts\install-superpowers-memory-integration.ps1 -Tool all -ProjectRoot <project-root>
+```
+
+macOS or Linux:
+
+```bash
+pwsh -File ./scripts/install-superpowers-memory-integration.ps1 -Tool all -ProjectRoot <project-root>
 ```
 
 ### Codex
@@ -146,6 +166,12 @@ PowerShell:
 .\scripts\install-codex.ps1 -Bundle openspec-superpowers
 ```
 
+macOS or Linux (`pwsh`):
+
+```bash
+pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex"
+```
+
 Useful options:
 
 ```powershell
@@ -153,6 +179,15 @@ Useful options:
 .\scripts\install-codex.ps1 -Bundle openspec-superpowers -Backup
 .\scripts\install-codex.ps1 -Bundle openspec-superpowers -Backup -Force
 .\scripts\install-codex.ps1 -Bundle openspec-superpowers -CheckDependencies
+```
+
+macOS or Linux examples:
+
+```bash
+pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex" -DryRun
+pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex" -Backup
+pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex" -Backup -Force
+pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex" -CheckDependencies
 ```
 
 - `-DryRun`: show what would be installed without copying files
@@ -184,6 +219,12 @@ Install a Cursor bundle into the target repository root:
 .\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
 ```
 
+macOS or Linux (`pwsh`):
+
+```bash
+pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
+```
+
 This writes `.cursor/rules/` files plus an `AGENTS.md` workflow guide.
 
 Important: for Cursor, these workflow bundles are also intended to be explicit opt-in. Install them into the project, but only ask Cursor to follow them when you explicitly name the workflow in chat.
@@ -197,10 +238,25 @@ Useful options:
 .\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
 ```
 
+macOS or Linux examples:
+
+```bash
+pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -DryRun
+pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup
+pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup -Force
+pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
+```
+
 You can also install the three-stage execution bundle:
 
 ```powershell
 .\scripts\install-cursor.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
+```
+
+macOS or Linux:
+
+```bash
+pwsh -File ./scripts/install-cursor.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
 ```
 
 Recommended explicit activation pattern:
@@ -217,6 +273,12 @@ Install a Claude Code bundle into the target repository root:
 .\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
 ```
 
+macOS or Linux (`pwsh`):
+
+```bash
+pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
+```
+
 This writes `.claude/commands/` files plus a `CLAUDE.md` project guide.
 
 Important: for Claude Code, install the bundle but only activate the workflow when you explicitly invoke the command or explicitly ask for the workflow style.
@@ -230,10 +292,25 @@ Useful options:
 .\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
 ```
 
+macOS or Linux examples:
+
+```bash
+pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -DryRun
+pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup
+pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup -Force
+pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
+```
+
 You can also install the three-stage execution bundle:
 
 ```powershell
 .\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
+```
+
+macOS or Linux:
+
+```bash
+pwsh -File ./scripts/install-claude-code.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
 ```
 
 Recommended explicit activation pattern:

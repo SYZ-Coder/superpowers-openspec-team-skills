@@ -48,6 +48,7 @@ Use $superpowers-openspec-execution-workflow for this feature.
 
 - 使用 OpenSpec 相关 workflow 时，需要安装 OpenSpec CLI
 - 需要一个实际项目仓库来保存设计文档、计划、OpenSpec change、代码、测试和验证结果
+- 在 macOS 或 Linux 上使用仓库自带安装脚本时，需要 PowerShell 7（`pwsh`）
 - 如果想启用跨会话记忆，目标项目里还需要有 `.superpowers-memory/` 目录
 
 ### 推荐入口
@@ -114,16 +115,35 @@ cd <repo-root>
 & "<repo-root>\scripts\install-codex.ps1" -Bundle openspec-superpowers
 ```
 
+macOS / Linux：
+
+```bash
+cd <repo-root>
+pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex"
+```
+
 如果你还想给目标项目安装 Superpowers 记忆骨架，可以运行：
 
 ```powershell
 .\scripts\install-superpowers-memory.ps1 -ProjectRoot <project-root>
 ```
 
+macOS / Linux：
+
+```bash
+pwsh -File ./scripts/install-superpowers-memory.ps1 -ProjectRoot <project-root>
+```
+
 如果你还想把这套记忆接到 Codex、Cursor、Claude Code 的项目级指令里，可以继续运行：
 
 ```powershell
 .\scripts\install-superpowers-memory-integration.ps1 -Tool all -ProjectRoot <project-root>
+```
+
+macOS / Linux：
+
+```bash
+pwsh -File ./scripts/install-superpowers-memory-integration.ps1 -Tool all -ProjectRoot <project-root>
 ```
 
 ### Codex
@@ -136,6 +156,12 @@ PowerShell：
 .\scripts\install-codex.ps1 -Bundle openspec-superpowers
 ```
 
+macOS / Linux（`pwsh`）：
+
+```bash
+pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex"
+```
+
 常用参数：
 
 ```powershell
@@ -143,6 +169,15 @@ PowerShell：
 .\scripts\install-codex.ps1 -Bundle openspec-superpowers -Backup
 .\scripts\install-codex.ps1 -Bundle openspec-superpowers -Backup -Force
 .\scripts\install-codex.ps1 -Bundle openspec-superpowers -CheckDependencies
+```
+
+macOS / Linux 示例：
+
+```bash
+pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex" -DryRun
+pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex" -Backup
+pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex" -Backup -Force
+pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex" -CheckDependencies
 ```
 
 - `-DryRun`：只预览将安装什么，不实际复制
@@ -174,6 +209,12 @@ Use $openspec-superpowers-workflow to run this feature from clarification throug
 .\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
 ```
 
+macOS / Linux（`pwsh`）：
+
+```bash
+pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
+```
+
 这会写入 `.cursor/rules/` 和 `AGENTS.md`。
 
 重要说明：对 Cursor 来说，这些 workflow bundle 也应该按“显式启用”来使用。可以安装到项目里，但只有在对话中明确点名 workflow 时，才让 Cursor 按它执行。
@@ -187,10 +228,25 @@ Use $openspec-superpowers-workflow to run this feature from clarification throug
 .\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
 ```
 
+macOS / Linux 示例：
+
+```bash
+pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -DryRun
+pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup
+pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup -Force
+pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
+```
+
 如果你想使用“三段式流程 + OpenSpec 归档”，也可以安装：
 
 ```powershell
 .\scripts\install-cursor.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
+```
+
+macOS / Linux：
+
+```bash
+pwsh -File ./scripts/install-cursor.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
 ```
 
 推荐显式启用方式：
@@ -207,6 +263,12 @@ Use the superpowers-openspec-execution workflow for this feature.
 .\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
 ```
 
+macOS / Linux（`pwsh`）：
+
+```bash
+pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
+```
+
 这会写入 `.claude/commands/` 和 `CLAUDE.md`。
 
 重要说明：对 Claude Code 来说，安装 bundle 以后，也应该只在你明确调用命令或明确要求该 workflow 时才启用。
@@ -220,10 +282,25 @@ Use the superpowers-openspec-execution workflow for this feature.
 .\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
 ```
 
+macOS / Linux 示例：
+
+```bash
+pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -DryRun
+pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup
+pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup -Force
+pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
+```
+
 如果你想使用“三段式流程 + OpenSpec 归档”，也可以安装：
 
 ```powershell
 .\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
+```
+
+macOS / Linux：
+
+```bash
+pwsh -File ./scripts/install-claude-code.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
 ```
 
 推荐显式启用方式：
