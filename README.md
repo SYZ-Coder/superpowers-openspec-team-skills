@@ -1,5 +1,15 @@
 # Superpowers + OpenSpec Team Skills
 
+## Chinese Docs
+
+Chinese readers can start here:
+
+- [README.cn.md](README.cn.md)
+- [MEMORY.cn.md](MEMORY.cn.md)
+- [VERIFY.cn.md](VERIFY.cn.md)
+- [team-skills/INSTALL.cn.md](team-skills/INSTALL.cn.md)
+- [team-skills/README.cn.md](team-skills/README.cn.md)
+
 This is a skill library with memory and autonomous learning workflows designed for AI programming assistants. The goal is straightforward: enable agents to follow structured processes rather than jumping straight into writing code.Users can combine Superpowers and OpenSpec as needed.
 
 This repository now has two layers:
