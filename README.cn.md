@@ -48,7 +48,6 @@ Use $superpowers-openspec-execution-workflow for this feature.
 
 - 使用 OpenSpec 相关 workflow 时，需要安装 OpenSpec CLI
 - 需要一个实际项目仓库来保存设计文档、计划、OpenSpec change、代码、测试和验证结果
-- 在 macOS 或 Linux 上使用仓库自带安装脚本时，需要 PowerShell 7（`pwsh`）
 - 如果想启用跨会话记忆，目标项目里还需要有 `.superpowers-memory/` 目录
 
 ### 推荐入口
@@ -102,20 +101,27 @@ scripts/       安装脚本
 - 先切换到仓库根目录再执行
 - 或者直接使用脚本的绝对路径执行
 
-例如：
+Windows PowerShell：
 
 ```powershell
 cd <repo-root>
 .\scripts\install-codex.ps1 -Bundle openspec-superpowers
 ```
 
-或者：
+Windows PowerShell 绝对路径方式：
 
 ```powershell
 & "<repo-root>\scripts\install-codex.ps1" -Bundle openspec-superpowers
 ```
 
-macOS / Linux：
+macOS / Linux 原生 shell 方式：
+
+```bash
+cd <repo-root>
+sh ./scripts/install-codex.sh --bundle openspec-superpowers --codex-home "$HOME/.codex"
+```
+
+如果系统里已经安装了 PowerShell 7（`pwsh`），也可以直接运行脚本：
 
 ```bash
 cd <repo-root>
@@ -128,7 +134,13 @@ pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "
 .\scripts\install-superpowers-memory.ps1 -ProjectRoot <project-root>
 ```
 
-macOS / Linux：
+macOS / Linux 原生 shell 方式：
+
+```bash
+sh ./scripts/install-superpowers-memory.sh --project-root <project-root>
+```
+
+如果系统里已经安装了 PowerShell 7（`pwsh`），也可以直接运行脚本：
 
 ```bash
 pwsh -File ./scripts/install-superpowers-memory.ps1 -ProjectRoot <project-root>
@@ -140,7 +152,13 @@ pwsh -File ./scripts/install-superpowers-memory.ps1 -ProjectRoot <project-root>
 .\scripts\install-superpowers-memory-integration.ps1 -Tool all -ProjectRoot <project-root>
 ```
 
-macOS / Linux：
+macOS / Linux 原生 shell 方式：
+
+```bash
+sh ./scripts/install-superpowers-memory-integration.sh --tool all --project-root <project-root>
+```
+
+如果系统里已经安装了 PowerShell 7（`pwsh`），也可以直接运行脚本：
 
 ```bash
 pwsh -File ./scripts/install-superpowers-memory-integration.ps1 -Tool all -ProjectRoot <project-root>
@@ -156,7 +174,13 @@ PowerShell：
 .\scripts\install-codex.ps1 -Bundle openspec-superpowers
 ```
 
-macOS / Linux（`pwsh`）：
+macOS / Linux 原生 shell 方式：
+
+```bash
+sh ./scripts/install-codex.sh --bundle openspec-superpowers --codex-home "$HOME/.codex"
+```
+
+macOS / Linux 使用 `pwsh`：
 
 ```bash
 pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex"
@@ -171,7 +195,16 @@ pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "
 .\scripts\install-codex.ps1 -Bundle openspec-superpowers -CheckDependencies
 ```
 
-macOS / Linux 示例：
+macOS / Linux 原生 shell 示例：
+
+```bash
+sh ./scripts/install-codex.sh --bundle openspec-superpowers --codex-home "$HOME/.codex" --dry-run
+sh ./scripts/install-codex.sh --bundle openspec-superpowers --codex-home "$HOME/.codex" --backup
+sh ./scripts/install-codex.sh --bundle openspec-superpowers --codex-home "$HOME/.codex" --backup --force
+sh ./scripts/install-codex.sh --bundle openspec-superpowers --codex-home "$HOME/.codex" --check-dependencies
+```
+
+macOS / Linux `pwsh` 示例：
 
 ```bash
 pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex" -DryRun
@@ -209,7 +242,13 @@ Use $openspec-superpowers-workflow to run this feature from clarification throug
 .\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
 ```
 
-macOS / Linux（`pwsh`）：
+macOS / Linux 原生 shell 方式：
+
+```bash
+sh ./scripts/install-cursor.sh --bundle openspec-superpowers --project-root <project-root>
+```
+
+macOS / Linux 使用 `pwsh`：
 
 ```bash
 pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
@@ -228,7 +267,16 @@ pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoo
 .\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
 ```
 
-macOS / Linux 示例：
+macOS / Linux 原生 shell 示例：
+
+```bash
+sh ./scripts/install-cursor.sh --bundle openspec-superpowers --project-root <project-root> --dry-run
+sh ./scripts/install-cursor.sh --bundle openspec-superpowers --project-root <project-root> --backup
+sh ./scripts/install-cursor.sh --bundle openspec-superpowers --project-root <project-root> --backup --force
+sh ./scripts/install-cursor.sh --bundle openspec-superpowers --project-root <project-root> --check-dependencies
+```
+
+macOS / Linux `pwsh` 示例：
 
 ```bash
 pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -DryRun
@@ -243,7 +291,13 @@ pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoo
 .\scripts\install-cursor.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
 ```
 
-macOS / Linux：
+macOS / Linux 原生 shell 方式：
+
+```bash
+sh ./scripts/install-cursor.sh --bundle superpowers-openspec-execution --project-root <project-root>
+```
+
+macOS / Linux 使用 `pwsh`：
 
 ```bash
 pwsh -File ./scripts/install-cursor.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
@@ -263,7 +317,13 @@ Use the superpowers-openspec-execution workflow for this feature.
 .\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
 ```
 
-macOS / Linux（`pwsh`）：
+macOS / Linux 原生 shell 方式：
+
+```bash
+sh ./scripts/install-claude-code.sh --bundle openspec-superpowers --project-root <project-root>
+```
+
+macOS / Linux 使用 `pwsh`：
 
 ```bash
 pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
@@ -282,7 +342,16 @@ pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -Proje
 .\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
 ```
 
-macOS / Linux 示例：
+macOS / Linux 原生 shell 示例：
+
+```bash
+sh ./scripts/install-claude-code.sh --bundle openspec-superpowers --project-root <project-root> --dry-run
+sh ./scripts/install-claude-code.sh --bundle openspec-superpowers --project-root <project-root> --backup
+sh ./scripts/install-claude-code.sh --bundle openspec-superpowers --project-root <project-root> --backup --force
+sh ./scripts/install-claude-code.sh --bundle openspec-superpowers --project-root <project-root> --check-dependencies
+```
+
+macOS / Linux `pwsh` 示例：
 
 ```bash
 pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -DryRun
@@ -297,7 +366,13 @@ pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -Proje
 .\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
 ```
 
-macOS / Linux：
+macOS / Linux 原生 shell 方式：
+
+```bash
+sh ./scripts/install-claude-code.sh --bundle superpowers-openspec-execution --project-root <project-root>
+```
+
+macOS / Linux 使用 `pwsh`：
 
 ```bash
 pwsh -File ./scripts/install-claude-code.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
