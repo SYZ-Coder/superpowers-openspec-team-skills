@@ -1,6 +1,6 @@
 ---
 name: openspec-superpowers-workflow
-description: Use when a feature request must follow the full OpenSpec plus Superpowers workflow from clarification through proposal, design, tasks, implementation, and verification. Trigger when the user explicitly asks for OpenSpec plus Superpowers, asks for brainstorm then proposal/design/tasks then code, or the work is a non-trivial behavior change.
+description: Use when the user explicitly wants the full OpenSpec plus Superpowers path from clarification through proposal, design, tasks, implementation, verification, and optional archive.
 ---
 
 # OpenSpec + Superpowers Workflow
@@ -18,8 +18,9 @@ If `.superpowers-memory/` exists in the repository, treat it as shared project m
 1. Run `$superpowers-feature-workflow` to clarify the request, compare approaches, confirm the design, and prepare implementation.
 2. Run `$openspec-feature-workflow` to create the change and complete `proposal`, `design`, `specs`, and `tasks`.
 3. Return to the Superpowers track for plan execution, worktree setup, TDD, and verification.
-4. Do not claim completion until verification evidence exists.
-5. If `.superpowers-memory/` exists, update `CURRENT_STATE.md` and add a short journal entry for the session outcome.
+4. If the project uses OpenSpec archive flow and code, specs, and verification are aligned, archive the change as the final OpenSpec step.
+5. Do not claim completion until verification evidence exists.
+6. If `.superpowers-memory/` exists, update `CURRENT_STATE.md` and add a short journal entry for the session outcome.
 
 ## When to Use
 
@@ -34,11 +35,13 @@ If `.superpowers-memory/` exists in the repository, treat it as shared project m
 - OpenSpec change artifacts in `openspec/changes/<change-name>/`
 - Implementation plan in `docs/superpowers/plans/`
 - Code, tests, and fresh verification output
+- Archived OpenSpec change when archive flow is part of the project workflow
 - Updated Superpowers memory when `.superpowers-memory/` is present
 
 ## Guardrails
 
 - Do not start implementation before the design is approved
 - Do not skip OpenSpec artifacts for behavior changes
+- Do not archive the change until code, tests, and specs are aligned
 - Do not skip worktree, TDD, or verification when the request includes them
 - Keep the skill portable: use repo-local paths and avoid machine-specific assumptions

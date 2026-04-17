@@ -14,8 +14,9 @@ This is an explicit opt-in workflow. Do not use it by default. Only use it when 
 1. Review recent work, decisions, and verification evidence.
 2. Classify what was learned into durable facts, current state, session outcome, and reusable lessons.
 3. If `.superpowers-memory/` exists, update `PROJECT_CONTEXT.md`, `CURRENT_STATE.md`, recent journal files, and `LEARNING_BACKLOG.md` as appropriate.
-4. Keep stable facts separate from temporary notes.
-5. Summarize what the next session should remember.
+4. If `.superpowers-memory/` does not exist, tell the user to install the memory scaffold or keep the learning summary in a normal project document.
+5. Keep stable facts separate from temporary notes.
+6. Summarize what the next session should remember.
 
 ## Guardrails
 

@@ -19,6 +19,8 @@ This repository now has two layers:
 
 If you are a user of this repository, start with `dist/` and `scripts/`. Do not copy a single orchestrator workflow from `team-skills/` unless you are intentionally extending or adapting the source definitions yourself.
 
+Source workflows under `team-skills/` and tool bundles under `dist/` may differ in wording and structure, but they should remain functionally aligned. Source workflows are maintainer-facing definitions; distributed bundles are tool-adapted runtime forms of the same workflow.
+
 Important: these workflows are explicit opt-in workflows. They are not intended to become the default background behavior of your AI tool. Users should turn them on by explicit request, by naming the workflow, or because a repository policy explicitly requires them.
 
 If you want Codex to ignore these workflows unless explicitly invoked, install the bundle and only activate it by workflow name in the conversation.
