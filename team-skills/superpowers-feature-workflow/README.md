@@ -23,6 +23,8 @@ Use $superpowers-feature-workflow to drive the Superpowers stages for this featu
 
 The workflow starts by exploring project context, then asks clarifying questions, compares approaches, writes a design, creates a plan, and guides implementation with tests.
 
+When the work is meaningful and the team wants to preserve lessons for future sessions, follow it with `superpowers-learning-workflow`.
+
 ## Control Points
 
 - Project context is explored before proposing solutions.
@@ -37,6 +39,7 @@ The workflow starts by exploring project context, then asks clarifying questions
 - Implementation plan
 - Code changes
 - Tests and verification evidence
+- Optional follow-up: updated `.superpowers-memory/` files through `superpowers-learning-workflow`
 
 ## Advantages
 

@@ -70,6 +70,33 @@ Expected behavior:
 
 If Codex immediately starts writing production code without that staged flow, the workflow did not take effect.
 
+### Also verify `superpowers-learning`
+
+Install:
+
+```powershell
+.\scripts\install-codex.ps1 -Bundle superpowers-learning
+```
+
+Check:
+
+```powershell
+Test-Path "$env:USERPROFILE\.codex\skills\superpowers-learning-workflow\SKILL.md"
+```
+
+Then invoke:
+
+```text
+Use $superpowers-learning-workflow to capture what this session taught us and update the project memory.
+```
+
+Expected behavior:
+
+- Codex reviews recent work instead of starting new implementation
+- it separates stable facts from current state and session notes
+- it updates `.superpowers-memory/` when memory is enabled
+- it does not auto-edit the skill library unless explicitly asked
+
 ## 2. Cursor
 
 ### Step 1: Check runtime dependencies
@@ -121,6 +148,33 @@ Expected behavior:
 - the agent behaves like it is following a staged workflow
 - it does not skip directly to implementation
 - it treats design and OpenSpec artifact work as explicit phases
+
+### Also verify `superpowers-learning`
+
+Install:
+
+```powershell
+.\scripts\install-cursor.ps1 -Bundle superpowers-learning -ProjectRoot <project-root>
+```
+
+Check:
+
+```powershell
+Test-Path "<project-root>\.cursor\rules\superpowers-learning-workflow.mdc"
+Test-Path "<project-root>\AGENTS.md"
+```
+
+Then invoke:
+
+```text
+Use the superpowers-learning workflow to capture what this session taught us and update the project memory.
+```
+
+Expected behavior:
+
+- Cursor switches into reflection rather than implementation
+- it writes learning back into `.superpowers-memory/` when enabled
+- it keeps durable facts separate from temporary notes
 
 ## 3. Claude Code
 
@@ -174,6 +228,33 @@ Expected behavior:
 
 - the command is available
 - Claude Code follows the staged workflow instead of jumping straight into implementation
+
+### Also verify `superpowers-learning`
+
+Install:
+
+```powershell
+.\scripts\install-claude-code.ps1 -Bundle superpowers-learning -ProjectRoot <project-root>
+```
+
+Check:
+
+```powershell
+Test-Path "<project-root>\.claude\commands\superpowers-learning-workflow.md"
+Test-Path "<project-root>\CLAUDE.md"
+```
+
+Then invoke:
+
+```text
+/superpowers-learning-workflow
+```
+
+Expected behavior:
+
+- the command is available
+- Claude Code reflects on recent work instead of starting new implementation
+- it updates `.superpowers-memory/` when memory is enabled
 
 ## 4. What Counts As “Actually Working”
 
@@ -244,6 +325,7 @@ For any tool:
 3. verify expected files exist
 4. restart or reload the tool
 5. run one explicit workflow invocation
-6. confirm behavior follows the workflow stages
-7. run one normal request without naming a workflow
-8. confirm the workflow does not auto-activate
+6. if needed, run one explicit `superpowers-learning` invocation after a meaningful task
+7. confirm behavior follows the workflow stages
+8. run one normal request without naming a workflow
+9. confirm the workflow does not auto-activate

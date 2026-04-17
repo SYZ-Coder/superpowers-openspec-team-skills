@@ -14,6 +14,30 @@ Superpowers 记忆是一层持久化到仓库里的上下文机制，服务于 S
 
 这样下一次新会话就可以直接从仓库恢复上下文，而不是每次都从零开始解释。
 
+## 默认行为
+
+这项能力默认是不开启的。
+
+安装本仓库或安装 workflow bundle，并不会自动开启下面这些行为：
+
+- Superpowers 记忆
+- 自动读取记忆文件
+- 自动写回记忆文件
+- 自动学习沉淀
+- workflow 自动启用
+
+只有在下面这些条件满足时，记忆能力才会真正参与：
+
+1. 目标项目里存在 `.superpowers-memory/`
+2. 已安装对应的项目级集成，或者 workflow 明确会读取记忆
+3. 在需要 workflow 的场景下，用户明确调用了相关 workflow
+
+也就是说：
+
+- 安装只是让能力可用
+- 显式配置才会启用记忆
+- 显式调用才会启用 workflow
+
 ## 会保存什么
 
 启用后，项目会使用这套结构：
@@ -22,6 +46,7 @@ Superpowers 记忆是一层持久化到仓库里的上下文机制，服务于 S
 .superpowers-memory/
   PROJECT_CONTEXT.md
   CURRENT_STATE.md
+  LEARNING_BACKLOG.md
   session-journal/
 ```
 
@@ -58,6 +83,12 @@ Superpowers 记忆是一层持久化到仓库里的上下文机制，服务于 S
 - 验证了什么
 - 下一步建议是什么
 
+### `LEARNING_BACKLOG.md`
+
+这个文件用来保存未来可能值得沉淀成 workflow、skill、checklist 或项目规则的可复用经验。
+
+它只适合记录跨会话可复用的模式，不适合记录一次性的临时笔记。
+
 ## 它怎么工作
 
 当 Superpowers 相关 workflow 看到项目里存在 `.superpowers-memory/` 时，它应该：
@@ -73,6 +104,7 @@ Superpowers 记忆是一层持久化到仓库里的上下文机制，服务于 S
 - `superpowers-feature`
 - `superpowers-openspec-execution`
 - `openspec-superpowers`
+- `superpowers-learning`
 
 ## 使用规则
 

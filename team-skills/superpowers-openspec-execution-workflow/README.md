@@ -35,6 +35,8 @@ This makes the intended order explicit and prevents the agent from jumping strai
 3. Return to Superpowers to write the implementation plan, execute with TDD, and run fresh verification.
 4. Archive the OpenSpec change only after the code, tests, and specs are aligned.
 
+If the session produced useful reusable lessons, follow the archive step with `superpowers-learning-workflow` so the next session inherits the right context.
+
 ## Control Points
 
 - No production code during exploration.
@@ -49,6 +51,7 @@ This makes the intended order explicit and prevents the agent from jumping strai
 - Superpowers implementation plan under `docs/superpowers/plans/`
 - Verified code changes
 - Archived OpenSpec change when complete
+- Optional follow-up: updated `.superpowers-memory/` files and `LEARNING_BACKLOG.md` through `superpowers-learning-workflow`
 
 ## Advantages
 

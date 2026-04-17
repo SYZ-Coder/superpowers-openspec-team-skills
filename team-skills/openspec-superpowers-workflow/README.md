@@ -23,6 +23,8 @@ Use $openspec-superpowers-workflow to run this feature from clarification throug
 
 Then describe the feature request. The skill will route work through Superpowers discovery, OpenSpec artifacts, implementation planning, TDD, and final verification.
 
+If you also want to preserve what the session taught the team, run `superpowers-learning-workflow` after delivery is complete.
+
 ## Control Points
 
 - Design approval is required before implementation planning.
@@ -36,6 +38,7 @@ Then describe the feature request. The skill will route work through Superpowers
 - OpenSpec change under `openspec/changes/<change-name>/`
 - Implementation plan under `docs/superpowers/plans/`
 - Code changes, tests, and verification output
+- Optional follow-up: updated `.superpowers-memory/` files and reusable learning notes through `superpowers-learning-workflow`
 
 ## Advantages
 

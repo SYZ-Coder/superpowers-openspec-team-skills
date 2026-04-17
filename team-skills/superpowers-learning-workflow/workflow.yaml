@@ -1,0 +1,23 @@
+name: superpowers-learning-workflow
+type: workflow
+standalone: true
+description: Capture durable project knowledge, current state, session outcomes, and reusable lessons after meaningful work.
+tool_support:
+  - codex
+  - cursor
+  - claude-code
+activation:
+  mode: explicit-only
+  triggers:
+    - user-explicit-skill-name
+    - user-explicit-workflow-request
+    - repo-policy-explicit-requirement
+dependencies:
+  workflows: []
+  external_skills: []
+runtime_requirements: []
+outputs:
+  - .superpowers-memory/PROJECT_CONTEXT.md
+  - .superpowers-memory/CURRENT_STATE.md
+  - .superpowers-memory/session-journal/
+  - .superpowers-memory/LEARNING_BACKLOG.md

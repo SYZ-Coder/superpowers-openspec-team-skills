@@ -14,6 +14,30 @@ Instead of relying on a single chat session to remember project details, it stor
 
 That lets later sessions recover context from the repository instead of starting from blank context every time.
 
+## Default Behavior
+
+This feature is not enabled by default.
+
+Installing this repository or its workflow bundles does not automatically turn on:
+
+- Superpowers memory
+- memory file reads
+- memory file writes
+- learning capture
+- workflow auto-activation
+
+Memory only becomes active when:
+
+1. the project has `.superpowers-memory/`
+2. the relevant integration files are installed, or the workflow explicitly reads memory
+3. the user explicitly invokes the related workflow when workflow activation is required
+
+In other words:
+
+- install makes the capability available
+- explicit setup enables memory
+- explicit invocation enables workflows
+
 ## What Gets Stored
 
 When memory is enabled, the project uses this structure:
@@ -22,6 +46,7 @@ When memory is enabled, the project uses this structure:
 .superpowers-memory/
   PROJECT_CONTEXT.md
   CURRENT_STATE.md
+  LEARNING_BACKLOG.md
   session-journal/
 ```
 
@@ -58,6 +83,12 @@ Typical journal entries should capture:
 - what was verified
 - what should happen next
 
+### `LEARNING_BACKLOG.md`
+
+Use this file for reusable lessons that may deserve a future workflow, skill, checklist, or project rule.
+
+This file is for patterns that look reusable across future sessions, not for one-off notes.
+
 ## How It Works
 
 When a Superpowers-related workflow sees `.superpowers-memory/`, it should:
@@ -73,6 +104,7 @@ This applies to the Superpowers-related workflows in this repository, including:
 - `superpowers-feature`
 - `superpowers-openspec-execution`
 - `openspec-superpowers`
+- `superpowers-learning`
 
 ## Rules
 

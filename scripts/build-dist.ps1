@@ -22,7 +22,8 @@ $requiredWorkflows = @(
   "openspec-superpowers-workflow",
   "superpowers-openspec-execution-workflow",
   "superpowers-feature-workflow",
-  "openspec-feature-workflow"
+  "openspec-feature-workflow",
+  "superpowers-learning-workflow"
 )
 
 Write-Host "Source workflow check:"

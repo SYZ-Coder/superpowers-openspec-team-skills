@@ -1,0 +1,3 @@
+version: 1
+agent:
+  short_description: "Reflect, classify, and persist reusable project learning"

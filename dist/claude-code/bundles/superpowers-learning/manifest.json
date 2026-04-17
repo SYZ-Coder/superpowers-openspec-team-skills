@@ -1,0 +1,11 @@
+{
+  "name": "superpowers-learning",
+  "tool": "claude-code",
+  "type": "bundle",
+  "installTarget": "project-root",
+  "runtimeRequirements": [],
+  "contents": [
+    ".claude/commands/superpowers-learning-workflow.md",
+    "CLAUDE.md"
+  ]
+}

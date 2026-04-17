@@ -70,6 +70,33 @@ Use $superpowers-openspec-execution-workflow for this feature: first explore wit
 
 如果它还是直接开始写生产代码，说明 workflow 没有真正生效。
 
+### 也验证一下 `superpowers-learning`
+
+安装：
+
+```powershell
+.\scripts\install-codex.ps1 -Bundle superpowers-learning
+```
+
+检查：
+
+```powershell
+Test-Path "$env:USERPROFILE\.codex\skills\superpowers-learning-workflow\SKILL.md"
+```
+
+然后调用：
+
+```text
+Use $superpowers-learning-workflow to capture what this session taught us and update the project memory.
+```
+
+预期行为：
+
+- Codex 会先回顾最近工作，而不是重新开始实现
+- 会把稳定事实、当前状态和会话记录分开处理
+- 在启用记忆时，会更新 `.superpowers-memory/`
+- 不会在用户没有明确要求时直接修改技能库
+
 ## 2. Cursor
 
 ### 第一步：检查运行时依赖
@@ -121,6 +148,33 @@ Use the superpowers-openspec-execution workflow for this feature: first explore,
 - 智能体表现出明显的分阶段流程
 - 不会跳过探索和规范阶段直接进入实现
 - 会把设计和 OpenSpec 产物当成明确步骤处理
+
+### 也验证一下 `superpowers-learning`
+
+安装：
+
+```powershell
+.\scripts\install-cursor.ps1 -Bundle superpowers-learning -ProjectRoot <project-root>
+```
+
+检查：
+
+```powershell
+Test-Path "<project-root>\.cursor\rules\superpowers-learning-workflow.mdc"
+Test-Path "<project-root>\AGENTS.md"
+```
+
+然后调用：
+
+```text
+Use the superpowers-learning workflow to capture what this session taught us and update the project memory.
+```
+
+预期行为：
+
+- Cursor 会进入反思整理，而不是继续实现
+- 在启用记忆时，会把学习结果写回 `.superpowers-memory/`
+- 会把稳定事实和临时记录分开
 
 ## 3. Claude Code
 
@@ -174,6 +228,33 @@ Select-String -Path "<project-root>\CLAUDE.md" -Pattern "superpowers-memory:star
 
 - 该命令可用
 - Claude Code 会按分阶段流程工作，而不是直接进入实现
+
+### 也验证一下 `superpowers-learning`
+
+安装：
+
+```powershell
+.\scripts\install-claude-code.ps1 -Bundle superpowers-learning -ProjectRoot <project-root>
+```
+
+检查：
+
+```powershell
+Test-Path "<project-root>\.claude\commands\superpowers-learning-workflow.md"
+Test-Path "<project-root>\CLAUDE.md"
+```
+
+然后调用：
+
+```text
+/superpowers-learning-workflow
+```
+
+预期行为：
+
+- 该命令可用
+- Claude Code 会先回顾最近工作，而不是重新开始实现
+- 在启用记忆时，会更新 `.superpowers-memory/`
 
 ## 4. 什么才算“真的生效”
 
@@ -244,6 +325,7 @@ Help me make this small change.
 3. 检查目标文件是否存在
 4. 重启或刷新工具
 5. 发起一次明确的 workflow 调用
-6. 观察工具行为是否符合 workflow 分阶段要求
-7. 再发一次不点名 workflow 的普通请求
-8. 确认 workflow 不会自动启用
+6. 如果需要，再在重要任务结束后发起一次明确的 `superpowers-learning` 调用
+7. 观察工具行为是否符合 workflow 分阶段要求
+8. 再发一次不点名 workflow 的普通请求
+9. 确认 workflow 不会自动启用

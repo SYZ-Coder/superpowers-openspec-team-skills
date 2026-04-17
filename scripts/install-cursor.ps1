@@ -1,5 +1,5 @@
 param(
-  [ValidateSet("openspec-superpowers", "superpowers-openspec-execution", "superpowers-feature", "openspec-feature")]
+  [ValidateSet("openspec-superpowers", "superpowers-openspec-execution", "superpowers-feature", "openspec-feature", "superpowers-learning")]
   [string]$Bundle = "openspec-superpowers",
   [string]$ProjectRoot = (Get-Location).Path,
   [switch]$DryRun,

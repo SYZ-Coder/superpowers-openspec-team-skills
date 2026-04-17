@@ -55,6 +55,7 @@ Use $superpowers-openspec-execution-workflow for this feature.
 - `openspec-superpowers`：完整功能交付流程
 - `superpowers-openspec-execution`：先 Superpowers 探索，再 OpenSpec 固化，再回到 Superpowers 实现验证，最后归档 OpenSpec change
 - `superpowers-feature`：不生成 OpenSpec 产物，只做设计、计划、TDD、验证
+- `superpowers-learning`：在重要工作结束后沉淀项目记忆、会话结论和可复用经验
 - `openspec-feature`：只做 OpenSpec proposal、design、specs、tasks
 
 ### 怎么选择
@@ -62,7 +63,16 @@ Use $superpowers-openspec-execution-workflow for this feature.
 - `openspec-superpowers`：适合想要一个从需求澄清一路带到实现验证的统一入口，不想自己判断每一步先后顺序的场景。
 - `superpowers-openspec-execution`：适合已经明确要按四步走的场景，也就是先 Superpowers 探索，再 OpenSpec 固化，再回到 Superpowers 执行实现验证，最后归档 OpenSpec change。
 - `superpowers-feature`：适合只想使用 Superpowers 的设计、计划、TDD、验证纪律，不需要 OpenSpec change 产物的场景。
+- `superpowers-learning`：适合重要工作结束后，把经验沉淀到仓库记忆里，并整理出后续可复用方法的场景。
 - `openspec-feature`：适合只想先把 OpenSpec proposal、design、specs、tasks 补齐，再决定后续实现怎么推进的场景。
+
+### 推荐收尾方式
+
+对于持续协作的项目，比较推荐这样串起来：
+
+1. 先用一个交付型 workflow
+2. 完成实现和验证
+3. 再用 `superpowers-learning` 保存稳定经验和当前状态
 
 ## 包含内容
 
@@ -71,6 +81,7 @@ Use $superpowers-openspec-execution-workflow for this feature.
 - [OpenSpec + Superpowers Workflow](team-skills/openspec-superpowers-workflow/readme_cn.md)
 - [Superpowers -> OpenSpec -> Superpowers Workflow](team-skills/superpowers-openspec-execution-workflow/readme_cn.md)
 - [Superpowers Feature Workflow](team-skills/superpowers-feature-workflow/readme_cn.md)
+- [Superpowers Learning Workflow](team-skills/superpowers-learning-workflow/readme_cn.md)
 - [OpenSpec Feature Workflow](team-skills/openspec-feature-workflow/readme_cn.md)
 
 每个源码 workflow 现在都额外带有一个 `workflow.yaml`，用于描述依赖、支持的工具和运行要求。
@@ -152,6 +163,7 @@ Use $openspec-superpowers-workflow to run this feature from clarification throug
 - `openspec-superpowers`
 - `superpowers-openspec-execution`
 - `superpowers-feature`
+- `superpowers-learning`
 - `openspec-feature`
 
 ### Cursor

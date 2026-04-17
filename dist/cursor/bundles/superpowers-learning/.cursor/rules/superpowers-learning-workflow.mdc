@@ -1,0 +1,14 @@
+# Superpowers Learning Workflow
+
+Only apply this rule when the user explicitly asks for this workflow or explicitly names it. Do not treat it as default background behavior.
+
+Use this rule after meaningful work when the goal is to preserve durable project knowledge and reusable lessons.
+
+Required order:
+
+1. Review recent work and verification.
+2. Classify durable facts, current state, session outcome, and reusable lessons.
+3. Update `.superpowers-memory/PROJECT_CONTEXT.md` only for stable facts.
+4. Update `.superpowers-memory/CURRENT_STATE.md` for active state.
+5. Add a short session journal entry.
+6. Add reusable patterns to `.superpowers-memory/LEARNING_BACKLOG.md`.

@@ -1,0 +1,11 @@
+{
+  "name": "superpowers-learning",
+  "tool": "codex",
+  "type": "bundle",
+  "description": "Standalone Codex skill bundle for capturing project memory and reusable lessons after meaningful work.",
+  "installTarget": ".codex/skills",
+  "contents": [
+    "skills/superpowers-learning-workflow"
+  ],
+  "runtimeRequirements": []
+}
