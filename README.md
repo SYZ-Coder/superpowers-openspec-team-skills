@@ -106,6 +106,26 @@ scripts/       install scripts for supported tools
 
 ## Quick Start
 
+In this document, `<repo-root>` means the local filesystem path of this repository after you clone or unzip it.
+
+Examples:
+
+- macOS: `/Users/alex/projects/superpowers-openspec-team-skills`
+- Linux: `/home/alex/projects/superpowers-openspec-team-skills`
+- Windows: `D:\projects\superpowers-openspec-team-skills`
+
+So this command:
+
+```bash
+sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"
+```
+
+becomes, for example:
+
+```bash
+sh "/Users/alex/projects/superpowers-openspec-team-skills/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"
+```
+
 Before running any install script, either:
 
 - change into the repository root first, or
@@ -128,7 +148,7 @@ macOS or Linux with native shell:
 
 ```bash
 cd <repo-root>
-sh ./scripts/install-codex.sh --bundle openspec-superpowers --codex-home "$HOME/.codex"
+sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"
 ```
 
 macOS or Linux with PowerShell 7 (`pwsh`) if available:
@@ -137,6 +157,26 @@ macOS or Linux with PowerShell 7 (`pwsh`) if available:
 cd <repo-root>
 pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex"
 ```
+
+### Shell Installer Options
+
+The native shell installers support these flags:
+
+- `--bundle <name>`: choose which bundle to install
+- `--project-root <path>`: set the target repository root for Cursor, Claude Code, or memory installation
+- `--codex-home <path>`: set the Codex home directory for Codex installs
+- `--dry-run`: preview what would be written without copying files
+- `--backup`: back up existing target files before overwrite
+- `--force`: skip overwrite confirmation
+- `--check-dependencies`: check runtime requirements such as `openspec` without installing files
+
+Available shell installers:
+
+- `scripts/install-codex.sh`
+- `scripts/install-cursor.sh`
+- `scripts/install-claude-code.sh`
+- `scripts/install-superpowers-memory.sh`
+- `scripts/install-superpowers-memory-integration.sh`
 
 Optional memory scaffold for any target project:
 
@@ -147,7 +187,7 @@ Optional memory scaffold for any target project:
 macOS or Linux with native shell:
 
 ```bash
-sh ./scripts/install-superpowers-memory.sh --project-root <project-root>
+sh "<repo-root>/scripts/install-superpowers-memory.sh" --project-root <project-root>
 ```
 
 macOS or Linux with PowerShell 7 (`pwsh`) if available:
@@ -165,7 +205,7 @@ Optional project-level memory integration for Codex, Cursor, and Claude Code:
 macOS or Linux with native shell:
 
 ```bash
-sh ./scripts/install-superpowers-memory-integration.sh --tool all --project-root <project-root>
+sh "<repo-root>/scripts/install-superpowers-memory-integration.sh" --tool all --project-root <project-root>
 ```
 
 macOS or Linux with PowerShell 7 (`pwsh`) if available:
@@ -187,7 +227,7 @@ PowerShell:
 macOS or Linux with native shell:
 
 ```bash
-sh ./scripts/install-codex.sh --bundle openspec-superpowers --codex-home "$HOME/.codex"
+sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"
 ```
 
 macOS or Linux with PowerShell 7 (`pwsh`) if available:
@@ -208,10 +248,10 @@ Useful options:
 macOS or Linux native shell examples:
 
 ```bash
-sh ./scripts/install-codex.sh --bundle openspec-superpowers --codex-home "$HOME/.codex" --dry-run
-sh ./scripts/install-codex.sh --bundle openspec-superpowers --codex-home "$HOME/.codex" --backup
-sh ./scripts/install-codex.sh --bundle openspec-superpowers --codex-home "$HOME/.codex" --backup --force
-sh ./scripts/install-codex.sh --bundle openspec-superpowers --codex-home "$HOME/.codex" --check-dependencies
+sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex" --dry-run
+sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex" --backup
+sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex" --backup --force
+sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex" --check-dependencies
 ```
 
 macOS or Linux PowerShell examples:
@@ -255,7 +295,7 @@ Install a Cursor bundle into the target repository root:
 macOS or Linux with native shell:
 
 ```bash
-sh ./scripts/install-cursor.sh --bundle openspec-superpowers --project-root <project-root>
+sh "<repo-root>/scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root>
 ```
 
 macOS or Linux with PowerShell 7 (`pwsh`) if available:
@@ -280,10 +320,10 @@ Useful options:
 macOS or Linux native shell examples:
 
 ```bash
-sh ./scripts/install-cursor.sh --bundle openspec-superpowers --project-root <project-root> --dry-run
-sh ./scripts/install-cursor.sh --bundle openspec-superpowers --project-root <project-root> --backup
-sh ./scripts/install-cursor.sh --bundle openspec-superpowers --project-root <project-root> --backup --force
-sh ./scripts/install-cursor.sh --bundle openspec-superpowers --project-root <project-root> --check-dependencies
+sh "<repo-root>/scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root> --dry-run
+sh "<repo-root>/scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root> --backup
+sh "<repo-root>/scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root> --backup --force
+sh "<repo-root>/scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root> --check-dependencies
 ```
 
 macOS or Linux PowerShell examples:
@@ -304,7 +344,7 @@ You can also install the three-stage execution bundle:
 macOS or Linux with native shell:
 
 ```bash
-sh ./scripts/install-cursor.sh --bundle superpowers-openspec-execution --project-root <project-root>
+sh "<repo-root>/scripts/install-cursor.sh" --bundle superpowers-openspec-execution --project-root <project-root>
 ```
 
 macOS or Linux with PowerShell 7 (`pwsh`) if available:
@@ -330,7 +370,7 @@ Install a Claude Code bundle into the target repository root:
 macOS or Linux with native shell:
 
 ```bash
-sh ./scripts/install-claude-code.sh --bundle openspec-superpowers --project-root <project-root>
+sh "<repo-root>/scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root>
 ```
 
 macOS or Linux with PowerShell 7 (`pwsh`) if available:
@@ -355,10 +395,10 @@ Useful options:
 macOS or Linux native shell examples:
 
 ```bash
-sh ./scripts/install-claude-code.sh --bundle openspec-superpowers --project-root <project-root> --dry-run
-sh ./scripts/install-claude-code.sh --bundle openspec-superpowers --project-root <project-root> --backup
-sh ./scripts/install-claude-code.sh --bundle openspec-superpowers --project-root <project-root> --backup --force
-sh ./scripts/install-claude-code.sh --bundle openspec-superpowers --project-root <project-root> --check-dependencies
+sh "<repo-root>/scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --dry-run
+sh "<repo-root>/scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --backup
+sh "<repo-root>/scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --backup --force
+sh "<repo-root>/scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --check-dependencies
 ```
 
 macOS or Linux PowerShell examples:
@@ -379,7 +419,7 @@ You can also install the three-stage execution bundle:
 macOS or Linux with native shell:
 
 ```bash
-sh ./scripts/install-claude-code.sh --bundle superpowers-openspec-execution --project-root <project-root>
+sh "<repo-root>/scripts/install-claude-code.sh" --bundle superpowers-openspec-execution --project-root <project-root>
 ```
 
 macOS or Linux with PowerShell 7 (`pwsh`) if available:

@@ -7,10 +7,44 @@ Verification should happen at two levels:
 1. installation verification: did the expected files land in the expected location?
 2. runtime verification: did the tool actually pick up the workflow and behave differently?
 
+In this document, `<repo-root>` means the local path of this repository on your machine.
+
+Example:
+
+```bash
+sh "/Users/alex/projects/superpowers-openspec-team-skills/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex" --dry-run
+```
+
 Before running any script in this document, make sure you are either:
 
 - in the repository root, or
 - invoking the script with an absolute path
+
+## macOS or Linux Quick Checklist
+
+If you are validating the shell installers on macOS or Linux, use this quick sequence first:
+
+1. Confirm the script file exists:
+   `ls "<repo-root>/scripts/install-codex.sh"`
+2. Run a dry run with an absolute path:
+   `sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex" --dry-run`
+3. For OpenSpec bundles, check dependencies before install:
+   `sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex" --check-dependencies`
+4. Install the bundle:
+   `sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"`
+5. Verify the target file exists:
+   `test -f "$HOME/.codex/skills/openspec-superpowers-workflow/SKILL.md" && echo OK`
+
+Use the same pattern for other tools:
+
+- Cursor:
+  `sh "<repo-root>/scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root> --dry-run`
+- Claude Code:
+  `sh "<repo-root>/scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --dry-run`
+- Memory scaffold:
+  `sh "<repo-root>/scripts/install-superpowers-memory.sh" --project-root <project-root> --dry-run`
+- Memory integration:
+  `sh "<repo-root>/scripts/install-superpowers-memory-integration.sh" --tool all --project-root <project-root> --dry-run`
 
 ## 1. Codex
 

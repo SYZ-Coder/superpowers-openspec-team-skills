@@ -81,6 +81,10 @@ if [ -z "$INSTALL_PLAN" ]; then
   exit 1
 fi
 
+PLAN_FILE=$(mktemp)
+trap 'rm -f "$PLAN_FILE"' EXIT
+printf "%s\n" "$INSTALL_PLAN" >"$PLAN_FILE"
+
 echo "Cursor bundle: $BUNDLE"
 echo "Source bundle: $BUNDLE_ROOT"
 echo "Install target: $PROJECT_ROOT"
@@ -88,7 +92,8 @@ echo ""
 echo "Install plan:"
 
 EXISTING_COUNT=0
-for SOURCE_PATH in $INSTALL_PLAN; do
+while IFS= read -r SOURCE_PATH; do
+  [ -n "$SOURCE_PATH" ] || continue
   NAME=$(basename "$SOURCE_PATH")
   TARGET_PATH="$PROJECT_ROOT/$NAME"
   STATUS="new"
@@ -97,7 +102,7 @@ for SOURCE_PATH in $INSTALL_PLAN; do
     EXISTING_COUNT=$((EXISTING_COUNT + 1))
   fi
   echo "- $NAME -> $TARGET_PATH [$STATUS]"
-done
+done <"$PLAN_FILE"
 
 if [ "$DRY_RUN" -eq 1 ]; then
   echo ""
@@ -126,7 +131,8 @@ fi
 TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
 RESULTS=""
 
-for SOURCE_PATH in $INSTALL_PLAN; do
+while IFS= read -r SOURCE_PATH; do
+  [ -n "$SOURCE_PATH" ] || continue
   NAME=$(basename "$SOURCE_PATH")
   TARGET_PATH="$PROJECT_ROOT/$NAME"
   EXISTS_BEFORE=0
@@ -148,7 +154,7 @@ for SOURCE_PATH in $INSTALL_PLAN; do
     RESULTS="${RESULTS}- $NAME: installed
 "
   fi
-done
+done <"$PLAN_FILE"
 
 echo ""
 echo "Install summary:"

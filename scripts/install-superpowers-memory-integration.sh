@@ -10,6 +10,15 @@ FORCE=0
 
 MARKER_START='<!-- superpowers-memory:start -->'
 MARKER_END='<!-- superpowers-memory:end -->'
+OPS_FILE=""
+
+cleanup() {
+  if [ -n "$OPS_FILE" ] && [ -f "$OPS_FILE" ]; then
+    rm -f "$OPS_FILE"
+  fi
+}
+
+trap cleanup EXIT
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -75,7 +84,7 @@ set_managed_block() {
 
   if [ ! -e "$target_path" ] || [ ! -s "$target_path" ]; then
     cp "$block_path" "$tmp_file"
-  elif grep -q "$MARKER_START" "$target_path"; then
+  elif grep -F -q "$MARKER_START" "$target_path"; then
     awk -v start="$MARKER_START" -v end="$MARKER_END" -v blockfile="$block_path" '
       BEGIN {
         while ((getline line < blockfile) > 0) {
@@ -187,7 +196,6 @@ while IFS='|' read -r OP_TOOL OP_MODE OP_SOURCE OP_TARGET; do
   [ -n "$OP_TOOL" ] || continue
 
   if [ ! -f "$OP_SOURCE" ]; then
-    rm -f "$OPS_FILE"
     echo "Integration template not found: $OP_SOURCE" >&2
     exit 1
   fi
@@ -215,8 +223,6 @@ while IFS='|' read -r OP_TOOL OP_MODE OP_SOURCE OP_TARGET; do
 "
   fi
 done <"$OPS_FILE"
-
-rm -f "$OPS_FILE"
 
 echo ""
 echo "Install summary:"

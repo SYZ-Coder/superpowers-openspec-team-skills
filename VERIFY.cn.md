@@ -7,10 +7,44 @@
 1. 安装验证：文件是否落到了预期位置
 2. 运行验证：工具是否真的加载了 workflow，并按预期行为执行
 
+本文里的 `<repo-root>`，指的是这个仓库在你本机上的实际路径。
+
+例如：
+
+```bash
+sh "/Users/alex/projects/superpowers-openspec-team-skills/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex" --dry-run
+```
+
 在执行本文中的脚本前，请先确认：
 
 - 你已经切换到了仓库根目录，或者
 - 你使用的是脚本的绝对路径
+
+## macOS / Linux 快速验证清单
+
+如果你是在 macOS / Linux 上验证 shell 安装脚本，建议先按这组最短路径检查：
+
+1. 先确认脚本文件存在：
+   `ls "<repo-root>/scripts/install-codex.sh"`
+2. 用绝对路径先跑一次 dry run：
+   `sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex" --dry-run`
+3. 对依赖 OpenSpec 的 bundle，安装前先检查依赖：
+   `sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex" --check-dependencies`
+4. 正式安装：
+   `sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"`
+5. 检查目标文件是否存在：
+   `test -f "$HOME/.codex/skills/openspec-superpowers-workflow/SKILL.md" && echo OK`
+
+其他工具也按同样思路验证：
+
+- Cursor：
+  `sh "<repo-root>/scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root> --dry-run`
+- Claude Code：
+  `sh "<repo-root>/scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --dry-run`
+- 记忆骨架：
+  `sh "<repo-root>/scripts/install-superpowers-memory.sh" --project-root <project-root> --dry-run`
+- 记忆集成：
+  `sh "<repo-root>/scripts/install-superpowers-memory-integration.sh" --tool all --project-root <project-root> --dry-run`
 
 ## 1. Codex
 
