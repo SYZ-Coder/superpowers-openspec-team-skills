@@ -13,7 +13,7 @@ This is an explicit opt-in workflow. Do not use it by default. Only use it when 
 
 ## Workflow
 
-1. Explore project context before proposing solutions. If `.superpowers-memory/` exists, read `PROJECT_CONTEXT.md`, `CURRENT_STATE.md`, and the latest session journal entries first.
+1. Explore project context before proposing solutions. If `.superpowers-memory/` exists, read `PROJECT_CONTEXT.md`, `CURRENT_STATE.md`, `DECISIONS.md`, `KNOWN_FAILURES.md`, and the latest session journal entries first.
 2. Clarify requirements one question at a time.
 3. Present 2-3 approaches with a recommendation.
 4. Write the approved design to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`.
@@ -22,7 +22,9 @@ This is an explicit opt-in workflow. Do not use it by default. Only use it when 
 7. Prefer a repo-local worktree for implementation.
 8. Implement with TDD: failing test first, then minimal code, then green.
 9. Run fresh verification commands before any completion claim.
-10. Before finishing the session, update `.superpowers-memory/CURRENT_STATE.md` and add a short session note under `.superpowers-memory/session-journal/` when the repo uses Superpowers memory.
+10. Before finishing the session, run a short memory closeout check: durable facts changed, current state changed, important decisions added, failure patterns discovered, verification rules changed, and reusable lessons identified.
+11. When the repo uses Superpowers memory, update the relevant memory files, including `.superpowers-memory/CURRENT_STATE.md` and a short session note under `.superpowers-memory/session-journal/`.
+12. When memory quality matters for the task, run `scripts/validate-superpowers-memory.ps1` before the final completion claim.
 
 ## When to Use
 
@@ -37,6 +39,7 @@ This is an explicit opt-in workflow. Do not use it by default. Only use it when 
 - Implementation plan
 - Verified implementation evidence
 - Updated Superpowers memory when `.superpowers-memory/` is present
+- Memory validation evidence when memory updates were part of the workflow
 
 ## Guardrails
 
@@ -44,3 +47,4 @@ This is an explicit opt-in workflow. Do not use it by default. Only use it when 
 - Do not skip the failing-test step for new behavior
 - Do not report success without fresh command output
 - Do not overwrite stable project memory with temporary notes; keep long-term facts in `PROJECT_CONTEXT.md` and session-specific updates in the journal
+- Do not leave new durable decisions, known failures, or verification rules only in chat history when the repo uses Superpowers memory

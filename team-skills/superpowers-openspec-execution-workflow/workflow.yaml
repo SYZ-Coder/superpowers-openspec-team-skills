@@ -30,3 +30,4 @@ outputs:
   - docs/superpowers/plans/
   - openspec/changes/<change-name>/
   - .superpowers-memory/
+  - scripts/validate-superpowers-memory.ps1

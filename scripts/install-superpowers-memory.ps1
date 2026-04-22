@@ -16,7 +16,7 @@ if (-not (Test-Path $templateRoot)) {
   throw "Memory template not found: $templateRoot"
 }
 
-$entries = Get-ChildItem $templateRoot -Force
+$entries = Get-ChildItem $templateRoot -Force | Where-Object { $_.Name -ne "integrations" }
 if (-not $entries) {
   throw "No memory template files found in: $templateRoot"
 }
@@ -86,4 +86,4 @@ if ($Backup -and ($installPlan | Where-Object { $_.Exists }).Count -gt 0) {
 
 Write-Host ""
 Write-Host "Installed Superpowers memory scaffold into $targetRoot"
-Write-Host "Next: fill in PROJECT_CONTEXT.md, update CURRENT_STATE.md, and keep session-journal entries for future sessions."
+Write-Host "Next: fill in PROJECT_CONTEXT.md, update CURRENT_STATE.md, add durable decisions or known failures when they appear, and run validate-superpowers-memory.ps1 after meaningful updates."

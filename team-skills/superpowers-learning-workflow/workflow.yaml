@@ -19,5 +19,10 @@ runtime_requirements: []
 outputs:
   - .superpowers-memory/PROJECT_CONTEXT.md
   - .superpowers-memory/CURRENT_STATE.md
+  - .superpowers-memory/DECISIONS.md
+  - .superpowers-memory/KNOWN_FAILURES.md
+  - .superpowers-memory/VERIFICATION_BASELINE.md
+  - .superpowers-memory/TEAM_PREFERENCES.md
   - .superpowers-memory/session-journal/
   - .superpowers-memory/LEARNING_BACKLOG.md
+  - scripts/validate-superpowers-memory.ps1

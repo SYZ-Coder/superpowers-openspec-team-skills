@@ -51,8 +51,10 @@ When a project contains `.superpowers-memory/`, Superpowers workflows should:
 
 - read `PROJECT_CONTEXT.md` for stable project facts
 - read `CURRENT_STATE.md` for the latest working context
+- read `DECISIONS.md` and `KNOWN_FAILURES.md` when they exist
 - read recent entries under `session-journal/`
-- update `CURRENT_STATE.md` and add a short journal entry before ending the session
+- update the relevant memory files before ending the session
+- run `scripts/validate-superpowers-memory.ps1` when memory quality matters for the workflow
 
 This gives AI a lightweight cross-session memory without requiring a separate memory service.
 

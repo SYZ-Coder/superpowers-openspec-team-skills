@@ -29,7 +29,8 @@ If `.superpowers-memory/` exists in the repository, read it at the start and upd
 3. Return to `$superpowers-feature-workflow`.
    Use it to write the implementation plan, prefer a worktree, execute with TDD, and run fresh verification.
 4. If implementation and specs are aligned after verification, use `$openspec-archive-change` to archive the completed change.
-5. If `.superpowers-memory/` exists, update `CURRENT_STATE.md` and add a short session journal entry after verification and archive decisions are complete.
+5. If `.superpowers-memory/` exists, perform a memory alignment check after verification and archive decisions: ensure durable facts, current state, decisions, failure patterns, and session outcome are reflected in the right files.
+6. When memory quality matters for the project, run `scripts/validate-superpowers-memory.ps1` before the final completion claim.
 
 ## Decision Gates
 
@@ -37,6 +38,7 @@ If `.superpowers-memory/` exists in the repository, read it at the start and upd
 - Do not start coding until required OpenSpec artifacts are complete.
 - Do not claim success until fresh verification output exists.
 - Do not archive the change until code, tests, and specs are aligned.
+- Do not leave memory out of sync with the final archive decision when `.superpowers-memory/` exists.
 
 ## When to Use
 
@@ -51,6 +53,7 @@ If `.superpowers-memory/` exists in the repository, read it at the start and upd
 - OpenSpec artifacts under `openspec/changes/<change-name>/`
 - Implementation plan in `docs/superpowers/plans/`
 - Code, tests, and fresh verification evidence
+- Updated Superpowers memory and memory validation evidence when memory is in use
 - Archived OpenSpec change when the work is complete
 
 ## Recommended Prompt

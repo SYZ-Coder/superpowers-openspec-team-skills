@@ -1,0 +1,14 @@
+version: 1
+last_full_review:
+active_focus:
+  file: CURRENT_STATE.md
+  last_updated:
+memory_health:
+  current_state_fresh: false
+  journal_recent: false
+  conflicts_detected: 0
+  stale_entries: 0
+learning_backlog:
+  total_candidates: 0
+  ready_for_promotion: 0
+  stale_candidates: 0

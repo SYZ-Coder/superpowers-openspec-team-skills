@@ -4,13 +4,31 @@ Use this file to track reusable lessons that may deserve a future workflow, skil
 
 ## Candidate Format
 
+```md
 ### Candidate: <short-name>
+- candidate_id: learn-YYYY-MM-DD-<slug>
+- type: learning_candidate
+- status: proposed
+- confidence: inferred
+- last_updated: YYYY-MM-DD
+- source:
+- owner:
+- review_after:
+- trigger:
+- repeated_pattern:
+- impact:
+- evidence_count:
+- repeated_times:
+- suggested_artifact:
+- promote_decision:
+- linked_entries:
+```
 
-- Trigger:
-- Repeated pattern:
-- Why it matters:
-- Suggested artifact:
-- Status:
+## Promotion Guidance
+
+- Keep a candidate in `proposed` until it shows a repeated pattern or clear cross-session value.
+- Move it to `ready_for_promotion` when it has enough evidence and a clear target artifact.
+- Use `superseded` when the lesson is no longer relevant or has already been turned into a durable artifact.
 
 ## Notes
 

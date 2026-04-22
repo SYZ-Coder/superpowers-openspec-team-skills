@@ -24,3 +24,4 @@ outputs:
   - docs/superpowers/specs/
   - docs/superpowers/plans/
   - .superpowers-memory/
+  - scripts/validate-superpowers-memory.ps1

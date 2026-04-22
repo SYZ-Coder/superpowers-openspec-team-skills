@@ -9,17 +9,6 @@ Verification should happen at two levels:
 
 In this document, `<repo-root>` means the local path of this repository on your machine.
 
-Example:
-
-```bash
-sh "/Users/alex/projects/superpowers-openspec-team-skills/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex" --dry-run
-```
-
-Before running any script in this document, make sure you are either:
-
-- in the repository root, or
-- invoking the script with an absolute path
-
 ## macOS or Linux Quick Checklist
 
 If you are validating the shell installers on macOS or Linux, use this quick sequence first:
@@ -46,7 +35,77 @@ Use the same pattern for other tools:
 - Memory integration:
   `sh "<repo-root>/scripts/install-superpowers-memory-integration.sh" --tool all --project-root <project-root> --dry-run`
 
-## 1. Codex
+## 1. Verify Memory Scaffold
+
+Install:
+
+```powershell
+.\scripts\install-superpowers-memory.ps1 -ProjectRoot <project-root>
+```
+
+Verify the expanded scaffold:
+
+```powershell
+Test-Path "<project-root>\\.superpowers-memory\\PROJECT_CONTEXT.md"
+Test-Path "<project-root>\\.superpowers-memory\\CURRENT_STATE.md"
+Test-Path "<project-root>\\.superpowers-memory\\DECISIONS.md"
+Test-Path "<project-root>\\.superpowers-memory\\KNOWN_FAILURES.md"
+Test-Path "<project-root>\\.superpowers-memory\\VERIFICATION_BASELINE.md"
+Test-Path "<project-root>\\.superpowers-memory\\TEAM_PREFERENCES.md"
+Test-Path "<project-root>\\.superpowers-memory\\LEARNING_BACKLOG.md"
+Test-Path "<project-root>\\.superpowers-memory\\memory-index.yaml"
+Test-Path "<project-root>\\.superpowers-memory\\session-journal"
+```
+
+Expected result:
+
+```text
+True
+True
+True
+True
+True
+True
+True
+True
+True
+```
+
+Then run memory validation:
+
+```powershell
+.\scripts\validate-superpowers-memory.ps1 -ProjectRoot <project-root>
+```
+
+Expected behavior:
+
+- the script completes without errors for a fresh scaffold
+- warnings are acceptable when the project has not yet accumulated real journal history
+- the output clearly shows what is missing or stale
+
+## 2. Verify Memory Integration
+
+Install:
+
+```powershell
+.\scripts\install-superpowers-memory-integration.ps1 -Tool all -ProjectRoot <project-root>
+```
+
+Verify:
+
+```powershell
+Select-String -Path "<project-root>\\AGENTS.md" -Pattern "superpowers-memory:start"
+Test-Path "<project-root>\\.cursor\\rules\\superpowers-memory.mdc"
+Select-String -Path "<project-root>\\CLAUDE.md" -Pattern "superpowers-memory:start"
+```
+
+Expected behavior:
+
+- Codex project instructions include the managed memory block
+- Cursor has a dedicated memory rule file
+- Claude Code project instructions include the managed memory block
+
+## 3. Codex
 
 ### Step 1: Check runtime dependencies
 
@@ -55,8 +114,6 @@ For bundles that depend on OpenSpec, run:
 ```powershell
 .\scripts\install-codex.ps1 -Bundle superpowers-openspec-execution -CheckDependencies
 ```
-
-If `openspec-cli` is missing, the bundle can still be installed, but the workflow may not run end to end.
 
 ### Step 2: Install the bundle
 
@@ -70,13 +127,7 @@ If `openspec-cli` is missing, the bundle can still be installed, but the workflo
 Test-Path "$env:USERPROFILE\.codex\skills\superpowers-openspec-execution-workflow\SKILL.md"
 ```
 
-Expected result:
-
-```text
-True
-```
-
-If you installed Superpowers memory integration for Codex, also verify:
+If you installed memory integration for Codex, also verify:
 
 ```powershell
 Select-String -Path "<project-root>\AGENTS.md" -Pattern "superpowers-memory:start"
@@ -98,11 +149,9 @@ Expected behavior:
 
 - Codex does not jump straight into code
 - it explores the request first
-- it asks clarifying questions or confirms scope
 - it moves through OpenSpec artifact work before implementation
 - it returns to implementation and verification after the spec is locked
-
-If Codex immediately starts writing production code without that staged flow, the workflow did not take effect.
+- when memory is enabled, it reads repo memory before asking for repeated project background
 
 ### Also verify `superpowers-learning`
 
@@ -110,12 +159,6 @@ Install:
 
 ```powershell
 .\scripts\install-codex.ps1 -Bundle superpowers-learning
-```
-
-Check:
-
-```powershell
-Test-Path "$env:USERPROFILE\.codex\skills\superpowers-learning-workflow\SKILL.md"
 ```
 
 Then invoke:
@@ -126,12 +169,12 @@ Use $superpowers-learning-workflow to capture what this session taught us and up
 
 Expected behavior:
 
-- Codex reviews recent work instead of starting new implementation
-- it separates stable facts from current state and session notes
-- it updates `.superpowers-memory/` when memory is enabled
-- it does not auto-edit the skill library unless explicitly asked
+- Codex reflects on recent work instead of starting new implementation
+- it updates the right memory surfaces when memory is enabled
+- it can recommend promotion candidates from `LEARNING_BACKLOG.md`
+- it runs memory validation when memory was updated
 
-## 2. Cursor
+## 4. Cursor
 
 ### Step 1: Check runtime dependencies
 
@@ -152,14 +195,7 @@ Test-Path "<project-root>\.cursor\rules\superpowers-openspec-execution-workflow.
 Test-Path "<project-root>\AGENTS.md"
 ```
 
-Expected result:
-
-```text
-True
-True
-```
-
-If you installed Superpowers memory integration for Cursor, also verify:
+If you installed memory integration for Cursor, also verify:
 
 ```powershell
 Test-Path "<project-root>\.cursor\rules\superpowers-memory.mdc"
@@ -171,7 +207,7 @@ Cursor should reload the project rules after the files are written.
 
 ### Step 5: Verify runtime behavior
 
-In Cursor, send a request such as:
+In Cursor, send:
 
 ```text
 Use the superpowers-openspec-execution workflow for this feature: first explore, then lock OpenSpec, then implement and verify, then archive the change.
@@ -182,23 +218,11 @@ Expected behavior:
 - the agent behaves like it is following a staged workflow
 - it does not skip directly to implementation
 - it treats design and OpenSpec artifact work as explicit phases
+- when memory is enabled, it reads the right memory files before asking repeated background questions
 
 ### Also verify `superpowers-learning`
 
-Install:
-
-```powershell
-.\scripts\install-cursor.ps1 -Bundle superpowers-learning -ProjectRoot <project-root>
-```
-
-Check:
-
-```powershell
-Test-Path "<project-root>\.cursor\rules\superpowers-learning-workflow.mdc"
-Test-Path "<project-root>\AGENTS.md"
-```
-
-Then invoke:
+Invoke:
 
 ```text
 Use the superpowers-learning workflow to capture what this session taught us and update the project memory.
@@ -207,10 +231,11 @@ Use the superpowers-learning workflow to capture what this session taught us and
 Expected behavior:
 
 - Cursor switches into reflection rather than implementation
-- it writes learning back into `.superpowers-memory/` when enabled
+- it writes learning back into the expanded `.superpowers-memory/` structure
 - it keeps durable facts separate from temporary notes
+- it validates memory when the workflow updated it
 
-## 3. Claude Code
+## 5. Claude Code
 
 ### Step 1: Check runtime dependencies
 
@@ -231,14 +256,7 @@ Test-Path "<project-root>\.claude\commands\superpowers-openspec-execution-workfl
 Test-Path "<project-root>\CLAUDE.md"
 ```
 
-Expected result:
-
-```text
-True
-True
-```
-
-If you installed Superpowers memory integration for Claude Code, also verify:
+If you installed memory integration for Claude Code, also verify:
 
 ```powershell
 Select-String -Path "<project-root>\CLAUDE.md" -Pattern "superpowers-memory:start"
@@ -262,23 +280,11 @@ Expected behavior:
 
 - the command is available
 - Claude Code follows the staged workflow instead of jumping straight into implementation
+- when memory is enabled, it reads repo memory before repeated discovery questions
 
 ### Also verify `superpowers-learning`
 
-Install:
-
-```powershell
-.\scripts\install-claude-code.ps1 -Bundle superpowers-learning -ProjectRoot <project-root>
-```
-
-Check:
-
-```powershell
-Test-Path "<project-root>\.claude\commands\superpowers-learning-workflow.md"
-Test-Path "<project-root>\CLAUDE.md"
-```
-
-Then invoke:
+Invoke:
 
 ```text
 /superpowers-learning-workflow
@@ -288,9 +294,10 @@ Expected behavior:
 
 - the command is available
 - Claude Code reflects on recent work instead of starting new implementation
-- it updates `.superpowers-memory/` when memory is enabled
+- it updates the expanded memory structure when memory is enabled
+- it runs memory validation when memory was updated
 
-## 4. What Counts As “Actually Working”
+## 6. What Counts As Actually Working
 
 A bundle is not considered fully verified just because the files exist.
 
@@ -298,17 +305,17 @@ The real signal is behavior:
 
 - the tool recognizes the installed bundle
 - the tool follows the intended workflow stages
-- the tool respects design/spec/verification gates
+- the tool respects design, spec, verification, and memory gates
 
 If the files are present but the agent still behaves as if nothing changed, installation succeeded but runtime activation did not.
 
-## 5. Verify That Workflows Do Not Auto-Activate
+## 7. Verify That Workflows Do Not Auto-Activate
 
 After installation, also verify the opposite case: the workflow should stay inactive unless explicitly invoked.
 
 ### Codex
 
-Send a normal coding request without naming any workflow, for example:
+Send a normal coding request without naming any workflow:
 
 ```text
 Implement this small feature and keep the change minimal.
@@ -316,9 +323,9 @@ Implement this small feature and keep the change minimal.
 
 Expected behavior:
 
-- Codex should respond normally
-- it should not automatically announce or assume a Superpowers or OpenSpec workflow
-- it should not force staged workflow behavior unless the user explicitly asked for it
+- Codex responds normally
+- it does not automatically announce or assume a Superpowers or OpenSpec workflow
+- it does not force staged behavior unless the user explicitly asked for it
 
 ### Cursor
 
@@ -330,14 +337,14 @@ Please help implement this small change.
 
 Expected behavior:
 
-- Cursor should behave like a normal coding assistant
-- it should not automatically switch into the installed workflow
+- Cursor behaves like a normal coding assistant
+- it does not automatically switch into the installed workflow
 
 ### Claude Code
 
 Open the project after installation, but do not invoke any workflow command.
 
-Then send a normal request such as:
+Then send:
 
 ```text
 Help me make this small change.
@@ -345,21 +352,19 @@ Help me make this small change.
 
 Expected behavior:
 
-- Claude Code should behave normally
-- it should not automatically act as if `/superpowers-openspec-execution-workflow` had been invoked
+- Claude Code behaves normally
+- it does not automatically act as if `/superpowers-openspec-execution-workflow` had been invoked
 
-If the tool behaves as if the workflow is active even when you did not explicitly request it, the explicit opt-in rule is not working correctly.
-
-## 6. Recommended Verification Sequence
+## 8. Recommended Verification Sequence
 
 For any tool:
 
 1. run `-CheckDependencies`
-2. install the bundle
+2. install the bundle or memory scaffold
 3. verify expected files exist
-4. restart or reload the tool
+4. reload the tool
 5. run one explicit workflow invocation
-6. if needed, run one explicit `superpowers-learning` invocation after a meaningful task
-7. confirm behavior follows the workflow stages
+6. if memory is enabled, run `validate-superpowers-memory.ps1`
+7. confirm behavior follows the intended workflow stages
 8. run one normal request without naming a workflow
 9. confirm the workflow does not auto-activate

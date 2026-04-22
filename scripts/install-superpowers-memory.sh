@@ -134,4 +134,4 @@ fi
 
 echo ""
 echo "Installed Superpowers memory scaffold into $TARGET_ROOT"
-echo "Next: fill in PROJECT_CONTEXT.md, update CURRENT_STATE.md, and keep session-journal entries for future sessions."
+echo "Next: fill in PROJECT_CONTEXT.md, update CURRENT_STATE.md, add durable decisions or known failures when they appear, and run validate-superpowers-memory.ps1 after meaningful updates."
