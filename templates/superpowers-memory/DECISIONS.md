@@ -27,3 +27,5 @@ Impact:
 - Put only decisions that still matter to future sessions.
 - Move outdated decisions to `status: superseded` instead of deleting history blindly.
 - Reference code, docs, tests, or session notes when possible.
+- Durable entries should always include `id`, `status`, `confidence`, `source`, `last_updated`, and `review_after`.
+- Do not mark an entry `confidence: verified` unless `source` points to real evidence.

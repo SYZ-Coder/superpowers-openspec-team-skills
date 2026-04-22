@@ -54,7 +54,10 @@ When memory is enabled, the project can use this structure:
   KNOWN_FAILURES.md
   VERIFICATION_BASELINE.md
   TEAM_PREFERENCES.md
+  USER_PROFILE.md
+  AGENT_NOTES.md
   LEARNING_BACKLOG.md
+  SESSION_CLOSE_CHECKLIST.md
   memory-index.yaml
   session-journal/
 ```
@@ -97,11 +100,23 @@ Use this file for verification commands or methods the team considers trustworth
 
 Use this file for durable collaboration preferences and working agreements that future sessions should follow.
 
+### `USER_PROFILE.md`
+
+Use this file for durable user preferences that affect how the assistant should communicate or collaborate, but that are not project facts.
+
+### `AGENT_NOTES.md`
+
+Use this file for durable execution reminders about this repository, such as repeated operational pitfalls or agent-side quality reminders.
+
 ### `LEARNING_BACKLOG.md`
 
 Use this file for reusable lessons that may deserve a future workflow, skill, checklist, project rule, or validation script.
 
 This file is for patterns that look reusable across future sessions, not for one-off notes.
+
+### `SESSION_CLOSE_CHECKLIST.md`
+
+Use this file as the standard session-close reminder before claiming memory work is complete.
 
 ### `memory-index.yaml`
 
@@ -124,7 +139,7 @@ When a Superpowers-related workflow sees `.superpowers-memory/`, it should:
 
 1. read `PROJECT_CONTEXT.md`
 2. read `CURRENT_STATE.md`
-3. read `DECISIONS.md` and `KNOWN_FAILURES.md` when they exist
+3. read `DECISIONS.md`, `KNOWN_FAILURES.md`, `VERIFICATION_BASELINE.md`, `TEAM_PREFERENCES.md`, `USER_PROFILE.md`, and `AGENT_NOTES.md` when they exist
 4. read the newest session journal entries
 5. use that context before asking the user to repeat project background
 6. update the relevant memory files before ending a meaningful session
@@ -147,6 +162,8 @@ Use these rules to keep memory useful instead of noisy.
 - put current work state in `CURRENT_STATE.md`
 - put lasting decisions in `DECISIONS.md`
 - put repeated failure patterns in `KNOWN_FAILURES.md`
+- put durable user preferences in `USER_PROFILE.md`
+- put agent execution reminders in `AGENT_NOTES.md`
 - put per-session notes in `session-journal/`
 
 Do not mix all of them into one file.
@@ -157,12 +174,16 @@ A session journal is not a full retrospective. Keep it concise and useful for th
 
 ### Rule 3: Capture sources and confidence for important entries
 
-For durable entries, prefer recording:
+For durable entries, require:
 
+- id
+- review_after
 - source
 - status
 - confidence
 - last updated date
+
+Do not mark an entry as `verified` if `source` is empty.
 
 ### Rule 4: Update memory after meaningful work
 
@@ -174,6 +195,7 @@ Good times to update memory:
 - after discovering a repeated failure pattern
 - after confirming a verification baseline
 - after archiving a completed OpenSpec change
+- before ending a session that changed durable memory
 
 ### Rule 5: Do not use memory as auto-activation permission
 
@@ -188,6 +210,16 @@ If old memory is wrong, fix or replace it. Do not keep piling contradictory note
 ### Rule 7: Treat backlog items as candidates, not automatic rules
 
 A reusable lesson should usually show repeated value before it becomes a permanent rule, checklist, workflow step, or skill.
+
+### Rule 8: Use the session-close checklist before claiming memory work is done
+
+Before ending a meaningful session, review `SESSION_CLOSE_CHECKLIST.md` and confirm:
+
+- current state is current
+- a journal entry exists when needed
+- durable entries include required metadata
+- any promotion candidate has enough evidence
+- validator has been run when memory changed
 
 ## How To Enable It
 
@@ -226,8 +258,12 @@ The simplest flow is:
 3. keep `CURRENT_STATE.md` current
 4. add decisions, failure patterns, and verification rules when they become durable
 5. let Superpowers-related workflows add short session notes
-6. run `scripts/validate-superpowers-memory.ps1` after meaningful updates
-7. reopen the project in your tool when instruction files change
+6. review `SESSION_CLOSE_CHECKLIST.md` before claiming memory updates are complete
+7. run `scripts/validate-superpowers-memory.ps1` after meaningful updates
+8. use `scripts/search-superpowers-memory.ps1` to confirm whether a decision, failure pattern, or lesson already exists
+9. use `scripts/suggest-superpowers-memory-updates.ps1` when the correct memory target is unclear at session close
+10. use `scripts/run-superpowers-memory-closeout.ps1` as a standard closeout helper when you want checklist + suggestions + optional validation in one step
+11. reopen the project in your tool when instruction files change
 
 ## How To Turn It Off
 
@@ -265,6 +301,8 @@ After installation, verify:
 Test-Path "<project-root>\\.superpowers-memory\\PROJECT_CONTEXT.md"
 Test-Path "<project-root>\\.superpowers-memory\\CURRENT_STATE.md"
 Test-Path "<project-root>\\.superpowers-memory\\session-journal"
+Test-Path "<project-root>\\.superpowers-memory\\USER_PROFILE.md"
+Test-Path "<project-root>\\.superpowers-memory\\AGENT_NOTES.md"
 ```
 
 ### Codex integration
@@ -289,6 +327,24 @@ Select-String -Path "<project-root>\\CLAUDE.md" -Pattern "superpowers-memory:sta
 
 ```powershell
 .\scripts\validate-superpowers-memory.ps1 -ProjectRoot <project-root>
+```
+
+### Memory search
+
+```powershell
+.\scripts\search-superpowers-memory.ps1 -ProjectRoot <project-root> -Query "validator" -Type decisions
+```
+
+### Memory update suggestion
+
+```powershell
+.\scripts\suggest-superpowers-memory-updates.ps1 -ProjectRoot <project-root> -ChangedPaths "scripts/validate-superpowers-memory.ps1","docs/memory-enhancement-design.cn.md" -Signals "decision","validation","reusable"
+```
+
+### Memory closeout helper
+
+```powershell
+.\scripts\run-superpowers-memory-closeout.ps1 -ProjectRoot <project-root> -ChangedPaths "scripts/validate-superpowers-memory.ps1","docs/memory-learning-dialogue.cn.md" -Signals "decision","validation","reusable" -RunValidator
 ```
 
 ## Best Fit

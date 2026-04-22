@@ -6,8 +6,16 @@ Read in this order:
 
 1. `.superpowers-memory/PROJECT_CONTEXT.md`
 2. `.superpowers-memory/CURRENT_STATE.md`
-3. The newest files under `.superpowers-memory/session-journal/`
+3. `.superpowers-memory/DECISIONS.md` when it exists
+4. `.superpowers-memory/KNOWN_FAILURES.md` when it exists
+5. `.superpowers-memory/VERIFICATION_BASELINE.md` when it exists
+6. `.superpowers-memory/TEAM_PREFERENCES.md` when it exists
+7. `.superpowers-memory/USER_PROFILE.md` when it exists
+8. `.superpowers-memory/AGENT_NOTES.md` when it exists
+9. The newest files under `.superpowers-memory/session-journal/`
 
-When a meaningful Superpowers-related session ends, update `CURRENT_STATE.md` and add a short session journal entry.
+When a meaningful Superpowers-related session ends, update `CURRENT_STATE.md`, any durable files that changed, including `USER_PROFILE.md` or `AGENT_NOTES.md` when relevant, and add a short session journal entry.
+
+When memory updates are part of the workflow, run `scripts/validate-superpowers-memory.ps1` before claiming completion.
 
 This memory rule does not auto-enable any Superpowers workflow. Workflows still require explicit user opt-in.

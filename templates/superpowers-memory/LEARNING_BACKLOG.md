@@ -29,6 +29,7 @@ Use this file to track reusable lessons that may deserve a future workflow, skil
 - Keep a candidate in `proposed` until it shows a repeated pattern or clear cross-session value.
 - Move it to `ready_for_promotion` when it has enough evidence and a clear target artifact.
 - Use `superseded` when the lesson is no longer relevant or has already been turned into a durable artifact.
+- Promotion-ready candidates should normally have `evidence_count >= 2`, `repeated_times >= 2`, `source`, `review_after`, and linked evidence.
 
 ## Notes
 

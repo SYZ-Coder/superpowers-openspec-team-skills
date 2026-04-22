@@ -108,6 +108,17 @@ dist/          prebuilt bundles for specific tools
 scripts/       install scripts for supported tools
 ```
 
+## Community
+
+If you want to contribute or review repository policies, start here:
+
+- [CONTRIBUTING.md](CONTRIBUTING.md)
+- [SECURITY.md](SECURITY.md)
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+- [CHANGELOG.md](CHANGELOG.md)
+
+The repository also includes a baseline GitHub Actions CI workflow for governance-file checks and memory-script smoke tests.
+
 ## Quick Start
 
 In this document, `<repo-root>` means the local filesystem path of this repository after you clone or unzip it.

@@ -1,4 +1,6 @@
 version: 1
+# This file is intended to be maintained by validate-superpowers-memory.ps1.
+# Manual edits are allowed, but the validator may overwrite summary fields.
 last_full_review:
 active_focus:
   file: CURRENT_STATE.md
@@ -8,7 +10,18 @@ memory_health:
   journal_recent: false
   conflicts_detected: 0
   stale_entries: 0
+  stale_durable_entries: 0
+  entries_missing_source: 0
+  entries_missing_review_after: 0
+  review_overdue_entries: 0
+  warning_count: 0
+  error_count: 0
+  conflict_summary: none
+validator:
+  last_validator_version:
+  last_promotion_scan:
 learning_backlog:
   total_candidates: 0
   ready_for_promotion: 0
   stale_candidates: 0
+  promotion_ready_candidates: 0

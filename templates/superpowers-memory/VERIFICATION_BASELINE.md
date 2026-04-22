@@ -28,3 +28,5 @@ Evidence expected:
 
 - Prefer commands that are reproducible and already used successfully by the team.
 - Record known blind spots so future sessions do not overclaim confidence.
+- Durable entries should always include `id`, `status`, `confidence`, `source`, `last_updated`, and `review_after`.
+- If the rule is `verified`, the `source` should point to a successful command, log, test, or documented evidence.

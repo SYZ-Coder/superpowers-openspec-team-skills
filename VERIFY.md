@@ -2,6 +2,8 @@
 
 This document explains how to verify that a bundle has been installed correctly and is actually affecting tool behavior.
 
+For a compact platform-by-platform script matrix, see [docs/CROSS_PLATFORM_TESTING.md](/D:/spring_AI/superpowers-openspec-team-skills/docs/CROSS_PLATFORM_TESTING.md).
+
 Verification should happen at two levels:
 
 1. installation verification: did the expected files land in the expected location?
@@ -52,7 +54,10 @@ Test-Path "<project-root>\\.superpowers-memory\\DECISIONS.md"
 Test-Path "<project-root>\\.superpowers-memory\\KNOWN_FAILURES.md"
 Test-Path "<project-root>\\.superpowers-memory\\VERIFICATION_BASELINE.md"
 Test-Path "<project-root>\\.superpowers-memory\\TEAM_PREFERENCES.md"
+Test-Path "<project-root>\\.superpowers-memory\\USER_PROFILE.md"
+Test-Path "<project-root>\\.superpowers-memory\\AGENT_NOTES.md"
 Test-Path "<project-root>\\.superpowers-memory\\LEARNING_BACKLOG.md"
+Test-Path "<project-root>\\.superpowers-memory\\SESSION_CLOSE_CHECKLIST.md"
 Test-Path "<project-root>\\.superpowers-memory\\memory-index.yaml"
 Test-Path "<project-root>\\.superpowers-memory\\session-journal"
 ```
@@ -60,6 +65,9 @@ Test-Path "<project-root>\\.superpowers-memory\\session-journal"
 Expected result:
 
 ```text
+True
+True
+True
 True
 True
 True
@@ -77,11 +85,124 @@ Then run memory validation:
 .\scripts\validate-superpowers-memory.ps1 -ProjectRoot <project-root>
 ```
 
+macOS or Linux with native shell:
+
+```bash
+sh "<repo-root>/scripts/validate-superpowers-memory.sh" --project-root <project-root>
+```
+
 Expected behavior:
 
 - the script completes without errors for a fresh scaffold
 - warnings are acceptable when the project has not yet accumulated real journal history
 - the output clearly shows what is missing or stale
+- `memory-index.yaml` is refreshed with the current health summary
+- durable entries are checked for `id`, `source`, `review_after`, and overdue review windows
+
+Cross-platform verification commands:
+
+- Windows PowerShell:
+  `.\scripts\validate-superpowers-memory.ps1 -ProjectRoot <project-root>`
+- Linux or macOS:
+  `sh "<repo-root>/scripts/validate-superpowers-memory.sh" --project-root <project-root>`
+- Skip index write during inspection only:
+  `sh "<repo-root>/scripts/validate-superpowers-memory.sh" --project-root <project-root> --skip-index-write`
+
+Cross-platform notes:
+
+- the shell scripts are native `sh` implementations and do not require `pwsh`
+- file timestamp lookup supports both GNU `stat -c` and BSD `stat -f`
+- date parsing falls back across GNU `date -d` and BSD `date -j` / `date -v`
+- run the shell scripts on a real macOS or Linux machine, or inside a POSIX-compatible shell on Windows
+
+To verify promotion draft generation, add one candidate in `LEARNING_BACKLOG.md` with:
+
+- `status: ready_for_promotion`
+- `suggested_artifact: checklist` or `rule` or `skill draft`
+
+Then run:
+
+```powershell
+.\scripts\generate-superpowers-promotion-drafts.ps1 -ProjectRoot <project-root>
+```
+
+macOS or Linux with native shell:
+
+```bash
+sh "<repo-root>/scripts/generate-superpowers-promotion-drafts.sh" --project-root <project-root>
+```
+
+Expected behavior:
+
+- a draft file appears under `.superpowers-memory/promotion-drafts/`
+- existing drafts are not overwritten unless `-Force` is used
+
+Cross-platform draft generation commands:
+
+- Windows PowerShell:
+  `.\scripts\generate-superpowers-promotion-drafts.ps1 -ProjectRoot <project-root>`
+- Linux or macOS:
+  `sh "<repo-root>/scripts/generate-superpowers-promotion-drafts.sh" --project-root <project-root>`
+- Overwrite existing drafts:
+  `sh "<repo-root>/scripts/generate-superpowers-promotion-drafts.sh" --project-root <project-root> --force`
+
+To verify local memory search, run:
+
+```powershell
+.\scripts\search-superpowers-memory.ps1 -ProjectRoot <project-root> -Query "decision" -Type decisions
+```
+
+macOS or Linux with native shell:
+
+```bash
+sh "<repo-root>/scripts/search-superpowers-memory.sh" --project-root <project-root> --query "decision" --type decisions
+```
+
+Expected behavior:
+
+- matching entries are listed with file paths
+- `--type` narrows the search to a specific memory surface
+- `--status` can narrow entry-based files such as decisions or backlog candidates
+- `-RecentFirst` can sort results toward newer durable entries and journals
+- `-SinceDays` can limit results to a recent time window
+- `-Summary` can print a compact count-by-kind and count-by-status view before detailed results
+
+To verify memory update suggestions, run:
+
+```powershell
+.\scripts\suggest-superpowers-memory-updates.ps1 -ProjectRoot <project-root> -ChangedPaths "scripts/validate-superpowers-memory.ps1","docs/memory-enhancement-design.cn.md" -Signals "decision","validation","reusable"
+```
+
+macOS or Linux with native shell:
+
+```bash
+sh "<repo-root>/scripts/suggest-superpowers-memory-updates.sh" --project-root <project-root> --changed-paths "scripts/validate-superpowers-memory.sh,docs/memory-enhancement-design.cn.md" --signals "decision,validation,reusable"
+```
+
+Expected behavior:
+
+- suggested targets include `CURRENT_STATE.md` and `session-journal/`
+- signal-specific targets such as `DECISIONS.md`, `VERIFICATION_BASELINE.md`, or `LEARNING_BACKLOG.md` appear when relevant
+- the script acts as a closeout hint, not as an automatic writer
+
+To verify the closeout helper, run:
+
+```powershell
+.\scripts\run-superpowers-memory-closeout.ps1 -ProjectRoot <project-root> -ChangedPaths "scripts/validate-superpowers-memory.ps1","docs/memory-learning-dialogue.cn.md" -Signals "decision","validation","reusable" -RunValidator
+```
+
+macOS or Linux with native shell:
+
+```bash
+sh "<repo-root>/scripts/run-superpowers-memory-closeout.sh" --project-root <project-root> --changed-paths "scripts/validate-superpowers-memory.sh,docs/memory-learning-dialogue.cn.md" --signals "decision,validation,reusable" --run-validator
+```
+
+Expected behavior:
+
+- the checklist path is shown first
+- memory update suggestions are listed next
+- validator output appears when validation is requested
+- the helper does not edit memory files on its own
 
 ## 2. Verify Memory Integration
 

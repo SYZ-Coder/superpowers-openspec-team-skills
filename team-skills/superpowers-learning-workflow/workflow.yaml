@@ -23,6 +23,12 @@ outputs:
   - .superpowers-memory/KNOWN_FAILURES.md
   - .superpowers-memory/VERIFICATION_BASELINE.md
   - .superpowers-memory/TEAM_PREFERENCES.md
+  - .superpowers-memory/USER_PROFILE.md
+  - .superpowers-memory/AGENT_NOTES.md
+  - .superpowers-memory/SESSION_CLOSE_CHECKLIST.md
   - .superpowers-memory/session-journal/
   - .superpowers-memory/LEARNING_BACKLOG.md
+  - scripts/run-superpowers-memory-closeout.ps1
   - scripts/validate-superpowers-memory.ps1
+  - scripts/search-superpowers-memory.ps1
+  - scripts/suggest-superpowers-memory-updates.ps1

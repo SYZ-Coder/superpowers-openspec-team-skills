@@ -13,7 +13,7 @@ This is an explicit opt-in workflow. Do not use it by default. Only use it when 
 
 ## Workflow
 
-1. Explore project context before proposing solutions. If `.superpowers-memory/` exists, read `PROJECT_CONTEXT.md`, `CURRENT_STATE.md`, `DECISIONS.md`, `KNOWN_FAILURES.md`, and the latest session journal entries first.
+1. Explore project context before proposing solutions. If `.superpowers-memory/` exists, read `PROJECT_CONTEXT.md`, `CURRENT_STATE.md`, `DECISIONS.md`, `KNOWN_FAILURES.md`, `VERIFICATION_BASELINE.md`, `TEAM_PREFERENCES.md`, `USER_PROFILE.md`, `AGENT_NOTES.md`, and the latest session journal entries first.
 2. Clarify requirements one question at a time.
 3. Present 2-3 approaches with a recommendation.
 4. Write the approved design to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`.
@@ -23,8 +23,10 @@ This is an explicit opt-in workflow. Do not use it by default. Only use it when 
 8. Implement with TDD: failing test first, then minimal code, then green.
 9. Run fresh verification commands before any completion claim.
 10. Before finishing the session, run a short memory closeout check: durable facts changed, current state changed, important decisions added, failure patterns discovered, verification rules changed, and reusable lessons identified.
-11. When the repo uses Superpowers memory, update the relevant memory files, including `.superpowers-memory/CURRENT_STATE.md` and a short session note under `.superpowers-memory/session-journal/`.
-12. When memory quality matters for the task, run `scripts/validate-superpowers-memory.ps1` before the final completion claim.
+11. Prefer `scripts/run-superpowers-memory-closeout.ps1` when you want one command to review the checklist, get update suggestions, and optionally run validation.
+12. Use `scripts/suggest-superpowers-memory-updates.ps1` when the right memory surface is still unclear after implementation or verification.
+13. When the repo uses Superpowers memory, update the relevant memory files, including `.superpowers-memory/CURRENT_STATE.md` and a short session note under `.superpowers-memory/session-journal/`.
+14. When memory quality matters for the task, run `scripts/validate-superpowers-memory.ps1` before the final completion claim.
 
 ## When to Use
 
@@ -39,6 +41,7 @@ This is an explicit opt-in workflow. Do not use it by default. Only use it when 
 - Implementation plan
 - Verified implementation evidence
 - Updated Superpowers memory when `.superpowers-memory/` is present
+- Optional closeout helper output when the closeout helper was used
 - Memory validation evidence when memory updates were part of the workflow
 
 ## Guardrails

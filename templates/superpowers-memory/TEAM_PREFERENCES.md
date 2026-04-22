@@ -26,3 +26,4 @@ How to apply it:
 
 - Keep this file for durable preferences, not session-specific requests.
 - If a preference changes, update the existing entry or mark it `superseded`.
+- Durable entries should always include `id`, `status`, `confidence`, `source`, `last_updated`, and `review_after`.

@@ -18,7 +18,7 @@ This skill is an orchestrator. It should delegate detail work to the existing wo
 
 This is an explicit opt-in workflow. Do not use it by default. Only use it when the user explicitly asks for this workflow, names this skill, or a repository policy explicitly requires it.
 
-If `.superpowers-memory/` exists in the repository, read it at the start and update it before final archive so the next session can resume with real context.
+If `.superpowers-memory/` exists in the repository, read `PROJECT_CONTEXT.md`, `CURRENT_STATE.md`, `DECISIONS.md`, `KNOWN_FAILURES.md`, `VERIFICATION_BASELINE.md`, `TEAM_PREFERENCES.md`, `USER_PROFILE.md`, `AGENT_NOTES.md`, and the newest session journal entries at the start, then update the relevant files before final archive so the next session can resume with real context.
 
 ## Required Order
 
@@ -30,7 +30,9 @@ If `.superpowers-memory/` exists in the repository, read it at the start and upd
    Use it to write the implementation plan, prefer a worktree, execute with TDD, and run fresh verification.
 4. If implementation and specs are aligned after verification, use `$openspec-archive-change` to archive the completed change.
 5. If `.superpowers-memory/` exists, perform a memory alignment check after verification and archive decisions: ensure durable facts, current state, decisions, failure patterns, and session outcome are reflected in the right files.
-6. When memory quality matters for the project, run `scripts/validate-superpowers-memory.ps1` before the final completion claim.
+6. Prefer `scripts/run-superpowers-memory-closeout.ps1` when you want one command to review the checklist, get update suggestions, and optionally run validation after execution or archive work.
+7. Use `scripts/suggest-superpowers-memory-updates.ps1` if it is still unclear which memory surfaces should be updated after implementation, verification, or archive work.
+8. When memory quality matters for the project, run `scripts/validate-superpowers-memory.ps1` before the final completion claim.
 
 ## Decision Gates
 
@@ -54,6 +56,7 @@ If `.superpowers-memory/` exists in the repository, read it at the start and upd
 - Implementation plan in `docs/superpowers/plans/`
 - Code, tests, and fresh verification evidence
 - Updated Superpowers memory and memory validation evidence when memory is in use
+- Optional closeout helper output when the closeout helper was used
 - Archived OpenSpec change when the work is complete
 
 ## Recommended Prompt
