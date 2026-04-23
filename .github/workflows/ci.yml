@@ -33,7 +33,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if grep -RInE 'OWNER/REPO|TODO|TBD' .github README.md CONTRIBUTING.md SECURITY.md CODE_OF_CONDUCT.md CHANGELOG.md; then
+          placeholder_pattern='OWNER''/REPO|TO''DO|T''BD'
+          if grep -RInE "$placeholder_pattern" .github README.md CONTRIBUTING.md SECURITY.md CODE_OF_CONDUCT.md CHANGELOG.md; then
             echo "Found placeholder content"
             exit 1
           fi

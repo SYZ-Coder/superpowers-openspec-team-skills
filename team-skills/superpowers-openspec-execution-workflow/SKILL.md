@@ -1,6 +1,6 @@
-﻿---
+---
 name: superpowers-openspec-execution-workflow
-description: Use when a feature should follow four explicit steps: Superpowers exploration, OpenSpec locking, Superpowers execution, and OpenSpec archive.
+description: Use when the team explicitly wants the Superpowers exploration, OpenSpec specification, Superpowers execution, and OpenSpec archive workflow for a feature 
 ---
 
 # Superpowers -> OpenSpec -> Superpowers Workflow

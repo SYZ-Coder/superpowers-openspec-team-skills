@@ -116,6 +116,8 @@ If you want to contribute or review repository policies, start here:
 - [SECURITY.md](SECURITY.md)
 - [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 - [CHANGELOG.md](CHANGELOG.md)
+- [docs/enhancement-overview.cn.md](docs/enhancement-overview.cn.md)
+- [docs/layered-adoption-model.cn.md](docs/layered-adoption-model.cn.md)
 
 The repository also includes a baseline GitHub Actions CI workflow for governance-file checks and memory-script smoke tests.
 

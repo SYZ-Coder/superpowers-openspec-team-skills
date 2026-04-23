@@ -513,3 +513,7 @@ Claude Code 更适合使用命令文件和项目说明，因此请使用 `dist/c
 - [中文验证指南](VERIFY.cn.md)
 - [源码层 workflow 总览](team-skills/README.cn.md)
 - [源码层安装说明](team-skills/INSTALL.cn.md)
+## 增强文档
+
+- [增强功能总览](docs/enhancement-overview.cn.md)
+- [分层采用模型](docs/layered-adoption-model.cn.md)
