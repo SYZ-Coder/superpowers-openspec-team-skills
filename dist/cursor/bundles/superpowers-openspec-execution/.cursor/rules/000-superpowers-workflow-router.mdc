@@ -1,0 +1,27 @@
+---
+description: Highest-priority router for explicit superpowers-openspec-execution-workflow requests.
+alwaysApply: true
+---
+
+# Workflow Router Override
+
+This rule is a router, not a workflow body.
+
+If the current user message contains `superpowers-openspec-execution-workflow`, this rule wins over OpenSpec proposal routing.
+
+Required routing:
+
+1. Do not invoke `openspec-propose`.
+2. Do not invoke `/opsx:propose`.
+3. Do not invoke `$openspec-feature-workflow`.
+4. Do not create an OpenSpec change proposal as the first action.
+5. Do not say "I will use the OpenSpec workflow first".
+
+The first action must be Superpowers exploration:
+
+1. Inspect relevant project context.
+2. Clarify the requested behavior if needed.
+3. Compare possible approaches or ask the next Superpowers-style question.
+4. Only after the user confirms the solution shape and a design draft exists in `docs/superpowers/specs/`, move to OpenSpec artifacts.
+
+If an OpenSpec proposal step has already started for a request that named `superpowers-openspec-execution-workflow`, stop that route and restart from Superpowers exploration.

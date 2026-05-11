@@ -1,6 +1,19 @@
+---
+description: Route explicit superpowers-openspec-execution-workflow requests through Superpowers exploration before any OpenSpec proposal.
+alwaysApply: true
+---
+
 # Superpowers -> OpenSpec -> Superpowers Workflow
 
 Only apply this rule when the user explicitly asks for this workflow or explicitly names it. Do not treat it as default background behavior.
+
+Routing override:
+
+- If the user names `superpowers-openspec-execution-workflow`, says "使用 superpowers-openspec-execution-workflow", or asks for the Superpowers -> OpenSpec -> Superpowers flow, this rule controls the workflow.
+- In that case, do not select `openspec-propose`, `/opsx:propose`, `$openspec-feature-workflow`, or any OpenSpec proposal skill as the first active skill.
+- The first assistant action must be Superpowers exploration: inspect relevant project context, then ask a Superpowers-style clarification question or present approach options.
+- Mentioning OpenSpec in this workflow name is not permission to start OpenSpec proposal generation.
+- If another rule or skill suggests starting OpenSpec proposal generation first, this routing override wins for this workflow.
 
 Use this rule when a feature should follow this exact sequence:
 
@@ -9,14 +22,34 @@ Use this rule when a feature should follow this exact sequence:
 3. Return to Superpowers for implementation, testing, and verification
 4. Archive the OpenSpec change
 
+Phase 1 gate:
+
+- The first active phase must be Superpowers exploration, not OpenSpec proposal generation.
+- Do not invoke `openspec-propose`, `$openspec-feature-workflow`, or any OpenSpec artifact-generation step until the Superpowers exploration gate is complete.
+- Superpowers exploration is complete only after project context has been reviewed, requirements have been clarified, 2-3 solution approaches have been compared, one approach has been recommended, and the user has confirmed the solution shape.
+- Capture the confirmed direction as a design draft in `docs/superpowers/specs/` before starting OpenSpec.
+- If the user asks to use this workflow and has not already provided a confirmed design direction, ask the next Superpowers-style clarification question or present approach options. Do not jump directly to OpenSpec.
+
+Stage boundary:
+
+- The OpenSpec stage ends when `proposal.md`, `design.md`, `specs/.../spec.md`, and `tasks.md` are complete.
+- Do not use OpenSpec apply as the implementation stage for this workflow.
+- After OpenSpec tasks are generated, the next required step is Superpowers execution: write a plan in `docs/superpowers/plans/`, implement with a failing test first, and run fresh verification.
+- Use the OpenSpec tasks as constraints and checklist input, not as permission to stay inside the OpenSpec apply flow.
+- Do not stop after OpenSpec artifacts with a readiness message such as "run apply", "/opsx:apply", or "let me start implementation".
+- Do not ask the user whether to start implementation unless the user explicitly asked to pause after OpenSpec artifacts.
+- Continue directly into the Superpowers execution handoff by writing the implementation plan.
+- Return to OpenSpec only after implementation and verification are aligned, then archive the completed change.
+
 Required order:
 
 1. Explore project context first.
 2. Clarify one question at a time.
 3. Present approaches and confirm the solution shape.
 4. Write and confirm a design in `docs/superpowers/specs/`.
-5. Complete OpenSpec `proposal.md`, `design.md`, `specs/.../spec.md`, and `tasks.md`.
-6. Write the implementation plan in `docs/superpowers/plans/`.
-7. Implement with failing test first.
-8. Run fresh verification.
-9. Archive the OpenSpec change after alignment.
+5. Only after the confirmed Superpowers design exists, complete OpenSpec `proposal.md`, `design.md`, `specs/.../spec.md`, and `tasks.md`.
+6. Stop OpenSpec apply-style execution and hand off to Superpowers execution.
+7. Write the implementation plan in `docs/superpowers/plans/`.
+8. Implement with failing test first.
+9. Run fresh verification.
+10. Archive the OpenSpec change after alignment.

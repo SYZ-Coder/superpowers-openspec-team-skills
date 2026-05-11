@@ -36,8 +36,17 @@ If `.superpowers-memory/` exists in the repository, read `PROJECT_CONTEXT.md`, `
 
 ## Decision Gates
 
+- When the user names `$superpowers-openspec-execution-workflow`, this orchestrator controls routing; do not route first to `$openspec-feature-workflow`, `openspec-propose`, `/opsx:propose`, or any OpenSpec proposal skill.
+- Mentioning OpenSpec in this workflow name is not permission to start OpenSpec proposal generation.
+- Do not invoke `$openspec-feature-workflow`, `openspec-propose`, or any OpenSpec artifact-generation step before the Superpowers exploration gate is complete.
+- The Superpowers exploration gate is complete only after context review, requirement clarification, approach comparison, user confirmation of the solution shape, and a design draft under `docs/superpowers/specs/`.
 - Do not create implementation code during the exploration stage.
 - Do not start coding until required OpenSpec artifacts are complete.
+- Do not use OpenSpec apply as the implementation stage for this workflow.
+- After OpenSpec `tasks.md` is complete, stop OpenSpec apply-style execution and hand off to `$superpowers-feature-workflow`.
+- Do not stop after OpenSpec artifacts with a readiness message such as "run apply", "/opsx:apply", or "let me start implementation".
+- Unless the user explicitly asked to pause after OpenSpec artifacts, continue directly into Superpowers execution by writing the implementation plan.
+- Treat OpenSpec tasks as constraints and checklist input for the Superpowers implementation plan, not as permission to stay inside the OpenSpec apply flow.
 - Do not claim success until fresh verification output exists.
 - Do not archive the change until code, tests, and specs are aligned.
 - Do not leave memory out of sync with the final archive decision when `.superpowers-memory/` exists.

@@ -1,16 +1,31 @@
+---
+description: Route explicit openspec-superpowers-workflow requests through OpenSpec artifacts, then Superpowers execution.
+alwaysApply: false
+---
+
 # OpenSpec + Superpowers Workflow
 
 Only apply this rule when the user explicitly asks for this workflow or explicitly names it. Do not treat it as default background behavior.
 
-Use this rule when a non-trivial feature needs clarification, OpenSpec artifacts, implementation planning, TDD, and verification.
+Use this rule when a non-trivial feature should start with OpenSpec artifacts, then use Superpowers for implementation planning, TDD, and verification.
+
+Stage boundary:
+
+- Use OpenSpec only to create or update the change artifacts: `proposal.md`, `design.md`, `specs/.../spec.md`, and `tasks.md`.
+- After `tasks.md` is complete, do not continue with the OpenSpec apply flow for implementation.
+- Treat the completed OpenSpec tasks as input to the Superpowers execution stage.
+- The next required action after completed OpenSpec tasks is to write a Superpowers implementation plan in `docs/superpowers/plans/`, then implement with a failing test first and run fresh verification.
+- Do not stop after OpenSpec artifacts with a readiness message such as "run apply", "/opsx:apply", or "let me start implementation".
+- Do not ask the user whether to start implementation unless the user explicitly asked to pause after OpenSpec artifacts.
+- Continue directly into the Superpowers execution handoff by writing the implementation plan.
+- Only return to OpenSpec after implementation and verification are aligned, and only for final spec alignment or archive work.
 
 Required order:
 
-1. Explore context first.
-2. Ask clarifying questions one at a time.
-3. Present 2-3 approaches and recommend one.
-4. Write and confirm a design doc in `docs/superpowers/specs/`.
-5. Create or confirm an OpenSpec change and complete `proposal.md`, `design.md`, `specs/.../spec.md`, and `tasks.md`.
-6. Write the implementation plan in `docs/superpowers/plans/`.
-7. Implement with failing test first.
-8. Run fresh verification before reporting success.
+1. Explore context enough to understand the behavior change.
+2. Ask clarifying questions one at a time only as needed for accurate OpenSpec artifacts.
+3. Create or confirm an OpenSpec change and complete `proposal.md`, `design.md`, `specs/.../spec.md`, and `tasks.md`.
+4. Stop OpenSpec apply-style execution and hand off to Superpowers execution.
+5. Write the implementation plan in `docs/superpowers/plans/`.
+6. Implement with failing test first.
+7. Run fresh verification before reporting success.
