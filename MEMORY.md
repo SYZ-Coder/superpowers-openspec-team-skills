@@ -265,6 +265,188 @@ The simplest flow is:
 10. use `scripts/run-superpowers-memory-closeout.ps1` as a standard closeout helper when you want checklist + suggestions + optional validation in one step
 11. reopen the project in your tool when instruction files change
 
+### What To Do Right After Installation
+
+Installing memory integration does not mean memory is already being used in a meaningful way. A practical next step is:
+
+1. confirm the project contains `.superpowers-memory/`
+2. confirm the tool-level integration file exists for your tool
+3. reopen or refresh the project in the tool so the new instruction files are loaded
+4. add at least a few lines to `PROJECT_CONTEXT.md` and `CURRENT_STATE.md`
+5. start a new session in the tool
+6. begin work normally and let the tool read the repo memory first
+
+If the memory files are empty, memory can still be considered enabled, but it will not help much yet because there is little context to recover.
+
+### Minimal First-Time Setup Example
+
+You do not need to fully document the project before memory becomes useful. A very small amount of content is enough to start:
+
+`PROJECT_CONTEXT.md`
+
+```md
+# Project Context
+- hobby-map is a map-based hobby discovery project.
+- Main stack: Vue 3 + Spring Boot + MySQL.
+- Core modules: map view, point management, user favorites.
+```
+
+`CURRENT_STATE.md`
+
+```md
+# Current State
+- Current focus: fixing map marker clustering and detail panel behavior.
+- Recently done: integrated the basic point list and detail fetch API.
+- Next step: verify marker click behavior and mobile layout.
+```
+
+This is enough for later sessions to start with a real project summary instead of asking for all background again.
+
+### How To Tell Memory Is Actually In Use
+
+After installation, memory is being used more concretely when all of these are true:
+
+1. `.superpowers-memory/` exists in the project
+2. the tool integration file exists
+3. the project has been reopened or refreshed after installation
+4. a new session has started
+5. the memory files contain useful content
+
+Typical signs:
+
+- the tool asks fewer repeated background questions
+- it can refer to current project state from `CURRENT_STATE.md`
+- it can pick up durable decisions or constraints from memory files
+
+Memory enablement does not mean workflow auto-activation. The tool may read memory at session start while still requiring explicit workflow invocation where the workflow rules require it.
+
+### Concrete Example: Cursor
+
+For a Cursor project at `D:\ys\ysProjects\Hobby\hobby-map`, a practical flow looks like this:
+
+1. install the scaffold
+
+```powershell
+.\scripts\install-superpowers-memory.ps1 -ProjectRoot D:\ys\ysProjects\Hobby\hobby-map
+```
+
+2. install Cursor integration
+
+```powershell
+.\scripts\install-superpowers-memory-integration.ps1 -Tool cursor -ProjectRoot D:\ys\ysProjects\Hobby\hobby-map
+```
+
+3. verify the expected files exist
+
+```powershell
+Test-Path "D:\ys\ysProjects\Hobby\hobby-map\.superpowers-memory\PROJECT_CONTEXT.md"
+Test-Path "D:\ys\ysProjects\Hobby\hobby-map\.cursor\rules\superpowers-memory.mdc"
+```
+
+4. add a short project summary to `PROJECT_CONTEXT.md` and `CURRENT_STATE.md`
+5. reopen Cursor or refresh the project
+6. start a new chat session
+7. ask for real project work, for example:
+
+```text
+Please use the repo memory first, then help me decide the next priority for hobby-map.
+```
+
+That is the point where memory becomes operational in day-to-day use.
+
+### Concrete Example: Codex
+
+For Codex, the main difference is that project instructions are loaded from `AGENTS.md`, and after installing or changing bundled skills or project instructions you should reopen or refresh the project so Codex can rediscover them.
+
+A practical flow looks like this:
+
+1. install the scaffold
+
+```powershell
+.\scripts\install-superpowers-memory.ps1 -ProjectRoot D:\ys\ysProjects\Hobby\hobby-map
+```
+
+2. install Codex integration
+
+```powershell
+.\scripts\install-superpowers-memory-integration.ps1 -Tool codex -ProjectRoot D:\ys\ysProjects\Hobby\hobby-map
+```
+
+3. verify the expected files exist
+
+```powershell
+Test-Path "D:\ys\ysProjects\Hobby\hobby-map\.superpowers-memory\PROJECT_CONTEXT.md"
+Select-String -Path "D:\ys\ysProjects\Hobby\hobby-map\AGENTS.md" -Pattern "superpowers-memory:start"
+```
+
+4. add a short project summary to `PROJECT_CONTEXT.md` and `CURRENT_STATE.md`
+5. reopen or refresh the project in Codex
+6. start a new session
+7. ask for real project work, for example:
+
+```text
+Please read the repo memory first, then help me continue the current hobby-map work.
+```
+
+For Codex, this reopen step matters because the tool needs to pick up the updated project instructions before the new session begins.
+
+### Concrete Example: Claude Code
+
+For Claude Code, memory integration can coexist with workflow bundles, but workflow activation is more reliable when you use the generated slash command instead of relying only on natural-language routing.
+
+A practical flow looks like this:
+
+1. install the scaffold
+
+```powershell
+.\scripts\install-superpowers-memory.ps1 -ProjectRoot D:\ys\ysProjects\Hobby\hobby-map
+```
+
+2. install Claude Code integration
+
+```powershell
+.\scripts\install-superpowers-memory-integration.ps1 -Tool claude-code -ProjectRoot D:\ys\ysProjects\Hobby\hobby-map
+```
+
+3. verify the expected files exist
+
+```powershell
+Test-Path "D:\ys\ysProjects\Hobby\hobby-map\.superpowers-memory\PROJECT_CONTEXT.md"
+Select-String -Path "D:\ys\ysProjects\Hobby\hobby-map\CLAUDE.md" -Pattern "superpowers-memory:start"
+```
+
+4. add a short project summary to `PROJECT_CONTEXT.md` and `CURRENT_STATE.md`
+5. reopen or refresh the project in Claude Code
+6. start a new session
+7. when using a bundled workflow, prefer the generated slash command so Claude Code reads the command file and applies the workflow gates consistently
+8. ask for real project work, for example:
+
+```text
+/superpowers-feature
+Continue hobby-map using the existing repo memory and current project state.
+```
+
+If you are only relying on memory and not activating a workflow bundle, a normal new session is still enough for Claude Code to read repo memory. The slash-command recommendation is specifically about reliable workflow activation.
+
+### Recommended Session-Close Habit
+
+After meaningful work:
+
+1. update `CURRENT_STATE.md` if the active focus changed
+2. add durable entries to `DECISIONS.md`, `KNOWN_FAILURES.md`, or `VERIFICATION_BASELINE.md` when needed
+3. add a short note under `session-journal/`
+4. run validation
+
+```powershell
+.\scripts\validate-superpowers-memory.ps1 -ProjectRoot <project-root>
+```
+
+If you want one standard closeout command instead of doing this manually:
+
+```powershell
+.\scripts\run-superpowers-memory-closeout.ps1 -ProjectRoot <project-root> -ChangedPaths "src","docs" -Signals "decision","validation" -RunValidator
+```
+
 ## How To Turn It Off
 
 You can disable memory at two levels as well.

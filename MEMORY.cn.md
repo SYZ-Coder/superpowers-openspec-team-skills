@@ -265,6 +265,188 @@ workflow 仍然必须显式 opt-in。
 10. 如果想把 checklist、建议和可选校验串成一次收尾动作，就运行 `scripts/run-superpowers-memory-closeout.ps1`
 11. 如果项目级指令文件更新了，重新打开工具项目
 
+### 安装完成后，下一步应该做什么
+
+安装好记忆集成，并不等于已经“有明显效果地使用上了记忆”。更实用的下一步是：
+
+1. 确认目标项目里已经有 `.superpowers-memory/`
+2. 确认当前工具对应的集成文件已经存在
+3. 重新打开或刷新工具项目，让新的项目级指令生效
+4. 至少给 `PROJECT_CONTEXT.md` 和 `CURRENT_STATE.md` 补几行内容
+5. 新开一个会话
+6. 在新会话里正常开始工作，让工具先读取 repo memory
+
+如果记忆文件是空的，也可以算“已经启用”，但效果通常会比较弱，因为工具读不到多少上下文。
+
+### 第一次使用时，最小要补什么
+
+不需要一开始就把所有记忆文件写满。只要先补一点最关键的内容，后续会话就能明显更顺：
+
+`PROJECT_CONTEXT.md`
+
+```md
+# Project Context
+- hobby-map 是一个地图类兴趣发现项目。
+- 主要技术栈：Vue 3 + Spring Boot + MySQL。
+- 核心模块：地图视图、点位管理、用户收藏。
+```
+
+`CURRENT_STATE.md`
+
+```md
+# Current State
+- 当前重点：修复地图 marker 聚合和详情面板行为。
+- 最近完成：接通基础点位列表和详情查询接口。
+- 下一步：验证 marker 点击链路和移动端布局。
+```
+
+哪怕只有这几行，也已经足够让后续会话少问很多重复背景。
+
+### 怎么判断自己已经真正开始使用记忆
+
+安装之后，通常满足下面这些条件，才算进入“日常可用”的状态：
+
+1. 项目里存在 `.superpowers-memory/`
+2. 对应工具的集成文件已经写入
+3. 安装后已经重新打开或刷新过项目
+4. 已经新开了一个会话
+5. 记忆文件里已经有可读的内容
+
+常见表现包括：
+
+- 工具减少了重复询问项目背景
+- 工具能根据 `CURRENT_STATE.md` 接上当前工作现场
+- 工具能引用已存在的长期决策、约束或失败经验
+
+需要注意：记忆开始生效，不等于 workflow 自动启用。很多场景下，工具会先读取记忆，但 workflow 仍然需要你显式调用。
+
+### 一个更直观的 Cursor 使用示例
+
+假设你的项目路径是 `D:\ys\ysProjects\Hobby\hobby-map`，一个典型流程可以是：
+
+1. 安装记忆脚手架
+
+```powershell
+.\scripts\install-superpowers-memory.ps1 -ProjectRoot D:\ys\ysProjects\Hobby\hobby-map
+```
+
+2. 安装 Cursor 记忆集成
+
+```powershell
+.\scripts\install-superpowers-memory-integration.ps1 -Tool cursor -ProjectRoot D:\ys\ysProjects\Hobby\hobby-map
+```
+
+3. 检查关键文件是否存在
+
+```powershell
+Test-Path "D:\ys\ysProjects\Hobby\hobby-map\.superpowers-memory\PROJECT_CONTEXT.md"
+Test-Path "D:\ys\ysProjects\Hobby\hobby-map\.cursor\rules\superpowers-memory.mdc"
+```
+
+4. 给 `PROJECT_CONTEXT.md` 和 `CURRENT_STATE.md` 先补一个最小版本
+5. 重开 Cursor 或刷新项目
+6. 新开一个聊天会话
+7. 直接开始提真实需求，例如：
+
+```text
+请先基于 repo memory 理解 hobby-map 当前上下文，再帮我判断下一步优先做什么。
+```
+
+到这里，才算真正进入“日常使用记忆”的状态。
+
+### 一个更直观的 Codex 使用示例
+
+对 Codex 来说，主要差异是项目级指令来自 `AGENTS.md`。如果你刚安装了记忆集成，或者更新了项目级技能/指令，最好重开或刷新项目，让 Codex 重新发现这些内容。
+
+一个典型流程可以是：
+
+1. 安装记忆脚手架
+
+```powershell
+.\scripts\install-superpowers-memory.ps1 -ProjectRoot D:\ys\ysProjects\Hobby\hobby-map
+```
+
+2. 安装 Codex 记忆集成
+
+```powershell
+.\scripts\install-superpowers-memory-integration.ps1 -Tool codex -ProjectRoot D:\ys\ysProjects\Hobby\hobby-map
+```
+
+3. 检查关键文件是否存在
+
+```powershell
+Test-Path "D:\ys\ysProjects\Hobby\hobby-map\.superpowers-memory\PROJECT_CONTEXT.md"
+Select-String -Path "D:\ys\ysProjects\Hobby\hobby-map\AGENTS.md" -Pattern "superpowers-memory:start"
+```
+
+4. 给 `PROJECT_CONTEXT.md` 和 `CURRENT_STATE.md` 先补一个最小版本
+5. 重开或刷新 Codex 项目
+6. 新开一个会话
+7. 直接开始提真实需求，例如：
+
+```text
+请先读取 repo memory，再帮我继续 hobby-map 当前这轮工作。
+```
+
+对 Codex 来说，这里的“重开或刷新项目”比较关键，因为它需要先加载更新后的项目级指令，再在新会话开始时使用记忆。
+
+### 一个更直观的 Claude Code 使用示例
+
+对 Claude Code 来说，记忆集成可以和 workflow bundle 一起工作，但如果你要启用某个 workflow，通常更建议优先使用生成出来的 slash command，而不是只靠自然语言描述。
+
+一个典型流程可以是：
+
+1. 安装记忆脚手架
+
+```powershell
+.\scripts\install-superpowers-memory.ps1 -ProjectRoot D:\ys\ysProjects\Hobby\hobby-map
+```
+
+2. 安装 Claude Code 记忆集成
+
+```powershell
+.\scripts\install-superpowers-memory-integration.ps1 -Tool claude-code -ProjectRoot D:\ys\ysProjects\Hobby\hobby-map
+```
+
+3. 检查关键文件是否存在
+
+```powershell
+Test-Path "D:\ys\ysProjects\Hobby\hobby-map\.superpowers-memory\PROJECT_CONTEXT.md"
+Select-String -Path "D:\ys\ysProjects\Hobby\hobby-map\CLAUDE.md" -Pattern "superpowers-memory:start"
+```
+
+4. 给 `PROJECT_CONTEXT.md` 和 `CURRENT_STATE.md` 先补一个最小版本
+5. 重开或刷新 Claude Code 项目
+6. 新开一个会话
+7. 如果要启用 bundle 里的 workflow，优先使用生成的 slash command，让 Claude Code 读取命令文件并稳定应用 workflow 门禁
+8. 再开始提真实需求，例如：
+
+```text
+/superpowers-feature
+请基于现有 repo memory 和当前项目状态继续推进 hobby-map。
+```
+
+如果你只是想让 Claude Code 在新会话里读取项目记忆，而不是启用某个 workflow bundle，那么普通新会话也可以；这里推荐 slash command，主要是为了更稳定地启用 workflow。
+
+### 推荐的收尾习惯
+
+做完一轮有意义的工作后，建议顺手做这几件事：
+
+1. 如果当前工作重点变了，更新 `CURRENT_STATE.md`
+2. 如果出现了长期有效的决策、坑点、验证规则，更新对应 durable memory 文件
+3. 在 `session-journal/` 下补一条简短记录
+4. 运行校验
+
+```powershell
+.\scripts\validate-superpowers-memory.ps1 -ProjectRoot <project-root>
+```
+
+如果你不想手动分开做，也可以直接运行：
+
+```powershell
+.\scripts\run-superpowers-memory-closeout.ps1 -ProjectRoot <project-root> -ChangedPaths "src","docs" -Signals "decision","validation" -RunValidator
+```
+
 ## 如何关闭
 
 你也可以分两层关闭。
