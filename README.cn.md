@@ -46,6 +46,8 @@ Use $superpowers-openspec-execution-workflow for this feature.
 
 这样不用单独部署记忆服务，也能让 AI 在跨会话时接上之前的上下文。
 
+默认推荐用法很简单：让工具在新会话开始时先读取 repo memory，平时至少保持 `PROJECT_CONTEXT.md` 和 `CURRENT_STATE.md` 基本可用、基本最新；做完一轮有意义的工作后，用 `superpowers-learning` 作为默认记忆收尾入口。不要期待普通聊天自动把内容写回 memory 文件；如果想更轻量一点，可以改用 `scripts/run-superpowers-memory-closeout.ps1`。
+
 ### 运行要求
 
 - 使用 OpenSpec 相关 workflow 时，需要安装 OpenSpec CLI
@@ -205,6 +207,8 @@ sh "<repo-root>/scripts/install-superpowers-memory-integration.sh" --tool all --
 ```bash
 pwsh -File ./scripts/install-superpowers-memory-integration.ps1 -Tool all -ProjectRoot <project-root>
 ```
+
+安装完成后，记得重开或刷新项目，再新开一个会话，让工具先读取 repo memory；一轮有意义的工作结束后，优先用 `superpowers-learning` 来沉淀当前状态和可复用经验。
 
 ### Codex
 

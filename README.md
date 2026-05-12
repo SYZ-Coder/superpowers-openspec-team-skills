@@ -58,6 +58,8 @@ When a project contains `.superpowers-memory/`, Superpowers workflows should:
 
 This gives AI a lightweight cross-session memory without requiring a separate memory service.
 
+Recommended default usage: let the tool read repo memory at the start of a new session, keep `PROJECT_CONTEXT.md` and `CURRENT_STATE.md` minimally current, and after meaningful work use `superpowers-learning` as the default memory closeout entry. Do not expect ordinary chat to auto-write memory files. For a lighter fallback, use `scripts/run-superpowers-memory-closeout.ps1`.
+
 ### Requirements
 
 - OpenSpec CLI when using workflows that create or inspect OpenSpec changes
@@ -230,6 +232,8 @@ macOS or Linux with PowerShell 7 (`pwsh`) if available:
 ```bash
 pwsh -File ./scripts/install-superpowers-memory-integration.ps1 -Tool all -ProjectRoot <project-root>
 ```
+
+After installation, reopen or refresh the project, start a new session so the tool can read repo memory, and use `superpowers-learning` after meaningful work to preserve current state and reusable lessons.
 
 ### Codex
 

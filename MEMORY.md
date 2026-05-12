@@ -320,6 +320,78 @@ Typical signs:
 
 Memory enablement does not mean workflow auto-activation. The tool may read memory at session start while still requiring explicit workflow invocation where the workflow rules require it.
 
+### Recommended Default For Open-Source Users
+
+Across tools, the practical pattern is simple: let new sessions read repo memory first, and treat memory writes as an explicit closeout action rather than something ordinary chat does automatically.
+
+For most open-source users, the best default is:
+
+1. work normally in your tool
+2. let the tool read repo memory at the start of a new session
+3. after meaningful work, explicitly run a memory closeout step
+
+The recommended default closeout entry is `superpowers-learning-workflow` because it is easier to adopt than the larger delivery workflows and is directly focused on preserving current state, durable lessons, and short session outcomes.
+
+Recommended prompt:
+
+```text
+Use $superpowers-learning-workflow to capture what this session taught us and update the project memory.
+```
+
+This default works well across tools:
+
+- in Cursor, use the workflow name in chat after meaningful work
+- in Codex, use the workflow name in chat after meaningful work
+- in Claude Code, prefer the generated slash command when that workflow bundle is installed
+
+If `superpowers-learning-workflow` is not installed or you want a lighter fallback, use the closeout helper script:
+
+```powershell
+.\scripts\run-superpowers-memory-closeout.ps1 -ProjectRoot <project-root> -ChangedPaths "src","docs" -Signals "decision","validation" -RunValidator
+```
+
+Use the larger workflows only when you also want their full engineering discipline, not just memory capture:
+
+- `superpowers-feature-workflow`
+- `openspec-superpowers-workflow`
+- `superpowers-openspec-execution-workflow`
+
+### Recommended Operating Modes
+
+There are three practical ways to use memory. Choose one and stay consistent.
+
+#### Mode 1: Lightweight Default
+
+Best for most open-source users.
+
+1. keep `PROJECT_CONTEXT.md` and `CURRENT_STATE.md` current
+2. start new sessions normally so the tool can read memory
+3. after meaningful work, run `superpowers-learning-workflow`
+4. run validation if memory changed
+
+#### Mode 2: Script-Assisted Closeout
+
+Best when you want reminder-style support without adopting a full workflow.
+
+1. work normally
+2. run `scripts/run-superpowers-memory-closeout.ps1`
+3. update the suggested memory targets
+4. run `scripts/validate-superpowers-memory.ps1`
+
+This mode is lighter, but it will not write memory on its own.
+
+#### Mode 3: Full Workflow Delivery
+
+Best when the team also wants design gates, planning, verification discipline, and memory alignment in one operating style.
+
+Typical options:
+
+- `superpowers-feature-workflow`
+- `openspec-superpowers-workflow`
+- `superpowers-openspec-execution-workflow`
+
+Choose this mode for structured delivery. Do not choose it if your only goal is "please remember what happened this session."
+
 ### Concrete Example: Cursor
 
 For a Cursor project at `D:\ys\ysProjects\Hobby\hobby-map`, a practical flow looks like this:

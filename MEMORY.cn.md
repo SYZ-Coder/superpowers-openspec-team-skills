@@ -320,6 +320,78 @@ workflow 仍然必须显式 opt-in。
 
 需要注意：记忆开始生效，不等于 workflow 自动启用。很多场景下，工具会先读取记忆，但 workflow 仍然需要你显式调用。
 
+### 面向开源用户的默认推荐用法
+
+跨工具来看，最实用的模式其实很简单：让工具在新会话开始时先读取 repo memory，把“写回记忆”当成一次显式收尾动作，而不是期待普通聊天自动写入。
+
+对大多数开源用户来说，最推荐的默认方式是：
+
+1. 平时正常开发
+2. 让工具在新会话开始时先读取 repo memory
+3. 做完一轮有意义的工作后，显式做一次记忆收尾
+
+默认最推荐的收尾入口是 `superpowers-learning-workflow`。原因是它比完整交付 workflow 更轻，更容易落地，而且它的目标就是沉淀当前状态、可复用经验和简短会话结论。
+
+推荐提示词：
+
+```text
+Use $superpowers-learning-workflow to capture what this session taught us and update the project memory.
+```
+
+这套默认方式可以跨工具使用：
+
+- 在 Cursor 里，可以在一轮工作结束后直接在聊天里使用 workflow 名称
+- 在 Codex 里，也可以在一轮工作结束后直接在聊天里使用 workflow 名称
+- 在 Claude Code 里，如果安装了对应 workflow bundle，更推荐优先使用生成出来的 slash command
+
+如果当前没有安装 `superpowers-learning-workflow`，或者你想要一个更轻量的备选方式，可以改用 closeout helper：
+
+```powershell
+.\scripts\run-superpowers-memory-closeout.ps1 -ProjectRoot <project-root> -ChangedPaths "src","docs" -Signals "decision","validation" -RunValidator
+```
+
+更大的几个 workflow 只适合“除了记忆，还想一起使用设计、计划、验证纪律”的场景，而不适合仅仅为了记忆沉淀就默认启用：
+
+- `superpowers-feature-workflow`
+- `openspec-superpowers-workflow`
+- `superpowers-openspec-execution-workflow`
+
+### 推荐的三种使用模式
+
+你可以把记忆使用方式分成三档，选一种长期坚持即可。
+
+#### 模式 1：轻量默认模式
+
+最适合大多数开源用户。
+
+1. 保持 `PROJECT_CONTEXT.md` 和 `CURRENT_STATE.md` 基本最新
+2. 新会话正常开始，让工具先读取 memory
+3. 一轮有意义的工作结束后，运行 `superpowers-learning-workflow`
+4. 如果 memory 变了，再跑校验
+
+#### 模式 2：脚本辅助收尾模式
+
+适合想要提醒式支持，但又不想引入完整 workflow 的用户。
+
+1. 平时正常工作
+2. 收尾时运行 `scripts/run-superpowers-memory-closeout.ps1`
+3. 按建议更新对应 memory 文件
+4. 运行 `scripts/validate-superpowers-memory.ps1`
+
+这个模式更轻，但它不会自己写入 memory。
+
+#### 模式 3：完整 workflow 交付模式
+
+适合不仅想用记忆，还想把设计门禁、计划、验证纪律和 memory 对齐一起带起来的团队。
+
+典型选择包括：
+
+- `superpowers-feature-workflow`
+- `openspec-superpowers-workflow`
+- `superpowers-openspec-execution-workflow`
+
+如果你的目标只是“让工具记住这次会话发生了什么”，不建议默认上这一档。
+
 ### 一个更直观的 Cursor 使用示例
 
 假设你的项目路径是 `D:\ys\ysProjects\Hobby\hobby-map`，一个典型流程可以是：
