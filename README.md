@@ -398,7 +398,7 @@ pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -Proje
 
 This writes `.claude/commands/` files plus a `CLAUDE.md` project guide.
 
-Important: for Claude Code, install the bundle but only activate the workflow when you explicitly invoke the command or explicitly ask for the workflow style.
+Important: for Claude Code, install the bundle and activate workflows with the generated slash command. Prefer slash-command invocation over natural-language routing so Claude Code reads the command file and applies the workflow gates consistently.
 
 Useful options:
 
@@ -449,6 +449,21 @@ Recommended explicit activation pattern:
 
 ```text
 /superpowers-openspec-execution-workflow
+<describe the feature request>
+```
+
+For example:
+
+```text
+/superpowers-openspec-execution-workflow
+Add review store information.
+```
+
+After installation, verify these files exist in the target repository:
+
+```text
+CLAUDE.md
+.claude/commands/superpowers-openspec-execution-workflow.md
 ```
 
 Bundles that rely on OpenSpec will install even if `openspec` is missing, but the scripts now warn you before install and can explicitly check dependencies first.

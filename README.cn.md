@@ -373,7 +373,7 @@ pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -Proje
 
 这会写入 `.claude/commands/` 和 `CLAUDE.md`。
 
-重要说明：对 Claude Code 来说，安装 bundle 以后，也应该只在你明确调用命令或明确要求该 workflow 时才启用。
+重要说明：对 Claude Code 来说，安装 bundle 以后，请优先用生成的 slash command 启用 workflow，不建议只靠自然语言描述来触发。这样 Claude Code 会读取命令文件，并稳定应用 workflow 门禁。
 
 常用参数：
 
@@ -424,6 +424,21 @@ pwsh -File ./scripts/install-claude-code.ps1 -Bundle superpowers-openspec-execut
 
 ```text
 /superpowers-openspec-execution-workflow
+<描述你的功能需求>
+```
+
+例如：
+
+```text
+/superpowers-openspec-execution-workflow
+增加点评门店信息
+```
+
+安装后请确认目标项目里存在：
+
+```text
+CLAUDE.md
+.claude/commands/superpowers-openspec-execution-workflow.md
 ```
 
 如果某个 bundle 依赖 OpenSpec，脚本现在会在安装前做提示；你也可以先用 `-CheckDependencies` 单独检查环境是否满足。
