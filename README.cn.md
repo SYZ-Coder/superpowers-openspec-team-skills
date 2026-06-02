@@ -446,6 +446,20 @@ Use the superpowers-openspec-execution workflow for this feature.
 增加点评门店信息
 ```
 
+示例：
+
+```text
+Use the superpowers-openspec-execution workflow for this feature.
+
+现在需要根据 2026-06-02_drift-bottle_create-and-audit-rating-full-chain.md 梳理的内容改造漂流瓶审核功能。
+要求：
+1. 目前没有审核人员，去掉人审功能。
+2. 如果自动审核已经支持，则保留，不要退化。
+3. 启用自动审核流程。
+4. 用户最终发布漂流瓶时，如果自动评级没有给出更具体结果，则默认按“优”处理，不需要人为评级。
+请严格按这个 workflow 执行：先做 Superpowers exploration，不要先进入 openspec-propose，不要先枚举 OpenSpec 技能。
+```
+
 安装后请确认目标项目里存在：
 
 ```text

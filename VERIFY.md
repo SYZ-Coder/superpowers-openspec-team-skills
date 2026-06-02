@@ -491,6 +491,9 @@ For any tool:
 
    Cursor alternate text form:
    `Use $superpowers-openspec-execution-workflow for this feature: first explore with Superpowers, then lock the change with OpenSpec, then return to Superpowers for implementation, testing, verification, and archive.`
+
+   Cursor full example:
+   `Use the superpowers-openspec-execution workflow for this feature. Now update the drift-bottle review flow based on 2026-06-02_drift-bottle_create-and-audit-rating-full-chain.md. Requirements: remove manual review because there are no reviewers; keep automatic review if it already exists; enable the automatic audit flow; when the user finally publishes a drift bottle, default the rating to excellent unless the automatic rating determines otherwise. Do not start by listing OpenSpec skills or jumping to openspec-propose.`
 6. if memory is enabled, run `validate-superpowers-memory.ps1`
 7. confirm behavior follows the intended workflow stages
 8. run one normal request without naming a workflow
