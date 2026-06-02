@@ -19,6 +19,7 @@ If you want to install the workflows into a tool, use the prebuilt bundles and i
 
 - Codex: `dist/codex/bundles/` or `scripts/install-codex.ps1`
 - Cursor: `dist/cursor/bundles/` or `scripts/install-cursor.ps1`
+  For `superpowers-openspec-execution-workflow`, activate it in Cursor with an explicit text request after installation. This workflow is routed by repository rules, not by a native slash command.
 - Claude Code: `dist/claude-code/bundles/` or `scripts/install-claude-code.ps1`
 
 Optional memory scaffold for Superpowers workflows:

@@ -374,11 +374,19 @@ macOS or Linux with PowerShell 7 (`pwsh`) if available:
 pwsh -File ./scripts/install-cursor.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
 ```
 
-Recommended explicit activation pattern:
+Recommended explicit activation patterns:
 
 ```text
 Use the superpowers-openspec-execution workflow for this feature.
 ```
+
+or
+
+```text
+Use $superpowers-openspec-execution-workflow for this feature.
+```
+
+For Cursor, use an explicit text request. This bundle installs repository rules and `AGENTS.md` guidance, not a native slash command.
 
 ### Claude Code
 

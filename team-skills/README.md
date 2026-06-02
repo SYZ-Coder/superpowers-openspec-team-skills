@@ -26,6 +26,7 @@ If the team later wants automatic skill discovery, copy the needed folders into 
 
 - Use `openspec-superpowers-workflow` for a single full-flow entry.
 - Use `superpowers-openspec-execution-workflow` when the team wants four explicit steps: Superpowers exploration, OpenSpec locking, Superpowers execution, then OpenSpec archive.
+  In Cursor, activate it with an explicit text request after installing the matching bundle.
 - Use `superpowers-feature-workflow` when you only need design, planning, worktree, TDD, and verification discipline.
 - Use `superpowers-learning-workflow` when you want to capture durable lessons, current state, and reusable patterns after meaningful work.
 - Use `openspec-feature-workflow` when you only need to create or complete change artifacts.

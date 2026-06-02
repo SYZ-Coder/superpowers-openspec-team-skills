@@ -7,7 +7,7 @@ alwaysApply: true
 
 This rule is a router, not a workflow body.
 
-If the current user message contains `superpowers-openspec-execution-workflow`, this rule wins over OpenSpec proposal routing.
+If the current user message contains `superpowers-openspec-execution-workflow`, `superpowers-openspec-execution workflow`, `Use $superpowers-openspec-execution-workflow`, or another direct request to use the Superpowers -> OpenSpec -> Superpowers workflow, this rule wins over OpenSpec proposal routing.
 
 Required routing:
 
@@ -16,6 +16,7 @@ Required routing:
 3. Do not invoke `$openspec-feature-workflow`.
 4. Do not create an OpenSpec change proposal as the first action.
 5. Do not say "I will use the OpenSpec workflow first".
+6. Do not start by listing available OpenSpec skills or choosing between OpenSpec skills.
 
 The first action must be Superpowers exploration:
 
@@ -24,4 +25,4 @@ The first action must be Superpowers exploration:
 3. Compare possible approaches or ask the next Superpowers-style question.
 4. Only after the user confirms the solution shape and a design draft exists in `docs/superpowers/specs/`, move to OpenSpec artifacts.
 
-If an OpenSpec proposal step has already started for a request that named `superpowers-openspec-execution-workflow`, stop that route and restart from Superpowers exploration.
+If an OpenSpec proposal step has already started for a request that named `superpowers-openspec-execution-workflow` or clearly referred to the `superpowers-openspec-execution` workflow, stop that route and restart from Superpowers exploration.

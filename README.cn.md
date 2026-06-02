@@ -427,14 +427,22 @@ pwsh -File ./scripts/install-claude-code.ps1 -Bundle superpowers-openspec-execut
 推荐显式启用方式：
 
 ```text
-/superpowers-openspec-execution-workflow
-<描述你的功能需求>
+Use the superpowers-openspec-execution workflow for this feature.
 ```
+
+或
+
+```text
+Use $superpowers-openspec-execution-workflow for this feature.
+```
+
+对 Cursor 来说，请使用这种显式文本请求方式。这个 bundle 安装的是仓库规则和 `AGENTS.md` 指引，不会注册原生 slash command。
 
 例如：
 
 ```text
-/superpowers-openspec-execution-workflow
+Use the superpowers-openspec-execution workflow for this feature.
+
 增加点评门店信息
 ```
 

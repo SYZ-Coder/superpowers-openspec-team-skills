@@ -20,13 +20,15 @@ It is best when a team wants exploration first, specification second, discipline
 
 ## How To Use It
 
-Invoke the workflow with a feature request:
+Invoke the workflow with a feature request.
+
+Recommended text entry:
 
 ```text
 Use $superpowers-openspec-execution-workflow for this feature: first explore with Superpowers, then lock the change with OpenSpec, then return to Superpowers for implementation, testing, verification, and archive.
 ```
 
-This makes the intended order explicit and prevents the agent from jumping straight into code.
+For Cursor, use an explicit text request. The Cursor bundle installs repository rules rather than a native slash-command file. This makes the order explicit and helps prevent the agent from jumping straight into code.
 
 ## Workflow Sequence
 

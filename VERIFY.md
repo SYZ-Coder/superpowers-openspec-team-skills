@@ -485,6 +485,9 @@ For any tool:
 3. verify expected files exist
 4. reload the tool
 5. run one explicit workflow invocation
+
+   Cursor text form:
+   `Use $superpowers-openspec-execution-workflow for this feature: first explore with Superpowers, then lock the change with OpenSpec, then return to Superpowers for implementation, testing, verification, and archive.`
 6. if memory is enabled, run `validate-superpowers-memory.ps1`
 7. confirm behavior follows the intended workflow stages
 8. run one normal request without naming a workflow

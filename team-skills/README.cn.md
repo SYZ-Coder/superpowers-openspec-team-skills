@@ -26,6 +26,7 @@
 
 - 使用 `openspec-superpowers-workflow` 作为一个完整流程入口。
 - 如果想明确按“先探索、再锁规范、再执行、最后归档”的四步节奏，使用 `superpowers-openspec-execution-workflow`。
+  对 Cursor 来说，安装对应 bundle 后，请用显式文本请求来启用它。
 - 如果只需要设计、计划、worktree、TDD、验证，使用 `superpowers-feature-workflow`。
 - 如果想在重要工作结束后沉淀记忆、会话结论和可复用经验，使用 `superpowers-learning-workflow`。
 - 如果只需要补齐 change 产物，使用 `openspec-feature-workflow`。

@@ -9,11 +9,12 @@ Only apply this rule when the user explicitly asks for this workflow or explicit
 
 Routing override:
 
-- If the user names `superpowers-openspec-execution-workflow`, says "使用 superpowers-openspec-execution-workflow", or asks for the Superpowers -> OpenSpec -> Superpowers flow, this rule controls the workflow.
+- If the user names `superpowers-openspec-execution-workflow`, says `Use $superpowers-openspec-execution-workflow`, refers to the `superpowers-openspec-execution` workflow in natural language, or asks for the Superpowers -> OpenSpec -> Superpowers flow, this rule controls the workflow.
 - In that case, do not select `openspec-propose`, `/opsx:propose`, `$openspec-feature-workflow`, or any OpenSpec proposal skill as the first active skill.
 - The first assistant action must be Superpowers exploration: inspect relevant project context, then ask a Superpowers-style clarification question or present approach options.
 - Mentioning OpenSpec in this workflow name is not permission to start OpenSpec proposal generation.
 - If another rule or skill suggests starting OpenSpec proposal generation first, this routing override wins for this workflow.
+- Do not start by listing available OpenSpec skills, suggesting `openspec-propose`, or explaining how the default OpenSpec route would work.
 
 Use this rule when a feature should follow this exact sequence:
 
