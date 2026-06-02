@@ -12,13 +12,13 @@ Important handoff: after OpenSpec `tasks.md` is complete, stop OpenSpec apply-st
 Activation options in Cursor:
 
 ```text
-Use $superpowers-openspec-execution-workflow for this feature.
+Use the superpowers-openspec-execution workflow for this feature.
 ```
 
 or
 
 ```text
-Use the superpowers-openspec-execution workflow for this feature.
+Use $superpowers-openspec-execution-workflow for this feature.
 ```
 
-Cursor does not install a native slash command for this workflow. Use an explicit text request so the repository rules can route the conversation into the intended workflow.
+Cursor does not install a native slash command for this workflow. Use an explicit text request so the repository rules can route the conversation into the intended workflow. The natural-language form above is the primary example.

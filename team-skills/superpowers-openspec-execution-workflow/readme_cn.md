@@ -23,10 +23,16 @@
 在功能请求中调用：
 
 ```text
+Use the superpowers-openspec-execution workflow for this feature.
+```
+
+补充写法：
+
+```text
 Use $superpowers-openspec-execution-workflow for this feature: first explore with Superpowers, then lock the change with OpenSpec, then return to Superpowers for implementation, testing, verification, and archive.
 ```
 
-对 Cursor 来说，请使用这种显式文本请求方式。Cursor bundle 安装的是仓库规则，而不是原生 slash command。这样可以明确工作顺序，避免智能体直接跳到编码。
+对 Cursor 来说，请使用这种显式文本请求方式。Cursor bundle 安装的是仓库规则，而不是原生 slash command。上面的自然语言写法是主示例，这些写法都可以明确工作顺序，避免智能体直接跳到编码。
 
 ## 工作流顺序
 

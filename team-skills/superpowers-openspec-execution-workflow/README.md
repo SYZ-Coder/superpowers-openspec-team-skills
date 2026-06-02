@@ -25,10 +25,16 @@ Invoke the workflow with a feature request.
 Recommended text entry:
 
 ```text
+Use the superpowers-openspec-execution workflow for this feature.
+```
+
+Alternative text entry:
+
+```text
 Use $superpowers-openspec-execution-workflow for this feature: first explore with Superpowers, then lock the change with OpenSpec, then return to Superpowers for implementation, testing, verification, and archive.
 ```
 
-For Cursor, use an explicit text request. The Cursor bundle installs repository rules rather than a native slash-command file. This makes the order explicit and helps prevent the agent from jumping straight into code.
+For Cursor, use an explicit text request. The Cursor bundle installs repository rules rather than a native slash-command file. The natural-language form above is the primary example. These entries make the order explicit and help prevent the agent from jumping straight into code.
 
 ## Workflow Sequence
 

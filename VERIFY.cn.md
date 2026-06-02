@@ -334,6 +334,12 @@ Cursor 应重新加载项目规则。
 Use the superpowers-openspec-execution workflow for this feature: first explore, then lock OpenSpec, then implement and verify, then archive the change.
 ```
 
+也可以测试补充写法：
+
+```text
+Use $superpowers-openspec-execution-workflow for this feature: first explore with Superpowers, then lock the change with OpenSpec, then return to Superpowers for implementation, testing, verification, and archive.
+```
+
 预期行为：
 
 - 智能体呈现出明确的分阶段 workflow

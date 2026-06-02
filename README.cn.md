@@ -436,7 +436,7 @@ Use the superpowers-openspec-execution workflow for this feature.
 Use $superpowers-openspec-execution-workflow for this feature.
 ```
 
-对 Cursor 来说，请使用这种显式文本请求方式。这个 bundle 安装的是仓库规则和 `AGENTS.md` 指引，不会注册原生 slash command。
+对 Cursor 来说，请使用这种显式文本请求方式。上面的自然语言写法是主示例。这个 bundle 安装的是仓库规则和 `AGENTS.md` 指引，不会注册原生 slash command。
 
 例如：
 

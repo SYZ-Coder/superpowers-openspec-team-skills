@@ -386,7 +386,7 @@ or
 Use $superpowers-openspec-execution-workflow for this feature.
 ```
 
-For Cursor, use an explicit text request. This bundle installs repository rules and `AGENTS.md` guidance, not a native slash command.
+For Cursor, use an explicit text request. The natural-language form above is the primary example. This bundle installs repository rules and `AGENTS.md` guidance, not a native slash command.
 
 ### Claude Code
 
