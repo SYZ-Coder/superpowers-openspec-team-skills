@@ -12,12 +12,14 @@ Use this rule when a non-trivial feature should start with OpenSpec artifacts, t
 Stage boundary:
 
 - Use OpenSpec only to create or update the change artifacts: `proposal.md`, `design.md`, `specs/.../spec.md`, and `tasks.md`.
+- If this workflow already produced `tasks.md` for the current request and a later user turn confirms, revises, or continues those tasks, keep this rule active even if the workflow name is not repeated.
 - After `tasks.md` is complete, do not continue with the OpenSpec apply flow for implementation.
 - Treat the completed OpenSpec tasks as input to the Superpowers execution stage.
 - The next required action after completed OpenSpec tasks is to write a Superpowers implementation plan in `docs/superpowers/plans/`, then implement with a failing test first and run fresh verification.
 - Do not stop after OpenSpec artifacts with a readiness message such as "run apply", "/opsx:apply", or "let me start implementation".
 - Do not ask the user whether to start implementation unless the user explicitly asked to pause after OpenSpec artifacts.
 - Continue directly into the Superpowers execution handoff by writing the implementation plan.
+- If the user confirms the generated tasks on a follow-up turn, resume directly at the implementation-plan step instead of rerouting through generic OpenSpec apply guidance.
 - Only return to OpenSpec after implementation and verification are aligned, and only for final spec alignment or archive work.
 
 Required order:

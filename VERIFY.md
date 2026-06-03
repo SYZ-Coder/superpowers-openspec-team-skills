@@ -272,6 +272,8 @@ Expected behavior:
 - it explores the request first
 - it moves through OpenSpec artifact work before implementation
 - it returns to implementation and verification after the spec is locked
+- if you confirm or revise the generated `tasks.md` on the next turn, it should keep the same workflow active, avoid OpenSpec apply, and ask whether to continue execution development
+- at that handoff, `继续开发` and `continue-dev` should both work as fixed continuation commands
 - when memory is enabled, it reads repo memory before asking for repeated project background
 
 ### Also verify `superpowers-learning`
@@ -358,20 +360,25 @@ Expected behavior:
 
 - after OpenSpec `tasks.md` is generated, the agent shows the task checklist first
 - it waits for user confirmation instead of moving directly into implementation planning or coding
+- if the next user turn confirms or revises that checklist, the workflow stays active, does not suggest `/opsx:apply`, and asks whether to continue execution development
+- `继续开发` and `continue-dev` should both continue the workflow
 
-Continue directly:
+Post-task pause:
 
 ```text
 Use the superpowers-openspec-execution workflow for this feature.
 
 Now update the drift-bottle review flow based on 2026-06-02_drift-bottle_create-and-audit-rating-full-chain.md.
-After OpenSpec tasks are generated, continue directly into implementation without waiting for task confirmation.
+After OpenSpec tasks are generated, show them to me first. After I confirm them, ask whether to continue execution development.
 ```
 
 Expected behavior:
 
-- after OpenSpec `tasks.md` is generated, the agent may continue directly into implementation planning
-- it does not add an extra pause for task confirmation
+- after OpenSpec `tasks.md` is confirmed, the agent pauses once more for the execution-development choice
+- it does not fall back to `/opsx:apply`
+- after execution and verification finish, it may ask whether to continue code review
+- at that later handoff, `继续审查` and `continue-review` should both continue the workflow
+- if archive is the next aligned step, `继续归档` and `continue-archive` should also work, while `$openspec-archive-change` remains usable
 
 ### Also verify `superpowers-learning`
 
@@ -528,5 +535,6 @@ For any tool:
    `Use the superpowers-openspec-execution workflow for this feature. Now update the drift-bottle review flow based on 2026-06-02_drift-bottle_create-and-audit-rating-full-chain.md. Requirements: remove manual review because there are no reviewers; keep automatic review if it already exists; enable the automatic audit flow; when the user finally publishes a drift bottle, default the rating to excellent unless the automatic rating determines otherwise. Do not start by listing OpenSpec skills or jumping to openspec-propose.`
 6. if memory is enabled, run `validate-superpowers-memory.ps1`
 7. confirm behavior follows the intended workflow stages
-8. run one normal request without naming a workflow
-9. confirm the workflow does not auto-activate
+8. if the workflow pauses for task confirmation, reply once with a confirmation or task edit and confirm it stays inside the same workflow, does not fall back to generic OpenSpec apply guidance, and asks whether to continue execution development
+9. run one normal request without naming a workflow
+10. confirm the workflow does not auto-activate

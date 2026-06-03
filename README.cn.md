@@ -441,6 +441,23 @@ Use $superpowers-openspec-execution-workflow for this feature.
 任务确认控制：
 
 - `task_confirmation_mode` 用来控制 OpenSpec `tasks.md` 生成后，到进入实现计划之前，这个 workflow 应该如何处理任务清单确认。
+- 对 `openspec-superpowers-workflow` 和 `superpowers-openspec-execution-workflow`，在默认的 `optional` 模式下，如果用户在下一轮对已生成的任务清单做确认或修改，同一个 workflow 应继续保持激活，禁止回落到 OpenSpec apply，并先提示用户是否继续执行开发；代码审查应在执行与验证完成后再单独提示。
+- 这两个流转点都提供固定口令：任务确认后可输入 `继续开发` 或 `continue-dev`；执行与验证完成后可输入 `继续审查` 或 `continue-review`。
+- 如果后续进入归档阶段，还可以使用 `继续归档` 或 `continue-archive`。
+- 这些只是更短的继续口令，不会替代原有的 OpenSpec / Superpowers 命令；原命令仍然可以继续使用。
+
+阶段状态机（适用于两个组合 workflow）：
+
+1. OpenSpec 产物阶段
+   先生成并反复修订 `proposal.md`、`design.md`、`spec.md`、`tasks.md`，直到用户确认 `tasks.md`。
+2. 开发续接阶段
+   `tasks.md` 确认后，workflow 暂停并接受 `继续开发` 或 `continue-dev`。
+   这一阶段仍然表示 Superpowers 的实现计划、开发、TDD 和验证。
+3. 审查续接阶段
+   开发和验证完成后，workflow 可以再次暂停，并接受 `继续审查` 或 `continue-review`。
+4. 归档续接阶段
+   如果项目使用 OpenSpec 归档流程，且代码、测试、规范都已对齐，workflow 最后可以接受 `继续归档` 或 `continue-archive`。
+   这里原有的 `$openspec-archive-change` 入口仍然有效。
 - `required`：每次都必须停下来展示任务清单，等待用户确认后才能进入实现阶段。
 - `optional`：默认展示任务清单并等待确认；但如果用户在本次提示词里明确要求“直接执行”，就可以跳过确认暂停。
 - `off`：不等待任务确认，`tasks.md` 生成后直接进入实现计划。

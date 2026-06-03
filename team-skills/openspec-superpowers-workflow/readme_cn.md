@@ -67,3 +67,14 @@ OpenSpec tasks 生成后直接进入实现，不用等我确认任务清单。
 - 把探索思考、正式规范和实现纪律串成一条完整链路。
 - 通过明确门禁减少跳步骤的风险。
 - 产物可长期保留，方便后续维护者理解变更原因。
+## 最新流程说明
+
+- 这个 workflow 中，OpenSpec 只负责产出和确认 `proposal.md`、`design.md`、`spec.md`、`tasks.md`，不负责后续 `apply` 实现。
+- 当 `tasks.md` 生成并被用户确认后，禁止回落到 OpenSpec `apply`，也不应提示用户执行 `/opsx:apply`。
+- `tasks.md` 确认后，下一步只提示用户是否继续执行开发。
+- 这里的“继续执行开发”仍然包含 Superpowers 的实现计划、开发、TDD 和验证。
+- 只有当执行开发和验证都完成后，才再单独提示用户是否继续代码审查。
+- 代码审查不是 `tasks.md` 确认后的第一分支，而是执行完成后的后续质量步骤。
+- 对应固定口令分别是：`继续开发` / `continue-dev`，以及 `继续审查` / `continue-review`。
+- 如果后续进入归档阶段，还可以使用 `继续归档` / `continue-archive`。
+- 原有的 OpenSpec / Superpowers 命令和 skill 入口仍然可以继续使用，这些只是更短的续接口令。

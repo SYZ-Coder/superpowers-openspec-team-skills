@@ -9,4 +9,4 @@ Task confirmation control:
 - The default mode is `optional`.
 - By default, after OpenSpec `tasks.md` is generated, the workflow shows the tasks and waits for confirmation before implementation.
 - To require confirmation explicitly, add: `After OpenSpec tasks are generated, show them to me and wait for my confirmation before implementation.`
-- To continue directly, add: `After OpenSpec tasks are generated, continue directly into implementation without waiting for task confirmation.`
+- To require the extra post-task pause, add: `After I confirm OpenSpec tasks, ask whether to continue execution development.`

@@ -87,3 +87,14 @@ OpenSpec tasks 生成后直接进入实现，不用等我确认任务清单。
 - 把探索和规范分开，避免过早固化不清晰的需求。
 - 让 OpenSpec 聚焦已经确认的行为，而不是头脑风暴过程。
 - 在归档前保留 TDD 和验证纪律，收尾更稳。
+## 最新流程说明
+
+- 这个 workflow 的顺序仍然是：先用 Superpowers 探索，再用 OpenSpec 锁定规范，最后回到 Superpowers 做实现与验证。
+- OpenSpec 阶段在 `tasks.md` 完成并确认后结束，不应继续进入 OpenSpec `apply`。
+- 当 `tasks.md` 被用户确认后，只提示用户是否继续执行开发。
+- 如果用户选择继续执行开发，就继续进入 Superpowers 的实现计划、开发、TDD 和验证。
+- 代码审查不会和 `tasks.md` 确认放在同一个分叉点上。
+- 只有在执行开发和验证完成后，才再单独提示用户是否继续代码审查。
+- 对应固定口令分别是：`继续开发` / `continue-dev`，以及 `继续审查` / `continue-review`。
+- 如果后续进入归档阶段，还可以使用 `继续归档` / `continue-archive`。
+- 原有的 OpenSpec / Superpowers 命令和 skill 入口仍然可以继续使用，这些只是更短的续接口令。

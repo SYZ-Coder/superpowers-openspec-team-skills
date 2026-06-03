@@ -34,12 +34,14 @@ Phase 1 gate:
 Stage boundary:
 
 - The OpenSpec stage ends when `proposal.md`, `design.md`, `specs/.../spec.md`, and `tasks.md` are complete.
+- If this workflow already produced `tasks.md` for the current request and a later user turn confirms, revises, or continues those tasks, keep this rule active even if the workflow name is not repeated.
 - Do not use OpenSpec apply as the implementation stage for this workflow.
 - After OpenSpec tasks are generated, the next required step is Superpowers execution: write a plan in `docs/superpowers/plans/`, implement with a failing test first, and run fresh verification.
 - Use the OpenSpec tasks as constraints and checklist input, not as permission to stay inside the OpenSpec apply flow.
 - Do not stop after OpenSpec artifacts with a readiness message such as "run apply", "/opsx:apply", or "let me start implementation".
 - Do not ask the user whether to start implementation unless the user explicitly asked to pause after OpenSpec artifacts.
 - Continue directly into the Superpowers execution handoff by writing the implementation plan.
+- If the user confirms the generated tasks on a follow-up turn, resume directly at the implementation-plan step instead of rerouting through generic OpenSpec apply guidance.
 - Return to OpenSpec only after implementation and verification are aligned, then archive the completed change.
 
 Required order:

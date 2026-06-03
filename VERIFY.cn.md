@@ -362,6 +362,15 @@ Use the superpowers-openspec-execution workflow for this feature.
 
 ### 第六步：验证任务确认开关
 
+补充预期：
+
+- 如果 workflow 在 OpenSpec `tasks.md` 之后暂停等待确认，那么用户下一轮对任务清单做“确认”或“修改”时，应该继续沿用同一个 workflow。
+- 这一步之后，智能体不应回落到 OpenSpec apply，而应先提示用户是否继续执行开发。
+- 不应在这一轮掉回通用 OpenSpec apply 引导，也不应提示用户改为执行 `/opsx:apply`。
+- 代码审查应在执行与验证完成后，再作为单独的后续提示出现。
+- 在这两个流转点上，固定口令 `继续开发` / `continue-dev` 和 `继续审查` / `continue-review` 都应可用。
+- 如果下一步进入归档，固定口令 `继续归档` / `continue-archive` 也应可用，同时原有 `$openspec-archive-change` 仍然可用。
+
 默认模式是 `task_confirmation_mode: optional`，建议分别验证“先确认再实现”和“直接执行”两种行为。
 
 先确认再实现：
@@ -536,5 +545,6 @@ Help me make this small change.
 5. 发起一次明确的 workflow 调用
 6. 如果启用了记忆，再运行 `validate-superpowers-memory.ps1`
 7. 观察工具行为是否符合 workflow 分阶段要求
-8. 再发一次不点名 workflow 的普通请求
-9. 确认 workflow 不会自动启用
+8. 如果 workflow 在任务确认处暂停，再补发一轮“确认任务”或“调整任务”的消息，确认它会在同一个 workflow 内继续，不会退回通用 OpenSpec apply 提示，并会继续询问是否继续执行开发
+9. 再发一次不点名 workflow 的普通请求
+10. 确认 workflow 不会自动启用

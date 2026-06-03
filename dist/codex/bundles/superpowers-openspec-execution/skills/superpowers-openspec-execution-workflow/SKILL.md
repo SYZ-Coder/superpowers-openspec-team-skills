@@ -1,6 +1,6 @@
 ---
 name: superpowers-openspec-execution-workflow
-description: Standalone Codex workflow for Superpowers exploration, OpenSpec locking, Superpowers execution, and OpenSpec archive.
+description: Standalone Codex workflow for Superpowers exploration, OpenSpec locking, Superpowers execution, and OpenSpec archive, including follow-up turns that confirm or revise generated tasks.
 ---
 
 # Superpowers -> OpenSpec -> Superpowers Workflow
@@ -13,6 +13,8 @@ Use this standalone skill when feature delivery should follow this sequence:
 4. Archive the OpenSpec change when everything is aligned
 
 This is an explicit opt-in workflow. Do not use it by default. Only use it when the user explicitly asks for it, names `$superpowers-openspec-execution-workflow`, or a repository policy explicitly requires it.
+
+If this workflow already produced `tasks.md` for the current request and the next user turn confirms, revises, or continues those tasks, keep this workflow active even if the skill name is not repeated.
 
 If `.superpowers-memory/` exists in the repository, read it at the start and update it before the session ends.
 
@@ -35,17 +37,18 @@ If `.superpowers-memory/` exists in the repository, read it at the start and upd
 11. Stop OpenSpec apply-style execution.
 12. Summarize the generated OpenSpec tasks.
 13. By default, ask the user to confirm the OpenSpec task checklist before implementation planning starts.
-14. If the user explicitly asked to continue directly after OpenSpec tasks, skip the confirmation pause.
-15. Write the implementation plan to `docs/superpowers/plans/YYYY-MM-DD-<topic>.md`.
-16. Prefer a repo-local worktree when the task is non-trivial or risky.
-17. Implement with TDD:
+14. After the user confirms `tasks.md`, pause again and ask whether to continue execution development.
+15. Do not route the confirmed handoff through OpenSpec apply.
+16. If the user chooses execution development, write the implementation plan to `docs/superpowers/plans/YYYY-MM-DD-<topic>.md`.
+17. Prefer a repo-local worktree when the task is non-trivial or risky.
+18. Implement with TDD:
    - write the failing test first
    - run it to confirm failure
    - write the minimal implementation
    - run tests again to confirm success
-18. Run fresh verification commands before any completion claim.
-19. If code, specs, and verification are aligned, archive the change with the OpenSpec archive flow.
-20. If `.superpowers-memory/` exists, update `CURRENT_STATE.md` and add a short session journal entry.
+19. Run fresh verification commands before any completion claim.
+20. If code, specs, and verification are aligned, archive the change with the OpenSpec archive flow.
+21. If `.superpowers-memory/` exists, update `CURRENT_STATE.md` and add a short session journal entry.
 
 ## Guardrails
 
@@ -58,8 +61,10 @@ If `.superpowers-memory/` exists in the repository, read it at the start and upd
 - Do not use OpenSpec apply as the implementation stage for this workflow.
 - After OpenSpec `tasks.md` is complete, stop OpenSpec apply-style execution, summarize the generated tasks, and by default ask the user to confirm the OpenSpec task checklist before handing off to Superpowers execution.
 - Do not stop after OpenSpec artifacts with a readiness message such as "run apply", "/opsx:apply", or "let me start implementation".
-- If the user explicitly asked to continue directly after OpenSpec tasks, you may skip the confirmation pause.
-- Otherwise, do not continue directly into Superpowers execution after OpenSpec artifacts until the user has explicitly confirmed the generated `tasks.md`.
+- Do not resume through OpenSpec apply after `tasks.md` is confirmed; the only allowed next-step prompt is whether to continue execution development.
+- After the user confirms or revises the generated tasks on a follow-up turn, treat that turn as the continuation of this workflow, keep the workflow active, and ask whether to continue execution development.
+- Do not continue directly into Superpowers execution after OpenSpec artifacts until the user has explicitly confirmed the generated `tasks.md` and chosen execution development as the next step.
+- After Superpowers execution and verification complete, ask whether to continue code review.
 - Treat OpenSpec tasks as constraints and checklist input for the Superpowers implementation plan.
 - Do not report success without fresh verification evidence.
 - Do not archive the change until code, tests, and specs are aligned.

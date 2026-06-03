@@ -40,7 +40,11 @@ Default control:
 
 - `task_confirmation_mode: optional`
 - By default, the workflow shows the generated OpenSpec `tasks.md` and waits for your confirmation before implementation planning.
-- If you explicitly ask to continue directly after OpenSpec tasks, the workflow may skip the confirmation pause.
+- After you confirm the generated task checklist, the workflow should pause once more and ask whether to continue execution development.
+- If you confirm or revise that generated task checklist on the next turn, the workflow should stay active, avoid OpenSpec apply, and wait for that execution-development choice.
+- Fixed continuation commands: `继续开发` / `continue-dev`, then later `继续审查` / `continue-review`.
+- If archive is part of the project flow, you can also use `继续归档` / `continue-archive`.
+- Existing workflow commands and skills still work; these continuation commands are shorter optional shortcuts.
 
 Usage examples:
 
@@ -49,14 +53,14 @@ Use the superpowers-openspec-execution workflow for this feature.
 After OpenSpec tasks are generated, show them to me and wait for my confirmation before implementation.
 ```
 
-This is a good fit when you want to inspect the generated task checklist before development starts.
+This is a good fit when you want to inspect the generated task checklist before choosing whether to continue execution development.
 
 ```text
 Use the superpowers-openspec-execution workflow for this feature.
-After OpenSpec tasks are generated, continue directly into implementation without waiting for task confirmation.
+After OpenSpec tasks are generated, show me the task checklist first. After I confirm it, ask whether to continue execution development.
 ```
 
-This is a good fit when you accept the generated task checklist and want a continuous path into implementation.
+This is a good fit when you want a fixed post-task pause before execution, and a separate code-review prompt only after execution and verification finish.
 
 ## Workflow Sequence
 
@@ -73,7 +77,11 @@ If the session produced useful reusable lessons, follow the archive step with `s
 - No production code during exploration.
 - No coding until required OpenSpec artifacts are ready.
 - By default, there is no implementation planning or coding until the user confirms the generated OpenSpec `tasks.md`.
-- If the user explicitly asks to continue directly after OpenSpec tasks, the confirmation pause may be skipped.
+- After `tasks.md` is confirmed, the workflow should pause and ask whether to continue execution development.
+- If task confirmation happens on a later turn, that turn is still part of the same workflow and should not fall back to OpenSpec apply.
+- After execution and verification finish, the workflow should ask whether to continue code review.
+- You can answer those handoffs with `继续开发` / `continue-dev` and later `继续审查` / `continue-review`.
+- If archive is the next step, you can also use `继续归档` / `continue-archive`, or continue with `$openspec-archive-change`.
 - No completion claim without fresh verification output.
 - No archive until implementation, tests, and specs match.
 

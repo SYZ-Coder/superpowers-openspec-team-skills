@@ -395,10 +395,28 @@ Task confirmation control:
 - The default mode is `optional`.
 - `optional`: show the generated tasks and wait for confirmation by default, but allow the user to explicitly request direct execution in the same prompt.
 - `off`: do not pause for task confirmation; continue directly into implementation planning after `tasks.md`.
-- With `optional`, after OpenSpec `tasks.md` is generated, the workflow shows the tasks and waits for confirmation unless the user explicitly asks to continue directly.
+- With `optional`, after OpenSpec `tasks.md` is generated, the workflow shows the tasks and waits for confirmation.
+- For `openspec-superpowers-workflow` and `superpowers-openspec-execution-workflow`, once `tasks.md` is confirmed, the workflow should stay active, refuse to fall back to OpenSpec apply, and pause again to ask whether to continue execution development.
+- For those same workflows, code review is a later follow-up prompt that appears only after execution and verification complete.
+- Fixed continuation commands for those handoffs are `继续开发` / `continue-dev` and later `继续审查` / `continue-review`.
+- If archive is part of the flow, a later archive handoff may use `继续归档` / `continue-archive`.
+- These short continuation commands do not replace the original OpenSpec or Superpowers commands; the original workflow and skill entries remain valid.
+
+Stage state machine for the two combined workflows:
+
+1. OpenSpec artifacts stage
+   `proposal.md`, `design.md`, `spec.md`, and `tasks.md` are created and revised until the user confirms `tasks.md`.
+2. Development continuation stage
+   After `tasks.md` is confirmed, the workflow pauses and accepts `继续开发` or `continue-dev`.
+   This stage still means Superpowers planning, development, TDD, and verification.
+3. Review continuation stage
+   After development and verification finish, the workflow may pause again and accept `继续审查` or `continue-review`.
+4. Archive continuation stage
+   If the project uses OpenSpec archive flow and the work is aligned, the workflow may finally accept `继续归档` or `continue-archive`.
+   The original `$openspec-archive-change` entry remains valid here.
 - You can think of the three modes as: `required` for strict review-first teams, `optional` for flexible day-to-day use, and `off` for uninterrupted execution.
 - To require confirmation explicitly, add: `After OpenSpec tasks are generated, show them to me and wait for my confirmation before implementation.`
-- To continue directly, add: `After OpenSpec tasks are generated, continue directly into implementation without waiting for task confirmation.`
+- To require the extra post-task pause, add: `After I confirm OpenSpec tasks, ask whether to continue execution development.`
 
 Example prompt:
 
