@@ -388,6 +388,18 @@ Use $superpowers-openspec-execution-workflow for this feature.
 
 For Cursor, use an explicit text request. The natural-language form above is the primary example. This bundle installs repository rules and `AGENTS.md` guidance, not a native slash command.
 
+Task confirmation control:
+
+- `task_confirmation_mode` controls what happens between generated OpenSpec `tasks.md` and implementation planning.
+- `required`: always stop for user confirmation after `tasks.md` is generated.
+- The default mode is `optional`.
+- `optional`: show the generated tasks and wait for confirmation by default, but allow the user to explicitly request direct execution in the same prompt.
+- `off`: do not pause for task confirmation; continue directly into implementation planning after `tasks.md`.
+- With `optional`, after OpenSpec `tasks.md` is generated, the workflow shows the tasks and waits for confirmation unless the user explicitly asks to continue directly.
+- You can think of the three modes as: `required` for strict review-first teams, `optional` for flexible day-to-day use, and `off` for uninterrupted execution.
+- To require confirmation explicitly, add: `After OpenSpec tasks are generated, show them to me and wait for my confirmation before implementation.`
+- To continue directly, add: `After OpenSpec tasks are generated, continue directly into implementation without waiting for task confirmation.`
+
 Example prompt:
 
 ```text

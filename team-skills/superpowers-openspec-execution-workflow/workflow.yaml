@@ -25,6 +25,8 @@ dependencies:
     - verification-before-completion
 runtime_requirements:
   - openspec-cli
+execution_controls:
+  task_confirmation_mode: optional
 outputs:
   - docs/superpowers/specs/
   - docs/superpowers/plans/

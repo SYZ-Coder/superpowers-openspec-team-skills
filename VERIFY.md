@@ -341,6 +341,38 @@ Expected behavior:
 - it treats design and OpenSpec artifact work as explicit phases
 - when memory is enabled, it reads the right memory files before asking repeated background questions
 
+### Step 6: Verify task confirmation control
+
+The default mode is `task_confirmation_mode: optional`, so it is worth testing both "confirm before implementation" and "continue directly" behavior.
+
+Confirm before implementation:
+
+```text
+Use the superpowers-openspec-execution workflow for this feature.
+
+Now update the drift-bottle review flow based on 2026-06-02_drift-bottle_create-and-audit-rating-full-chain.md.
+After OpenSpec tasks are generated, show them to me and wait for my confirmation before implementation.
+```
+
+Expected behavior:
+
+- after OpenSpec `tasks.md` is generated, the agent shows the task checklist first
+- it waits for user confirmation instead of moving directly into implementation planning or coding
+
+Continue directly:
+
+```text
+Use the superpowers-openspec-execution workflow for this feature.
+
+Now update the drift-bottle review flow based on 2026-06-02_drift-bottle_create-and-audit-rating-full-chain.md.
+After OpenSpec tasks are generated, continue directly into implementation without waiting for task confirmation.
+```
+
+Expected behavior:
+
+- after OpenSpec `tasks.md` is generated, the agent may continue directly into implementation planning
+- it does not add an extra pause for task confirmation
+
 ### Also verify `superpowers-learning`
 
 Invoke:

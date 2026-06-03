@@ -26,13 +26,16 @@ If `.superpowers-memory/` exists in the repository, read `PROJECT_CONTEXT.md`, `
    Use it to clarify scope, compare approaches, confirm the solution shape, and capture the design draft.
 2. Move to `$openspec-feature-workflow`.
    Use it to create the change and complete `proposal.md`, `design.md`, `specs/.../spec.md`, and `tasks.md`.
-3. Return to `$superpowers-feature-workflow`.
+3. Present the generated OpenSpec task checklist to the user.
+4. By default, wait for explicit confirmation before implementation planning starts.
+5. If the user explicitly asked to continue directly after OpenSpec tasks, skip the confirmation pause and return to `$superpowers-feature-workflow`.
+6. Otherwise, return to `$superpowers-feature-workflow` only after the user confirms the generated `tasks.md`.
    Use it to write the implementation plan, prefer a worktree, execute with TDD, and run fresh verification.
-4. If implementation and specs are aligned after verification, use `$openspec-archive-change` to archive the completed change.
-5. If `.superpowers-memory/` exists, perform a memory alignment check after verification and archive decisions: ensure durable facts, current state, decisions, failure patterns, and session outcome are reflected in the right files.
-6. Prefer `scripts/run-superpowers-memory-closeout.ps1` when you want one command to review the checklist, get update suggestions, and optionally run validation after execution or archive work.
-7. Use `scripts/suggest-superpowers-memory-updates.ps1` if it is still unclear which memory surfaces should be updated after implementation, verification, or archive work.
-8. When memory quality matters for the project, run `scripts/validate-superpowers-memory.ps1` before the final completion claim.
+7. If implementation and specs are aligned after verification, use `$openspec-archive-change` to archive the completed change.
+8. If `.superpowers-memory/` exists, perform a memory alignment check after verification and archive decisions: ensure durable facts, current state, decisions, failure patterns, and session outcome are reflected in the right files.
+9. Prefer `scripts/run-superpowers-memory-closeout.ps1` when you want one command to review the checklist, get update suggestions, and optionally run validation after execution or archive work.
+10. Use `scripts/suggest-superpowers-memory-updates.ps1` if it is still unclear which memory surfaces should be updated after implementation, verification, or archive work.
+11. When memory quality matters for the project, run `scripts/validate-superpowers-memory.ps1` before the final completion claim.
 
 ## Decision Gates
 
@@ -43,9 +46,10 @@ If `.superpowers-memory/` exists in the repository, read `PROJECT_CONTEXT.md`, `
 - Do not create implementation code during the exploration stage.
 - Do not start coding until required OpenSpec artifacts are complete.
 - Do not use OpenSpec apply as the implementation stage for this workflow.
-- After OpenSpec `tasks.md` is complete, stop OpenSpec apply-style execution and hand off to `$superpowers-feature-workflow`.
+- After OpenSpec `tasks.md` is complete, stop OpenSpec apply-style execution, summarize the generated tasks, and by default ask the user to confirm the OpenSpec task checklist before handing off to `$superpowers-feature-workflow`.
 - Do not stop after OpenSpec artifacts with a readiness message such as "run apply", "/opsx:apply", or "let me start implementation".
-- Unless the user explicitly asked to pause after OpenSpec artifacts, continue directly into Superpowers execution by writing the implementation plan.
+- If the user explicitly asked to continue directly after OpenSpec tasks, you may skip the confirmation pause.
+- Otherwise, do not continue directly into Superpowers execution after OpenSpec artifacts until the user has explicitly confirmed the generated `tasks.md`.
 - Treat OpenSpec tasks as constraints and checklist input for the Superpowers implementation plan, not as permission to stay inside the OpenSpec apply flow.
 - Do not claim success until fresh verification output exists.
 - Do not archive the change until code, tests, and specs are aligned.

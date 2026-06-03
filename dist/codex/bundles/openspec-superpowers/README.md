@@ -14,4 +14,4 @@ After installation, invoke:
 Use $openspec-superpowers-workflow to run this feature from OpenSpec artifacts through Superpowers verification.
 ```
 
-Important handoff: OpenSpec is only used to lock the agreed artifacts. After `tasks.md` is complete, the workflow must hand off to Superpowers execution for planning, TDD, and verification instead of continuing through OpenSpec apply.
+Important handoff: OpenSpec is only used to lock the agreed artifacts. After `tasks.md` is complete, the workflow must summarize the generated tasks, get explicit user confirmation on the OpenSpec task checklist, and only then hand off to Superpowers execution for planning, TDD, and verification instead of continuing through OpenSpec apply.

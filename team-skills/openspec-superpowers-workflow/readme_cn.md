@@ -21,12 +21,36 @@
 Use $openspec-superpowers-workflow to run this feature from clarification through verification.
 ```
 
-然后描述你的功能需求。该 skill 会按顺序引导 Superpowers 探索、OpenSpec 产物、实现计划、TDD 和最终验证。
+然后描述你的功能需求。该 skill 会按顺序引导 Superpowers 探索、OpenSpec 产物、OpenSpec 任务确认、实现计划、TDD 和最终验证。
+
+默认控制方式：
+
+- `task_confirmation_mode: optional`
+- 默认会展示生成出来的 OpenSpec `tasks.md`，并等待你确认后再进入实现计划。
+- 如果你在提示词里明确要求“tasks 生成后直接执行”，就可以跳过这一步确认暂停。
+
+使用示例：
+
+```text
+Use $openspec-superpowers-workflow for this feature.
+OpenSpec tasks 生成后先给我看，我确认后再进入实现。
+```
+
+适合你想先审阅 OpenSpec 任务清单，再继续进入实现计划。
+
+```text
+Use $openspec-superpowers-workflow for this feature.
+OpenSpec tasks 生成后直接进入实现，不用等我确认任务清单。
+```
+
+适合你已经接受 OpenSpec 任务拆解，希望任务生成后直接进入实现。
 
 ## 控制点
 
 - 设计确认前不能进入实现计划。
 - OpenSpec 产物完成前不能开始编码。
+- 默认情况下，OpenSpec `tasks.md` 需要先让用户确认，之后才能进入实现计划。
+- 如果用户明确要求 tasks 生成后直接执行，可以跳过这一步确认暂停。
 - 实现阶段应遵循 Superpowers 的计划和 TDD 纪律。
 - 声称完成前必须有新的验证输出。
 

@@ -36,12 +36,35 @@ Use $superpowers-openspec-execution-workflow for this feature: first explore wit
 
 For Cursor, use an explicit text request. The Cursor bundle installs repository rules rather than a native slash-command file. The natural-language form above is the primary example. These entries make the order explicit and help prevent the agent from jumping straight into code.
 
+Default control:
+
+- `task_confirmation_mode: optional`
+- By default, the workflow shows the generated OpenSpec `tasks.md` and waits for your confirmation before implementation planning.
+- If you explicitly ask to continue directly after OpenSpec tasks, the workflow may skip the confirmation pause.
+
+Usage examples:
+
+```text
+Use the superpowers-openspec-execution workflow for this feature.
+After OpenSpec tasks are generated, show them to me and wait for my confirmation before implementation.
+```
+
+This is a good fit when you want to inspect the generated task checklist before development starts.
+
+```text
+Use the superpowers-openspec-execution workflow for this feature.
+After OpenSpec tasks are generated, continue directly into implementation without waiting for task confirmation.
+```
+
+This is a good fit when you accept the generated task checklist and want a continuous path into implementation.
+
 ## Workflow Sequence
 
 1. Use Superpowers to explore context, clarify requirements, compare approaches, and confirm the design direction.
 2. Use OpenSpec to write the confirmed change artifacts, including `proposal.md`, `design.md`, `specs/.../spec.md`, and `tasks.md`.
-3. Return to Superpowers to write the implementation plan, execute with TDD, and run fresh verification.
-4. Archive the OpenSpec change only after the code, tests, and specs are aligned.
+3. Review the generated OpenSpec `tasks.md` with the user and wait for explicit confirmation.
+4. Return to Superpowers to write the implementation plan, execute with TDD, and run fresh verification.
+5. Archive the OpenSpec change only after the code, tests, and specs are aligned.
 
 If the session produced useful reusable lessons, follow the archive step with `superpowers-learning-workflow` so the next session inherits the right context.
 
@@ -49,6 +72,8 @@ If the session produced useful reusable lessons, follow the archive step with `s
 
 - No production code during exploration.
 - No coding until required OpenSpec artifacts are ready.
+- By default, there is no implementation planning or coding until the user confirms the generated OpenSpec `tasks.md`.
+- If the user explicitly asks to continue directly after OpenSpec tasks, the confirmation pause may be skipped.
 - No completion claim without fresh verification output.
 - No archive until implementation, tests, and specs match.
 

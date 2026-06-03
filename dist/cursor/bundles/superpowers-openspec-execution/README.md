@@ -7,7 +7,7 @@ Copy this bundle into the target repository root for the four-stage flow:
 3. Superpowers execution and verification
 4. OpenSpec archive
 
-Important handoff: after OpenSpec `tasks.md` is complete, stop OpenSpec apply-style execution and return to Superpowers for the implementation plan, TDD, and fresh verification.
+Important handoff: after OpenSpec `tasks.md` is complete, stop OpenSpec apply-style execution, summarize the generated tasks, get explicit user confirmation on the OpenSpec task checklist, and only then return to Superpowers for the implementation plan, TDD, and fresh verification.
 
 Activation options in Cursor:
 
@@ -22,6 +22,13 @@ Use $superpowers-openspec-execution-workflow for this feature.
 ```
 
 Cursor does not install a native slash command for this workflow. Use an explicit text request so the repository rules can route the conversation into the intended workflow. The natural-language form above is the primary example.
+
+Task confirmation control:
+
+- The default mode is `optional`.
+- By default, after OpenSpec `tasks.md` is generated, the workflow shows the tasks and waits for confirmation before implementation.
+- To require confirmation explicitly, add: `After OpenSpec tasks are generated, show them to me and wait for my confirmation before implementation.`
+- To continue directly, add: `After OpenSpec tasks are generated, continue directly into implementation without waiting for task confirmation.`
 
 Example  prompt:
 

@@ -360,6 +360,38 @@ Use the superpowers-openspec-execution workflow for this feature.
 - 不会跳过探索和规范阶段直接实现
 - 在启用记忆时，会先读取正确的记忆文件再追问背景
 
+### 第六步：验证任务确认开关
+
+默认模式是 `task_confirmation_mode: optional`，建议分别验证“先确认再实现”和“直接执行”两种行为。
+
+先确认再实现：
+
+```text
+Use the superpowers-openspec-execution workflow for this feature.
+
+现在需要根据 2026-06-02_drift-bottle_create-and-audit-rating-full-chain.md 梳理的内容改造漂流瓶审核功能。
+OpenSpec tasks 生成后先给我看，我确认后再进入实现。
+```
+
+预期行为：
+
+- OpenSpec `tasks.md` 生成后，智能体会先展示任务清单
+- 会等待用户确认，而不是直接进入实现计划或编码
+
+直接执行：
+
+```text
+Use the superpowers-openspec-execution workflow for this feature.
+
+现在需要根据 2026-06-02_drift-bottle_create-and-audit-rating-full-chain.md 梳理的内容改造漂流瓶审核功能。
+OpenSpec tasks 生成后直接进入实现，不用等我确认任务清单。
+```
+
+预期行为：
+
+- OpenSpec `tasks.md` 生成后，智能体可以直接进入实现计划
+- 不会额外停下来等待用户确认任务清单
+
 ### 也验证 `superpowers-learning`
 
 调用：

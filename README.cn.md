@@ -438,6 +438,17 @@ Use $superpowers-openspec-execution-workflow for this feature.
 
 对 Cursor 来说，请使用这种显式文本请求方式。上面的自然语言写法是主示例。这个 bundle 安装的是仓库规则和 `AGENTS.md` 指引，不会注册原生 slash command。
 
+任务确认控制：
+
+- `task_confirmation_mode` 用来控制 OpenSpec `tasks.md` 生成后，到进入实现计划之前，这个 workflow 应该如何处理任务清单确认。
+- `required`：每次都必须停下来展示任务清单，等待用户确认后才能进入实现阶段。
+- `optional`：默认展示任务清单并等待确认；但如果用户在本次提示词里明确要求“直接执行”，就可以跳过确认暂停。
+- `off`：不等待任务确认，`tasks.md` 生成后直接进入实现计划。
+- 当前默认模式是 `optional`。
+- 在 `optional` 模式下，OpenSpec `tasks.md` 生成后会先展示任务清单，并等待你确认后再进入实现阶段，除非你明确要求直接执行。
+- 如果你想明确要求先确认，再加一句：`OpenSpec tasks 生成后先给我看，我确认后再进入实现。`
+- 如果你想直接执行，再加一句：`OpenSpec tasks 生成后直接进入实现，不用等我确认任务清单。`
+
 例如：
 
 ```text

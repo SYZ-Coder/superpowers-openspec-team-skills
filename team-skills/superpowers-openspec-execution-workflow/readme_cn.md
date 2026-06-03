@@ -34,17 +34,42 @@ Use $superpowers-openspec-execution-workflow for this feature: first explore wit
 
 对 Cursor 来说，请使用这种显式文本请求方式。Cursor bundle 安装的是仓库规则，而不是原生 slash command。上面的自然语言写法是主示例，这些写法都可以明确工作顺序，避免智能体直接跳到编码。
 
+默认控制方式：
+
+- `task_confirmation_mode: optional`
+- 默认会展示生成出来的 OpenSpec `tasks.md`，并等待你确认后再进入实现计划。
+- 如果你在提示词里明确要求“tasks 生成后直接执行”，就可以跳过这一步确认暂停。
+
+使用示例：
+
+```text
+Use the superpowers-openspec-execution workflow for this feature.
+OpenSpec tasks 生成后先给我看，我确认后再进入实现。
+```
+
+适合希望先评估任务清单，再决定是否进入开发。
+
+```text
+Use the superpowers-openspec-execution workflow for this feature.
+OpenSpec tasks 生成后直接进入实现，不用等我确认任务清单。
+```
+
+适合你已经接受自动生成的任务清单，希望连续执行到实现阶段。
+
 ## 工作流顺序
 
 1. 先用 Superpowers 探索上下文、澄清需求、比较方案，并确认设计方向。
 2. 再用 OpenSpec 补齐已经确认的 change 产物，包括 `proposal.md`、`design.md`、`specs/.../spec.md` 和 `tasks.md`。
-3. 回到 Superpowers 编写实现计划，按 TDD 执行实现，并运行新的验证。
-4. 只有在代码、测试和规范都对齐后，才归档 OpenSpec change。
+3. 让用户确认生成出来的 OpenSpec `tasks.md` 任务清单。
+4. 回到 Superpowers 编写实现计划，按 TDD 执行实现，并运行新的验证。
+5. 只有在代码、测试和规范都对齐后，才归档 OpenSpec change。
 
 ## 控制点
 
 - 探索阶段不能写生产代码。
 - 必需的 OpenSpec 产物完成前不能开始编码。
+- 默认情况下，用户没有确认 OpenSpec `tasks.md` 之前，不能进入实现计划或编码阶段。
+- 如果用户明确要求 tasks 生成后直接执行，可以跳过这一步确认暂停。
 - 没有新的验证输出不能声称完成。
 - 实现、测试和规范对齐前不能归档。
 
