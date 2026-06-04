@@ -4,9 +4,9 @@ These workflow instructions are explicit opt-in. Do not apply them by default. O
 
 If this workflow already produced `tasks.md` for the current request and the next user turn confirms, revises, or continues those tasks, keep this workflow active even if the command is not repeated.
 
-Prefer the `superpowers-openspec-execution-workflow` command when feature delivery should use Superpowers exploration, OpenSpec locking, Superpowers execution, and OpenSpec archive.
+Prefer the `superpowers-openspec-superpowers-workflow` command when feature delivery should use Superpowers exploration, OpenSpec locking, Superpowers execution, and OpenSpec archive.
 
-When the user invokes `superpowers-openspec-execution-workflow`, this workflow controls routing. Do not route first to OpenSpec proposal generation, `openspec-propose`, or `/opsx:propose`.
+When the user invokes `superpowers-openspec-superpowers-workflow`, this workflow controls routing. Do not route first to OpenSpec proposal generation, `openspec-propose`, or `/opsx:propose`.
 
 The first active phase must be Superpowers exploration. Do not invoke OpenSpec proposal or artifact-generation steps until context has been reviewed, requirements have been clarified, approaches have been compared, the user has confirmed the solution shape, and a design draft exists in `docs/superpowers/specs/`.
 

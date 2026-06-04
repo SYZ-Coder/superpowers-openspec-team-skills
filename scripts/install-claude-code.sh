@@ -50,7 +50,16 @@ SCRIPT_DIR=$(CDPATH= cd -- "$(dirname "$0")" && pwd)
 REPO_ROOT=$(CDPATH= cd -- "$SCRIPT_DIR/.." && pwd)
 . "$SCRIPT_DIR/common/dependency-check.sh"
 
-BUNDLE_ROOT="$REPO_ROOT/dist/claude-code/bundles/$BUNDLE"
+case "$BUNDLE" in
+  openspec-superpowers-workflow) BUNDLE_FOLDER="openspec-superpowers" ;;
+  superpowers-openspec-superpowers-workflow) BUNDLE_FOLDER="superpowers-openspec-superpowers" ;;
+  superpowers-feature-workflow) BUNDLE_FOLDER="superpowers-feature" ;;
+  openspec-feature-workflow) BUNDLE_FOLDER="openspec-feature" ;;
+  superpowers-learning-workflow) BUNDLE_FOLDER="superpowers-learning" ;;
+  *) BUNDLE_FOLDER="$BUNDLE" ;;
+esac
+
+BUNDLE_ROOT="$REPO_ROOT/dist/claude-code/bundles/$BUNDLE_FOLDER"
 BACKUP_ROOT="$PROJECT_ROOT/.ai-skill-backups/claude-code"
 
 if [ ! -d "$BUNDLE_ROOT" ]; then

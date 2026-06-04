@@ -1,5 +1,5 @@
 {
-  "name": "superpowers-openspec-execution",
+  "name": "superpowers-openspec-superpowers",
   "tool": "cursor",
   "type": "bundle",
   "installTarget": "project-root",
@@ -8,7 +8,7 @@
   ],
   "contents": [
     ".cursor/rules/000-superpowers-workflow-router.mdc",
-    ".cursor/rules/superpowers-openspec-execution-workflow.mdc",
+    ".cursor/rules/superpowers-openspec-superpowers-workflow.mdc",
     "AGENTS.md"
   ]
 }

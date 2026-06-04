@@ -20,7 +20,7 @@ Write-Host ""
 
 $requiredWorkflows = @(
   "openspec-superpowers-workflow",
-  "superpowers-openspec-execution-workflow",
+  "superpowers-openspec-superpowers-workflow",
   "superpowers-feature-workflow",
   "openspec-feature-workflow",
   "superpowers-learning-workflow"

@@ -23,6 +23,14 @@ Use $openspec-feature-workflow to create and complete the OpenSpec change for th
 
 The workflow derives or confirms a kebab-case change name, creates the OpenSpec change directory, reads OpenSpec instructions, and completes artifacts in dependency order.
 
+## Workflow Sequence
+
+1. Confirm or derive the kebab-case change name.
+2. Create the OpenSpec change directory.
+3. Read OpenSpec instructions for each artifact.
+4. Complete `proposal.md`, `design.md`, spec deltas, and `tasks.md` in dependency order.
+5. Hand off to implementation only after required artifacts are ready.
+
 ## Control Points
 
 - A change name must be confirmed or derived before artifacts are created.

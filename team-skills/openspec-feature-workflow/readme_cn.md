@@ -23,6 +23,14 @@ Use $openspec-feature-workflow to create and complete the OpenSpec change for th
 
 该工作流会推导或确认 kebab-case change 名称，创建 OpenSpec change 目录，读取 OpenSpec instructions，并按依赖顺序完成产物。
 
+## 工作流顺序
+
+1. 先确认或推导 kebab-case 的 change 名称。
+2. 创建 OpenSpec change 目录。
+3. 为每个产物读取对应的 OpenSpec instructions。
+4. 按依赖顺序完成 `proposal.md`、`design.md`、spec delta 和 `tasks.md`。
+5. 只有必需产物完成后，才进入后续实现。
+
 ## 控制点
 
 - 创建产物前必须确认或推导 change 名称。

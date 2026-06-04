@@ -1,0 +1,4 @@
+interface:
+  display_name: "Superpowers -> OpenSpec -> Superpowers"
+  short_description: "Think it through, lock it down, then build it right"
+  default_prompt: "Use $superpowers-openspec-superpowers-workflow to explore a feature, lock it with OpenSpec, then come back to Superpowers to build, verify, and complete it."

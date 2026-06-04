@@ -1,6 +1,6 @@
 # Cursor Bundle: Superpowers -> OpenSpec -> Superpowers
 
-Copy this bundle into the target repository root for the four-stage flow:
+Copy this bundle into the target repository root when you want the workflow that says: think it through first, lock it down second, then come back and build it right.
 
 1. Superpowers exploration
 2. OpenSpec locking
@@ -12,13 +12,13 @@ Important handoff: after OpenSpec `tasks.md` is complete, stop OpenSpec apply-st
 Activation options in Cursor:
 
 ```text
-Use the superpowers-openspec-execution workflow for this feature.
+Use the superpowers-openspec-superpowers workflow for this feature.
 ```
 
 or
 
 ```text
-Use $superpowers-openspec-execution-workflow for this feature.
+Use $superpowers-openspec-superpowers-workflow for this feature.
 ```
 
 Cursor does not install a native slash command for this workflow. Use an explicit text request so the repository rules can route the conversation into the intended workflow. The natural-language form above is the primary example.
@@ -30,10 +30,10 @@ Task confirmation control:
 - To require confirmation explicitly, add: `After OpenSpec tasks are generated, show them to me and wait for my confirmation before implementation.`
 - To require the extra post-task pause, add: `After I confirm OpenSpec tasks, ask whether to continue execution development.`
 
-Example  prompt:
+Example prompt:
 
 ```text
-Use the superpowers-openspec-execution workflow for this feature.
+Use the superpowers-openspec-superpowers workflow for this feature.
 
 Now update the drift-bottle review flow based on 2026-06-02_drift-bottle_create-and-audit-rating-full-chain.md.
 Requirements:

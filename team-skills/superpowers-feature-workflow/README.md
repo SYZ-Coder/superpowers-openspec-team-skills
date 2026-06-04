@@ -4,7 +4,7 @@
 
 `superpowers-feature-workflow` covers the Superpowers side of feature delivery: discovery, design confirmation, implementation planning, worktree setup, TDD, and final verification.
 
-It does not create OpenSpec artifacts. Use it when you want disciplined implementation without the formal OpenSpec change record.
+It does not create OpenSpec artifacts. Use it when you want disciplined implementation without a formal OpenSpec change record.
 
 ## When To Use It
 
@@ -23,7 +23,15 @@ Use $superpowers-feature-workflow to drive the Superpowers stages for this featu
 
 The workflow starts by exploring project context, then asks clarifying questions, compares approaches, writes a design, creates a plan, and guides implementation with tests.
 
-When the work is meaningful and the team wants to preserve lessons for future sessions, follow it with `superpowers-learning-workflow`.
+If the work is meaningful and the team wants to preserve lessons for future sessions, follow it with `superpowers-learning-workflow`.
+
+## Workflow Sequence
+
+1. Explore project context before proposing solutions.
+2. Clarify requirements and compare approaches.
+3. Confirm a design before implementation planning.
+4. Create the implementation plan and set up the worktree when needed.
+5. Implement with TDD and finish with fresh verification evidence.
 
 ## Control Points
 

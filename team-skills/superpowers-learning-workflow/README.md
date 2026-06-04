@@ -7,7 +7,7 @@
 It is designed to pair naturally with:
 
 - `superpowers-feature-workflow`
-- `superpowers-openspec-execution-workflow`
+- `superpowers-openspec-superpowers-workflow`
 - `openspec-superpowers-workflow`
 
 It helps the team turn recent work into:

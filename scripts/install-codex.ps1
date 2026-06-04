@@ -1,5 +1,16 @@
 param(
-  [ValidateSet("openspec-superpowers", "superpowers-openspec-execution", "superpowers-feature", "openspec-feature", "superpowers-learning")]
+  [ValidateSet(
+    "openspec-superpowers",
+    "openspec-superpowers-workflow",
+    "superpowers-openspec-superpowers",
+    "superpowers-openspec-superpowers-workflow",
+    "superpowers-feature",
+    "superpowers-feature-workflow",
+    "openspec-feature",
+    "openspec-feature-workflow",
+    "superpowers-learning",
+    "superpowers-learning-workflow"
+  )]
   [string]$Bundle = "openspec-superpowers",
   [string]$CodexHome = "$env:USERPROFILE\.codex",
   [switch]$DryRun,
@@ -12,7 +23,15 @@ $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 . (Join-Path $PSScriptRoot "common\dependency-check.ps1")
-$bundleRoot = Join-Path $repoRoot "dist\codex\bundles\$Bundle"
+$bundleFolder = switch ($Bundle) {
+  "openspec-superpowers-workflow" { "openspec-superpowers" }
+  "superpowers-openspec-superpowers-workflow" { "superpowers-openspec-superpowers" }
+  "superpowers-feature-workflow" { "superpowers-feature" }
+  "openspec-feature-workflow" { "openspec-feature" }
+  "superpowers-learning-workflow" { "superpowers-learning" }
+  default { $Bundle }
+}
+$bundleRoot = Join-Path $repoRoot "dist\codex\bundles\$bundleFolder"
 $skillsRoot = Join-Path $bundleRoot "skills"
 $targetRoot = Join-Path $CodexHome "skills"
 $backupRoot = Join-Path $CodexHome "backups\skills"

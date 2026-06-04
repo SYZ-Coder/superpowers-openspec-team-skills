@@ -1,45 +1,61 @@
-﻿# Team Skills
+# Team Skills
 
-This directory contains portable, repo-owned skill packages for the team's OpenSpec + Superpowers workflow.
+Navigation for the source workflow layer.
 
-Current packages:
+`team-skills/` contains the source workflow definitions maintained by this repository. This directory is for maintainers, adapters, and advanced readers who want to inspect the original workflow structure.
+
+If you want to install and use these workflows in Codex, Cursor, or Claude Code, start from the root [README.md](../README.md), `dist/`, and `scripts/` instead of copying folders out of `team-skills/`.
+
+## What Is Here
+
+This directory contains five source workflow packages:
 
 - `openspec-superpowers-workflow`
-- `superpowers-openspec-execution-workflow`
+- `superpowers-openspec-superpowers-workflow`
 - `superpowers-feature-workflow`
 - `superpowers-learning-workflow`
 - `openspec-feature-workflow`
 
-These packages are designed to be open-source friendly and do not depend on local machine paths.
+These packages are repo-owned, open-source-friendly, and do not depend on local machine paths.
 
-If the team later wants automatic skill discovery, copy the needed folders into a runtime skill directory such as `.codex/skills/`.
+## How To Use This Section
 
-## Packages
+Use `team-skills/` when you need one of these tasks:
 
-- [openspec-superpowers-workflow](openspec-superpowers-workflow/README.md) ([中文](openspec-superpowers-workflow/readme_cn.md))
-- [superpowers-openspec-execution-workflow](superpowers-openspec-execution-workflow/README.md) ([中文](superpowers-openspec-execution-workflow/readme_cn.md))
-- [superpowers-feature-workflow](superpowers-feature-workflow/README.md) ([中文](superpowers-feature-workflow/readme_cn.md))
-- [superpowers-learning-workflow](superpowers-learning-workflow/README.md) ([中文](superpowers-learning-workflow/readme_cn.md))
-- [openspec-feature-workflow](openspec-feature-workflow/README.md) ([中文](openspec-feature-workflow/readme_cn.md))
+- read the original workflow definitions
+- compare the responsibilities of each workflow
+- maintain workflow source content
+- adapt the workflows to a new AI tool
+- build or validate bundles under `dist/`
 
-## Recommended Use
+If your goal is installation into a tool, this section is not the primary entry point.
 
-- Use `openspec-superpowers-workflow` for a single full-flow entry.
-- Use `superpowers-openspec-execution-workflow` when the team wants four explicit steps: Superpowers exploration, OpenSpec locking, Superpowers execution, then OpenSpec archive.
-  In Cursor, activate it with an explicit text request after installing the matching bundle.
-- Use `superpowers-feature-workflow` when you only need design, planning, worktree, TDD, and verification discipline.
-- Use `superpowers-learning-workflow` when you want to capture durable lessons, current state, and reusable patterns after meaningful work.
-- Use `openspec-feature-workflow` when you only need to create or complete change artifacts.
+## Workflow Directory
+
+- [openspec-superpowers-workflow (EN)](openspec-superpowers-workflow/README.md) | [CN](openspec-superpowers-workflow/readme_cn.md)
+- [superpowers-openspec-superpowers-workflow (EN)](superpowers-openspec-superpowers-workflow/README.md) | [CN](superpowers-openspec-superpowers-workflow/readme_cn.md)
+- [superpowers-feature-workflow (EN)](superpowers-feature-workflow/README.md) | [CN](superpowers-feature-workflow/readme_cn.md)
+- [superpowers-learning-workflow (EN)](superpowers-learning-workflow/README.md) | [CN](superpowers-learning-workflow/readme_cn.md)
+- [openspec-feature-workflow (EN)](openspec-feature-workflow/README.md) | [CN](openspec-feature-workflow/readme_cn.md)
 
 ## How To Choose
 
-- Choose `openspec-superpowers-workflow` when you want one general entry point from clarification through implementation and verification.
-- Choose `superpowers-openspec-execution-workflow` when you want a fixed four-step sequence and want that sequence to stay explicit.
-- Choose `superpowers-feature-workflow` when you only want the Superpowers engineering workflow.
-- Choose `superpowers-learning-workflow` when the work is done and you want the next session to inherit the right lessons.
-- Choose `openspec-feature-workflow` when you only want OpenSpec change artifacts.
+- Choose `openspec-superpowers-workflow` when you want one full-flow entry from clarification through verified delivery.
+- Choose `superpowers-openspec-superpowers-workflow` when you want to explore first, lock the truth second, then come back and build the change with more confidence and less chaos.
+- Choose `superpowers-feature-workflow` when you want Superpowers engineering discipline without OpenSpec change artifacts.
+- Choose `superpowers-learning-workflow` when meaningful work is done and you want to preserve reusable lessons and current state.
+- Choose `openspec-feature-workflow` when you only want proposal, design, specs, and tasks before implementation.
 
-## Documentation
+## Source-Layer Guides
 
-- [INSTALL.md](INSTALL.md)
-- [INSTALL.cn.md](INSTALL.cn.md)
+- [Source Workflow Installation Notes](INSTALL.md)
+- [Source Workflow Usage Guide](USAGE.md)
+- [Chinese Installation Notes](INSTALL.cn.md)
+- [Chinese Usage Guide](USAGE.cn.md)
+
+## Relationship To `dist/`
+
+- `team-skills/`: source workflow definitions for maintainers and adapters
+- `dist/`: installable bundles prepared for specific AI tools
+
+The wording and file structure may differ between these layers, but the intended behavior should stay aligned.

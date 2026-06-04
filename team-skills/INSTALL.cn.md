@@ -19,7 +19,7 @@
 
 - Codex：`dist/codex/bundles/` 或 `scripts/install-codex.ps1`
 - Cursor：`dist/cursor/bundles/` 或 `scripts/install-cursor.ps1`
-  对 `superpowers-openspec-execution-workflow` 来说，安装后请在 Cursor 中使用显式文本请求来启用；它是通过仓库规则路由的，不是原生 slash command。
+  对 `superpowers-openspec-superpowers-workflow` 来说，安装后请在 Cursor 中使用显式文本请求来启用；它是通过仓库规则路由的，不是原生 slash command。
 - Claude Code：`dist/claude-code/bundles/` 或 `scripts/install-claude-code.ps1`
 
 如果你还想给 Superpowers 相关 workflow 增加跨会话记忆，可以额外运行：

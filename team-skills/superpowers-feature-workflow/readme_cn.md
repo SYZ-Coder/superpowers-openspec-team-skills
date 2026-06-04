@@ -23,6 +23,16 @@ Use $superpowers-feature-workflow to drive the Superpowers stages for this featu
 
 该工作流会先探索项目上下文，再澄清需求、比较方案、写设计、写计划，并引导带测试的实现。
 
+如果这次工作还希望为后续会话保留经验，可以在完成后继续使用 `superpowers-learning-workflow`。
+
+## 工作流顺序
+
+1. 提方案前先探索项目上下文。
+2. 澄清需求并比较可选方案。
+3. 先确认设计，再进入实现计划。
+4. 在需要时创建实现计划并使用独立 worktree。
+5. 按 TDD 执行实现，并在结束前补齐新的验证证据。
+
 ## 控制点
 
 - 提方案前先探索项目上下文。
@@ -37,6 +47,7 @@ Use $superpowers-feature-workflow to drive the Superpowers stages for this featu
 - 实现计划
 - 代码变更
 - 测试和验证证据
+- 可选后续产物：通过 `superpowers-learning-workflow` 更新项目记忆
 
 ## 优势
 

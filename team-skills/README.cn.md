@@ -1,45 +1,61 @@
-﻿# 团队 Skills
+# Team Skills
 
-这个目录包含团队在 OpenSpec + Superpowers 流程下使用的多个可移植 skill 包。
+源码工作流层的导航首页。
 
-当前包含：
+`team-skills/` 保存的是本仓库维护的 workflow 源定义。这里更适合维护者、适配者，或者想查看原始工作流结构的高级使用者。
+
+如果你的目标是把这些 workflow 安装到 Codex、Cursor 或 Claude Code 中使用，请优先回到根目录 [README.cn.md](../README.cn.md)、`dist/` 和 `scripts/`，而不是直接从 `team-skills/` 复制目录。
+
+## 这里包含什么
+
+这个目录当前包含 5 个源码工作流包：
 
 - `openspec-superpowers-workflow`
-- `superpowers-openspec-execution-workflow`
+- `superpowers-openspec-superpowers-workflow`
 - `superpowers-feature-workflow`
 - `superpowers-learning-workflow`
 - `openspec-feature-workflow`
 
-这些 skill 采用仓库内维护方式，适合开源，也不依赖本机私有路径。
+这些包由仓库直接维护，适合开源分发，也不依赖本机私有路径。
 
-如果团队后续需要自动发现，可以把需要的目录复制到运行时 skill 目录，例如 `.codex/skills/`。
+## 什么时候看这一层
 
-## 包列表
+当你有下面这些目标时，使用 `team-skills/`：
 
-- [openspec-superpowers-workflow](openspec-superpowers-workflow/README.md) ([中文](openspec-superpowers-workflow/readme_cn.md))
-- [superpowers-openspec-execution-workflow](superpowers-openspec-execution-workflow/README.md) ([中文](superpowers-openspec-execution-workflow/readme_cn.md))
-- [superpowers-feature-workflow](superpowers-feature-workflow/README.md) ([中文](superpowers-feature-workflow/readme_cn.md))
-- [superpowers-learning-workflow](superpowers-learning-workflow/README.md) ([中文](superpowers-learning-workflow/readme_cn.md))
-- [openspec-feature-workflow](openspec-feature-workflow/README.md) ([中文](openspec-feature-workflow/readme_cn.md))
+- 阅读原始 workflow 定义
+- 比较不同 workflow 的职责边界
+- 维护 workflow 源内容
+- 将这些 workflow 适配到新的 AI 工具
+- 构建或校验 `dist/` 下的 bundle
 
-## 推荐用法
+如果你的目标只是安装到某个工具里使用，这里不是首选入口。
 
-- 使用 `openspec-superpowers-workflow` 作为一个完整流程入口。
-- 如果想明确按“先探索、再锁规范、再执行、最后归档”的四步节奏，使用 `superpowers-openspec-execution-workflow`。
-  对 Cursor 来说，安装对应 bundle 后，请用显式文本请求来启用它。
-- 如果只需要设计、计划、worktree、TDD、验证，使用 `superpowers-feature-workflow`。
-- 如果想在重要工作结束后沉淀记忆、会话结论和可复用经验，使用 `superpowers-learning-workflow`。
-- 如果只需要补齐 change 产物，使用 `openspec-feature-workflow`。
+## 工作流目录
+
+- [openspec-superpowers-workflow（English）](openspec-superpowers-workflow/README.md) | [中文](openspec-superpowers-workflow/readme_cn.md)
+- [superpowers-openspec-superpowers-workflow（English）](superpowers-openspec-superpowers-workflow/README.md) | [中文](superpowers-openspec-superpowers-workflow/readme_cn.md)
+- [superpowers-feature-workflow（English）](superpowers-feature-workflow/README.md) | [中文](superpowers-feature-workflow/readme_cn.md)
+- [superpowers-learning-workflow（English）](superpowers-learning-workflow/README.md) | [中文](superpowers-learning-workflow/readme_cn.md)
+- [openspec-feature-workflow（English）](openspec-feature-workflow/README.md) | [中文](openspec-feature-workflow/readme_cn.md)
 
 ## 怎么选择
 
-- 如果你想要一个从需求澄清一路带到实现和验证的统一入口，用 `openspec-superpowers-workflow`。
-- 如果你已经明确要按四步顺序推进，并且希望这个顺序保持清晰可见，用 `superpowers-openspec-execution-workflow`。
-- 如果你只想用 Superpowers 的工程纪律，用 `superpowers-feature-workflow`。
-- 如果工作已经结束，想让下一次会话自动接上这次的经验，用 `superpowers-learning-workflow`。
-- 如果你只想先补齐 OpenSpec change 产物，用 `openspec-feature-workflow`。
+- 想要一个从澄清到验证的完整统一入口，用 `openspec-superpowers-workflow`
+- 想要“先想透、再锁准、最后做稳”的四阶段节奏，用 `superpowers-openspec-superpowers-workflow`
+- 只想要 Superpowers 工程纪律，不需要 OpenSpec change 产物，用 `superpowers-feature-workflow`
+- 工作完成后想沉淀可复用经验和当前状态，用 `superpowers-learning-workflow`
+- 只想先生成 proposal、design、specs、tasks，用 `openspec-feature-workflow`
 
-## 配套文档
+## 源码层配套文档
 
-- [INSTALL.md](INSTALL.md)
-- [INSTALL.cn.md](INSTALL.cn.md)
+- [源码层安装说明](INSTALL.cn.md)
+- [源码层使用指南](USAGE.cn.md)
+- [English Installation Notes](INSTALL.md)
+- [English Usage Guide](USAGE.md)
+
+## 与 `dist/` 的关系
+
+- `team-skills/`：面向维护者和适配者的源码工作流定义
+- `dist/`：面向具体 AI 工具的可安装 bundle
+
+这两层在写法和文件结构上可以不同，但预期行为应保持一致。

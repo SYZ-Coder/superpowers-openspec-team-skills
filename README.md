@@ -1,185 +1,303 @@
 # Superpowers + OpenSpec Team Skills
 
-## Chinese Docs
+Structured workflow packs for AI coding assistants, with built-in conversation memory, project memory, and learning-oriented collaboration patterns.
 
-Chinese readers can start here:
+This repository helps teams stop agents from jumping straight into code. It provides reusable workflows for clarification, spec writing, implementation, verification, archive, and optional repo-persisted memory, so AI coding support can become a durable collaboration capability instead of a one-off chat response.
 
-- [README.cn.md](README.cn.md)
-- [MEMORY.cn.md](MEMORY.cn.md)
-- [VERIFY.cn.md](VERIFY.cn.md)
-- [team-skills/INSTALL.cn.md](team-skills/INSTALL.cn.md)
-- [team-skills/README.cn.md](team-skills/README.cn.md)
+Important: these workflows are explicit opt-in. They should run only when the user names the workflow or when repository policy requires it.
 
-This is a skill library with memory and autonomous learning workflows designed for AI programming assistants. The goal is straightforward: enable agents to follow structured processes rather than jumping straight into writing code.Users can combine Superpowers and OpenSpec as needed.
-
-This repository now has two layers:
-
-- `team-skills/`: source workflow definitions maintained by the project
-- `dist/`: pre-adapted bundles for specific tools such as Codex, Cursor, and Claude Code
-
-If you are a user of this repository, start with `dist/` and `scripts/`. Do not copy a single orchestrator workflow from `team-skills/` unless you are intentionally extending or adapting the source definitions yourself.
-
-Source workflows under `team-skills/` and tool bundles under `dist/` may differ in wording and structure, but they should remain functionally aligned. Source workflows are maintainer-facing definitions; distributed bundles are tool-adapted runtime forms of the same workflow.
-
-Important: these workflows are explicit opt-in workflows. They are not intended to become the default background behavior of your AI tool. Users should turn them on by explicit request, by naming the workflow, or because a repository policy explicitly requires them.
-
-If you want Codex to ignore these workflows unless explicitly invoked, install the bundle and only activate it by workflow name in the conversation.
-
-Example:
-
-```text
-Use $superpowers-openspec-execution-workflow for this feature.
-```
+Chinese readers: [Chinese README](README.cn.md)
 
 ## Start Here
 
-### Why This Skill Pack Exists
+Use this README in three layers:
 
-This repository is for teams that want AI coding tools to stop jumping straight into code and instead follow a clearer delivery path:
+1. Decide whether you need this repository at all.
+2. Choose one workflow family and one target tool.
+3. Follow the matching install and activation path.
+
+If you only need the fastest orientation, read these sections first:
+
+- [What This Repository Is](#what-this-repository-is)
+- [Workflow Packs](#workflow-packs)
+- [How To Choose](#how-to-choose)
+- [Quick Start](#quick-start)
+- [Task Confirmation and Continuations](#task-confirmation-and-continuations)
+- [Installing Multiple Bundles](#installing-multiple-bundles)
+
+## At A Glance
+
+| Need | Use |
+| --- | --- |
+| One end-to-end delivery workflow | `openspec-superpowers` |
+| Explore first, spec second, build third | `superpowers-openspec-superpowers` |
+| Superpowers-only implementation discipline | `superpowers-feature` |
+| OpenSpec artifacts only | `openspec-feature` |
+| After delivery, preserve lessons, update project memory, and help the next session resume cleanly | `superpowers-learning` |
+
+## Choose By Tool
+
+| Tool | Install shape | Best activation pattern | Main caveat |
+| --- | --- | --- | --- |
+| Codex | `.codex/skills/` | Explicit skill name such as `$openspec-superpowers-workflow` | Multiple bundles are usually safe |
+| Cursor | `AGENTS.md` + `.cursor/rules/` in the target repo | Explicit text request in chat | Mixed bundles can create routing ambiguity |
+| Claude Code | `CLAUDE.md` + `.claude/commands/` in the target repo | Explicit slash command | `CLAUDE.md` follows the most recent install |
+
+## Choose By Outcome
+
+If your goal is primarily:
+
+- shipping a feature with one workflow: go to [openspec-superpowers](#workflow-packs)
+- exploring before locking requirements: go to [superpowers-openspec-superpowers](#workflow-packs)
+- preserving session outcomes after delivery so the next session can resume with the right context: go to [Use memory when you need cross-session continuity](#4-use-memory-when-you-need-cross-session-continuity) and `superpowers-learning`
+- understanding installation differences by tool: go to [Tool-Specific Behavior](#tool-specific-behavior)
+- avoiding wrong bundle and workflow combinations: go to [Installing Multiple Bundles](#installing-multiple-bundles)
+
+## Common Mistakes First
+
+Before installing or testing a workflow, keep these rules in mind:
+
+- Do not treat these workflows as always-on defaults. They are explicit opt-in.
+- Install the bundle that matches the workflow you plan to trigger.
+- In Cursor, repository rules are part of the runtime. Reopen the project after installing or replacing a bundle.
+- In the two combined workflows, `tasks.md` confirmation is not the same thing as OpenSpec apply. The workflow should pause, wait for confirmation, then continue with the defined handoff.
+
+## What This Repository Is
+
+This is not just a prompt collection. It is a workflow skill system for AI coding assistants.
+
+Its value is in turning AI coding from a temporary conversation into a repeatable, traceable, and reusable way of working:
+
+- workflow: guide the assistant to understand first, then implement, instead of editing code immediately
+- memory: carry project background, current state, key decisions, and known issues across sessions
+- learning: capture lessons after meaningful work so useful patterns can be reused later
+- collaboration boundaries: give both individual developers and project teams a more stable way to work with AI
+
+If you want AI to do more than generate a few code snippets, and instead participate in clarification, specification, implementation, verification, archive, and knowledge capture, this repository is designed for that style of engineering collaboration.
+
+This project has two layers:
+
+- `team-skills/`: source workflow definitions maintained by the project
+- `dist/`: installable bundles adapted for Codex, Cursor, and Claude Code
+
+If you are using the project, start with `dist/` and `scripts/`.
+Do not copy a single entry workflow out of `team-skills/` unless you are intentionally extending the source definitions.
+
+## Who This Is For
+
+This repository works for both individual developers and project teams:
+
+- individual developers who want AI to remember project context instead of re-explaining everything every session
+- small teams that want shared workflow discipline, consistent terminology, and clearer delivery boundaries with AI
+- evolving codebases that need AI to inherit prior decisions and stage status across longer-running work
+
+Use this repository if you want your AI coding tool to:
 
 - clarify before implementation
-- lock agreed behavior before risky changes
+- lock behavior before risky changes
 - implement with tests and verification
-- keep a clean closeout path for completed work
-- preserve project context in the repository so new sessions do not start from scratch
+- finish with a clean archive or closeout step
+- preserve durable project context across sessions
+- build up longer-term memory and reusable lessons over time
 
-### Project Memory
+## Common Scenarios
 
-This repository now includes an optional repo-persisted memory pattern for Superpowers-based workflows.
+- solo project work where you want AI to remember the project background, current phase, and latest progress
+- feature delivery where you want AI to sort out requirements and specs before coding
+- maintenance in older or more complex repositories where AI should understand first and modify second
+- team collaboration where different people should get more consistent workflow behavior and output structure from AI
+- knowledge capture where decisions, lessons learned, and stable patterns should remain available for future sessions
 
-When a project contains `.superpowers-memory/`, Superpowers workflows should:
+## Workflow Packs
 
-- read `PROJECT_CONTEXT.md` for stable project facts
-- read `CURRENT_STATE.md` for the latest working context
-- read `DECISIONS.md` and `KNOWN_FAILURES.md` when they exist
-- read recent entries under `session-journal/`
-- update the relevant memory files before ending the session
-- run `scripts/validate-superpowers-memory.ps1` when memory quality matters for the workflow
+Five workflow families are included:
 
-This gives AI a lightweight cross-session memory without requiring a separate memory service.
+- `openspec-superpowers`: one end-to-end flow from clarification through verification
+- `superpowers-openspec-superpowers`: start wide with Superpowers, lock the agreed truth with OpenSpec, then come back to Superpowers to build, verify, and archive with confidence
+- `superpowers-feature`: Superpowers-only design, planning, TDD, and verification
+- `superpowers-learning`: not a primary delivery workflow, but a post-delivery enhancement layer used after other workflows to update project memory, preserve durable lessons, and help the next session pick up from the right state
+- `openspec-feature`: create OpenSpec proposal, design, specs, and tasks before implementation
 
-Recommended default usage: let the tool read repo memory at the start of a new session, keep `PROJECT_CONTEXT.md` and `CURRENT_STATE.md` minimally current, and after meaningful work use `superpowers-learning` as the default memory closeout entry. Do not expect ordinary chat to auto-write memory files. For a lighter fallback, use `scripts/run-superpowers-memory-closeout.ps1`.
-
-### Requirements
-
-- OpenSpec CLI when using workflows that create or inspect OpenSpec changes
-- A real project repository where the agent can write design docs, plans, OpenSpec changes, code, tests, and verification output
-- Optional for cross-session memory: a `.superpowers-memory/` folder in the target project
-
-### Recommended Entry Points
-
-- `openspec-superpowers`: full feature flow from clarification through verification
-- `superpowers-openspec-execution`: Superpowers exploration, OpenSpec locking, Superpowers execution and verification, then OpenSpec archive
-- `superpowers-feature`: design, planning, TDD, and verification without OpenSpec artifact generation
-- `superpowers-learning`: reflective capture of durable project knowledge, session outcomes, and reusable lessons
-- `openspec-feature`: OpenSpec proposal, design, specs, and tasks before implementation
-
-### How To Choose
-
-- Use `openspec-superpowers` when you want one end-to-end entry point and do not want to decide the step order yourself. It is the general full-flow option from clarification through verification.
-- Use `superpowers-openspec-execution` when you want a fixed four-step path: Superpowers exploration, OpenSpec locking, Superpowers execution, and OpenSpec archive.
-- Use `superpowers-feature` when you only want the Superpowers engineering discipline without OpenSpec change artifacts.
-- Use `superpowers-learning` when meaningful work has finished and you want to preserve what the session taught the team.
-- Use `openspec-feature` when you only want to create or complete OpenSpec change artifacts before implementation.
-
-### Recommended Closure
-
-For long-running projects, a good pattern is:
-
-1. use one delivery workflow
-2. finish implementation and verification
-3. use `superpowers-learning` to preserve durable lessons and current state
-
-## What Is Included
-
-Source workflows:
+Source workflow docs:
 
 - [OpenSpec + Superpowers Workflow](team-skills/openspec-superpowers-workflow/README.md)
-- [Superpowers -> OpenSpec -> Superpowers Workflow](team-skills/superpowers-openspec-execution-workflow/README.md)
+- [Superpowers -> OpenSpec -> Superpowers Workflow](team-skills/superpowers-openspec-superpowers-workflow/README.md)
 - [Superpowers Feature Workflow](team-skills/superpowers-feature-workflow/README.md)
 - [Superpowers Learning Workflow](team-skills/superpowers-learning-workflow/README.md)
 - [OpenSpec Feature Workflow](team-skills/openspec-feature-workflow/README.md)
 
-Each source workflow now also includes a machine-readable `workflow.yaml` file for dependency and tool metadata.
+Each source workflow also includes a machine-readable `workflow.yaml`.
+
+## How To Choose
+
+- Choose `openspec-superpowers` when you want one general workflow for non-trivial feature delivery.
+- Choose `superpowers-openspec-superpowers` when you want to explore first, lock the truth second, then come back and build the change with more confidence and less chaos.
+- Choose `superpowers-feature` when you want disciplined engineering without OpenSpec change artifacts.
+- Choose `superpowers-learning` when delivery is already done and you want to write back the durable outcomes of this session so the next session can resume with the right context.
+- Choose `openspec-feature` when you only want change artifacts before implementation begins.
+
+`superpowers-learning` needs a different mental model from the delivery workflows above. It is best treated as an enhancement layer that follows `superpowers-feature`, `superpowers-openspec-superpowers`, or `openspec-superpowers` after meaningful work is finished. Its job is to review what happened in the session, separate stable project facts from temporary task noise, update `.superpowers-memory/`, and capture reusable lessons that may later become skills, checklists, or knowledge-base material.
+
+Recommended long-running pattern:
+
+1. Run one delivery workflow.
+2. Finish implementation and verification.
+3. Run `superpowers-learning` to write stable facts, current state, session notes, and reusable lessons back into project memory.
+
+## Explicit Activation
+
+These workflows should activate only when:
+
+- the user explicitly names the workflow
+- the user explicitly asks for this workflow style
+- repository policy explicitly requires it
+
+They should not become the default background behavior of your AI tool.
+
+Example:
+
+```text
+Use $superpowers-openspec-superpowers-workflow for this feature.
+```
+
+## Quick Start
+
+### 1. Pick the right install target
+
+- Codex: install a bundle into `.codex/skills/`
+- Cursor: install repository rules and `AGENTS.md` into the target project
+- Claude Code: install command files and `CLAUDE.md` into the target project
+
+### 2. Install a bundle
+
+Match the installed bundle to the workflow you plan to activate. Do not install `openspec-superpowers` and then try to trigger `superpowers-openspec-superpowers`, or the runtime rules may not match the prompt.
+
+If you want the single combined OpenSpec-first workflow, install `openspec-superpowers`.
+
+Windows PowerShell examples:
+
+```powershell
+.\scripts\install-codex.ps1 -Bundle openspec-superpowers
+.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
+.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
+```
+
+macOS or Linux examples:
+
+```bash
+sh "./scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"
+sh "./scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root>
+sh "./scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root>
+```
+
+If you want the Superpowers -> OpenSpec -> Superpowers workflow, install `superpowers-openspec-superpowers`.
+
+Windows PowerShell examples:
+
+```powershell
+.\scripts\install-codex.ps1 -Bundle superpowers-openspec-superpowers
+.\scripts\install-cursor.ps1 -Bundle superpowers-openspec-superpowers -ProjectRoot <project-root>
+.\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-superpowers -ProjectRoot <project-root>
+```
+
+macOS or Linux examples:
+
+```bash
+sh "./scripts/install-codex.sh" --bundle superpowers-openspec-superpowers --codex-home "$HOME/.codex"
+sh "./scripts/install-cursor.sh" --bundle superpowers-openspec-superpowers --project-root <project-root>
+sh "./scripts/install-claude-code.sh" --bundle superpowers-openspec-superpowers --project-root <project-root>
+```
+
+### 3. Activate the workflow explicitly
+
+Activate the same workflow family that you installed above.
+
+- Codex:
+
+```text
+Use $openspec-superpowers-workflow to run this feature from clarification through verification.
+```
+
+- Cursor:
+
+```text
+Use the superpowers-openspec-superpowers workflow for this feature.
+```
+
+- Claude Code:
+
+```text
+/superpowers-openspec-superpowers-workflow
+<describe the feature request>
+```
+
+For Cursor, `superpowers-openspec-superpowers` is routed by repository rules after installation. It is not a native slash command, so the project must already contain the matching `AGENTS.md` and `.cursor/rules` files from the `superpowers-openspec-superpowers` bundle.
+
+### 4. Use memory when you need cross-session continuity
+
+Optional memory scaffold:
+
+```powershell
+.\scripts\install-superpowers-memory.ps1 -ProjectRoot <project-root>
+```
+
+Optional tool integration:
+
+```powershell
+.\scripts\install-superpowers-memory-integration.ps1 -Tool all -ProjectRoot <project-root>
+```
+
+When a project contains `.superpowers-memory/`, workflows can read and update files such as:
+
+- `PROJECT_CONTEXT.md`
+- `CURRENT_STATE.md`
+- `DECISIONS.md`
+- `KNOWN_FAILURES.md`
+- `session-journal/`
+
+Use `superpowers-learning` after meaningful work if you want to write back the durable outcomes of the session, update project memory, and make the next session easier to resume.
+
+## Requirements
+
+- OpenSpec CLI for workflows that create or inspect OpenSpec changes
+- A real project repository where the agent can write docs, plans, code, tests, and verification output
+- Optional: a `.superpowers-memory/` folder for repo-persisted memory
 
 ## Repository Layout
 
 ```text
 team-skills/   source workflow definitions
-dist/          prebuilt bundles for specific tools
-scripts/       install scripts for supported tools
+dist/          tool-specific distributable bundles
+scripts/       install and maintenance scripts
+templates/     memory templates and helper content
+docs/          supporting documentation
 ```
 
-## Community
+## Build vs Install
 
-If you want to contribute or review repository policies, start here:
+There are two kinds of scripts in this repository:
 
-- [CONTRIBUTING.md](CONTRIBUTING.md)
-- [SECURITY.md](SECURITY.md)
-- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
-- [CHANGELOG.md](CHANGELOG.md)
-- [docs/enhancement-overview.cn.md](docs/enhancement-overview.cn.md)
-- [docs/layered-adoption-model.cn.md](docs/layered-adoption-model.cn.md)
+- `install-*`: for end users installing bundles into AI tools or target projects
+- `build-dist.ps1`: for maintainers rebuilding and validating `dist/`
 
-The repository also includes a baseline GitHub Actions CI workflow for governance-file checks and memory-script smoke tests.
-
-## Quick Start
-
-In this document, `<repo-root>` means the local filesystem path of this repository after you clone or unzip it.
-
-Examples:
-
-- macOS: `/Users/alex/projects/superpowers-openspec-team-skills`
-- Linux: `/home/alex/projects/superpowers-openspec-team-skills`
-- Windows: `D:\projects\superpowers-openspec-team-skills`
-
-So this command:
-
-```bash
-sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"
-```
-
-becomes, for example:
-
-```bash
-sh "/Users/alex/projects/superpowers-openspec-team-skills/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"
-```
-
-Before running any install script, either:
-
-- change into the repository root first, or
-- invoke the script by absolute path
-
-Windows PowerShell:
+If you change workflow sources or bundle structure, run:
 
 ```powershell
-cd <repo-root>
-.\scripts\install-codex.ps1 -Bundle openspec-superpowers
+.\scripts\build-dist.ps1
 ```
 
-Windows PowerShell with absolute path:
+## Tool Support
 
-```powershell
-& "<repo-root>\scripts\install-codex.ps1" -Bundle openspec-superpowers
-```
+- Codex: best fit for native skill-based usage
+- Cursor: uses repository rules and `AGENTS.md`
+- Claude Code: uses command files and `CLAUDE.md`
+- Other tools: can be added later by creating new adapters under `dist/`
 
-macOS or Linux with native shell:
+## Advanced Usage
 
-```bash
-cd <repo-root>
-sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"
-```
+### Installer Notes
 
-macOS or Linux with PowerShell 7 (`pwsh`) if available:
-
-```bash
-cd <repo-root>
-pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex"
-```
-
-### Shell Installer Options
-
-The native shell installers support these flags:
+Native shell installers support these common flags:
 
 - `--bundle <name>`: choose which bundle to install
 - `--project-root <path>`: set the target repository root for Cursor, Claude Code, or memory installation
@@ -189,344 +307,87 @@ The native shell installers support these flags:
 - `--force`: skip overwrite confirmation
 - `--check-dependencies`: check runtime requirements such as `openspec` without installing files
 
-Available shell installers:
+PowerShell installers expose the same ideas through parameters such as `-Bundle`, `-ProjectRoot`, `-CodexHome`, `-DryRun`, `-Backup`, `-Force`, and `-CheckDependencies`.
+
+Available installer scripts:
 
 - `scripts/install-codex.sh`
+- `scripts/install-codex.ps1`
 - `scripts/install-cursor.sh`
+- `scripts/install-cursor.ps1`
 - `scripts/install-claude-code.sh`
+- `scripts/install-claude-code.ps1`
 - `scripts/install-superpowers-memory.sh`
+- `scripts/install-superpowers-memory.ps1`
 - `scripts/install-superpowers-memory-integration.sh`
+- `scripts/install-superpowers-memory-integration.ps1`
 
-Optional memory scaffold for any target project:
+### Tool-Specific Behavior
 
-```powershell
-.\scripts\install-superpowers-memory.ps1 -ProjectRoot <project-root>
-```
+- Codex installs bundles into `.codex/skills/` and is the closest fit for native skill-style usage.
+- Cursor installs repository rules plus `AGENTS.md`. Use explicit text requests in chat instead of expecting a native slash command.
+- Claude Code installs `.claude/commands/` files plus `CLAUDE.md`. Prefer invoking the generated slash command so the command file is applied consistently.
 
-macOS or Linux with native shell:
+### Installing Multiple Bundles
 
-```bash
-sh "<repo-root>/scripts/install-superpowers-memory.sh" --project-root <project-root>
-```
+Multiple bundles are supported, but the behavior is different in each tool.
 
-macOS or Linux with PowerShell 7 (`pwsh`) if available:
+- Codex: lowest risk. Bundles install as separate skill directories, so `openspec-superpowers-workflow` and `superpowers-openspec-superpowers-workflow` can coexist. The main requirement is to explicitly name the workflow you want.
+- Claude Code: medium risk. Slash-command files under `.claude/commands/` can coexist, but `CLAUDE.md` is a shared top-level file and the most recently installed bundle will overwrite it.
+- Cursor: highest risk. Bundle installs copy both `AGENTS.md` and `.cursor/rules/` into the target project. `AGENTS.md` is overwritten by the last install, while rule files may accumulate side by side. That means multiple bundles can coexist, but routing behavior depends on the final combination of files in the project.
 
-```bash
-pwsh -File ./scripts/install-superpowers-memory.ps1 -ProjectRoot <project-root>
-```
+Recommended practice:
 
-Optional project-level memory integration for Codex, Cursor, and Claude Code:
+- For Codex, installing multiple bundles is generally fine.
+- For Claude Code, multiple bundles are workable if you mainly rely on explicit slash commands and understand that `CLAUDE.md` follows the last installation.
+- For Cursor, prefer one primary workflow bundle per project unless you are intentionally managing the final `AGENTS.md` and `.cursor/rules/` layout yourself.
 
-```powershell
-.\scripts\install-superpowers-memory-integration.ps1 -Tool all -ProjectRoot <project-root>
-```
+Recommended activation examples:
 
-macOS or Linux with native shell:
+- Codex: `Use $openspec-superpowers-workflow to run this feature from clarification through verification.`
+- Cursor: `Use the superpowers-openspec-superpowers workflow for this feature.`
+- Claude Code: `/superpowers-openspec-superpowers-workflow`
 
-```bash
-sh "<repo-root>/scripts/install-superpowers-memory-integration.sh" --tool all --project-root <project-root>
-```
+### Task Confirmation and Continuations
 
-macOS or Linux with PowerShell 7 (`pwsh`) if available:
+The two combined workflows, `openspec-superpowers-workflow` and `superpowers-openspec-superpowers-workflow`, support a staged handoff after OpenSpec task generation.
 
-```bash
-pwsh -File ./scripts/install-superpowers-memory-integration.ps1 -Tool all -ProjectRoot <project-root>
-```
+`task_confirmation_mode` controls what happens after OpenSpec `tasks.md` is generated:
 
-After installation, reopen or refresh the project, start a new session so the tool can read repo memory, and use `superpowers-learning` after meaningful work to preserve current state and reusable lessons.
+- `required`: always stop and wait for user confirmation
+- `optional`: show the task list and wait by default, unless the user explicitly asks for direct execution
+- `off`: continue directly into implementation planning without pausing
 
-### Codex
+Default behavior is `optional`.
 
-Install a prebuilt Codex bundle instead of copying a source workflow manually.
+In the default flow:
 
-PowerShell:
+1. Generate and review OpenSpec artifacts.
+2. Show `tasks.md` and wait for confirmation.
+3. After confirmation, pause again and ask whether to continue execution development.
+4. After execution and verification, optionally pause again for review or archive continuation.
 
-```powershell
-.\scripts\install-codex.ps1 -Bundle openspec-superpowers
-```
+Useful continuation commands:
 
-macOS or Linux with native shell:
+- `continue-dev`
+- `continue-review`
+- `continue-archive`
 
-```bash
-sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"
-```
+If your environment supports Chinese trigger text, the corresponding shortcuts may also be available there, but the English commands above are the safest cross-environment examples.
 
-macOS or Linux with PowerShell 7 (`pwsh`) if available:
-
-```bash
-pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex"
-```
-
-Useful options:
-
-```powershell
-.\scripts\install-codex.ps1 -Bundle openspec-superpowers -DryRun
-.\scripts\install-codex.ps1 -Bundle openspec-superpowers -Backup
-.\scripts\install-codex.ps1 -Bundle openspec-superpowers -Backup -Force
-.\scripts\install-codex.ps1 -Bundle openspec-superpowers -CheckDependencies
-```
-
-macOS or Linux native shell examples:
-
-```bash
-sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex" --dry-run
-sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex" --backup
-sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex" --backup --force
-sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex" --check-dependencies
-```
-
-macOS or Linux PowerShell examples:
-
-```bash
-pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex" -DryRun
-pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex" -Backup
-pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex" -Backup -Force
-pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex" -CheckDependencies
-```
-
-- `-DryRun`: show what would be installed without copying files
-- `-Backup`: back up existing same-name skill directories before overwrite
-- `-Force`: skip overwrite confirmation
-- `-CheckDependencies`: check runtime requirements such as `openspec` without installing files
-
-Then restart or refresh Codex and invoke:
+Suggested prompts:
 
 ```text
-Use $openspec-superpowers-workflow to run this feature from clarification through verification.
+After OpenSpec tasks are generated, show them to me and wait for my confirmation before implementation.
 ```
-
-If you do not explicitly ask for one of these workflows, Codex should continue behaving normally and should not assume Superpowers or OpenSpec workflow usage by default.
-
-Available Codex bundles:
-
-- `openspec-superpowers`
-- `superpowers-openspec-execution`
-- `superpowers-feature`
-- `superpowers-learning`
-- `openspec-feature`
-
-### Cursor
-
-Install a Cursor bundle into the target repository root:
-
-```powershell
-.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
-```
-
-macOS or Linux with native shell:
-
-```bash
-sh "<repo-root>/scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root>
-```
-
-macOS or Linux with PowerShell 7 (`pwsh`) if available:
-
-```bash
-pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
-```
-
-This writes `.cursor/rules/` files plus an `AGENTS.md` workflow guide.
-
-Important: for Cursor, these workflow bundles are also intended to be explicit opt-in. Install them into the project, but only ask Cursor to follow them when you explicitly name the workflow in chat.
-
-Useful options:
-
-```powershell
-.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -DryRun
-.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup
-.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup -Force
-.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
-```
-
-macOS or Linux native shell examples:
-
-```bash
-sh "<repo-root>/scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root> --dry-run
-sh "<repo-root>/scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root> --backup
-sh "<repo-root>/scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root> --backup --force
-sh "<repo-root>/scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root> --check-dependencies
-```
-
-macOS or Linux PowerShell examples:
-
-```bash
-pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -DryRun
-pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup
-pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup -Force
-pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
-```
-
-You can also install the three-stage execution bundle:
-
-```powershell
-.\scripts\install-cursor.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
-```
-
-macOS or Linux with native shell:
-
-```bash
-sh "<repo-root>/scripts/install-cursor.sh" --bundle superpowers-openspec-execution --project-root <project-root>
-```
-
-macOS or Linux with PowerShell 7 (`pwsh`) if available:
-
-```bash
-pwsh -File ./scripts/install-cursor.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
-```
-
-Recommended explicit activation patterns:
 
 ```text
-Use the superpowers-openspec-execution workflow for this feature.
+After I confirm OpenSpec tasks, ask whether to continue execution development.
 ```
 
-or
+### Bundle Model
 
-```text
-Use $superpowers-openspec-execution-workflow for this feature.
-```
-
-For Cursor, use an explicit text request. The natural-language form above is the primary example. This bundle installs repository rules and `AGENTS.md` guidance, not a native slash command.
-
-Task confirmation control:
-
-- `task_confirmation_mode` controls what happens between generated OpenSpec `tasks.md` and implementation planning.
-- `required`: always stop for user confirmation after `tasks.md` is generated.
-- The default mode is `optional`.
-- `optional`: show the generated tasks and wait for confirmation by default, but allow the user to explicitly request direct execution in the same prompt.
-- `off`: do not pause for task confirmation; continue directly into implementation planning after `tasks.md`.
-- With `optional`, after OpenSpec `tasks.md` is generated, the workflow shows the tasks and waits for confirmation.
-- For `openspec-superpowers-workflow` and `superpowers-openspec-execution-workflow`, once `tasks.md` is confirmed, the workflow should stay active, refuse to fall back to OpenSpec apply, and pause again to ask whether to continue execution development.
-- For those same workflows, code review is a later follow-up prompt that appears only after execution and verification complete.
-- Fixed continuation commands for those handoffs are `继续开发` / `continue-dev` and later `继续审查` / `continue-review`.
-- If archive is part of the flow, a later archive handoff may use `继续归档` / `continue-archive`.
-- These short continuation commands do not replace the original OpenSpec or Superpowers commands; the original workflow and skill entries remain valid.
-
-Stage state machine for the two combined workflows:
-
-1. OpenSpec artifacts stage
-   `proposal.md`, `design.md`, `spec.md`, and `tasks.md` are created and revised until the user confirms `tasks.md`.
-2. Development continuation stage
-   After `tasks.md` is confirmed, the workflow pauses and accepts `继续开发` or `continue-dev`.
-   This stage still means Superpowers planning, development, TDD, and verification.
-3. Review continuation stage
-   After development and verification finish, the workflow may pause again and accept `继续审查` or `continue-review`.
-4. Archive continuation stage
-   If the project uses OpenSpec archive flow and the work is aligned, the workflow may finally accept `继续归档` or `continue-archive`.
-   The original `$openspec-archive-change` entry remains valid here.
-- You can think of the three modes as: `required` for strict review-first teams, `optional` for flexible day-to-day use, and `off` for uninterrupted execution.
-- To require confirmation explicitly, add: `After OpenSpec tasks are generated, show them to me and wait for my confirmation before implementation.`
-- To require the extra post-task pause, add: `After I confirm OpenSpec tasks, ask whether to continue execution development.`
-
-Example prompt:
-
-```text
-Use the superpowers-openspec-execution workflow for this feature.
-
-Now update the drift-bottle review flow based on 2026-06-02_drift-bottle_create-and-audit-rating-full-chain.md.
-Requirements:
-1. Remove manual review because there are no reviewers.
-2. Keep automatic review if it already exists.
-3. Enable the automatic audit flow.
-4. When the user finally publishes a drift bottle, default the rating to excellent unless the automatic rating determines otherwise.
-Please follow the workflow in order: Superpowers exploration first, then OpenSpec locking, then Superpowers implementation and verification, then archive. Do not start by listing OpenSpec skills or jumping to openspec-propose.
-```
-
-### Claude Code
-
-Install a Claude Code bundle into the target repository root:
-
-```powershell
-.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
-```
-
-macOS or Linux with native shell:
-
-```bash
-sh "<repo-root>/scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root>
-```
-
-macOS or Linux with PowerShell 7 (`pwsh`) if available:
-
-```bash
-pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
-```
-
-This writes `.claude/commands/` files plus a `CLAUDE.md` project guide.
-
-Important: for Claude Code, install the bundle and activate workflows with the generated slash command. Prefer slash-command invocation over natural-language routing so Claude Code reads the command file and applies the workflow gates consistently.
-
-Useful options:
-
-```powershell
-.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -DryRun
-.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup
-.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup -Force
-.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
-```
-
-macOS or Linux native shell examples:
-
-```bash
-sh "<repo-root>/scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --dry-run
-sh "<repo-root>/scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --backup
-sh "<repo-root>/scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --backup --force
-sh "<repo-root>/scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --check-dependencies
-```
-
-macOS or Linux PowerShell examples:
-
-```bash
-pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -DryRun
-pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup
-pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup -Force
-pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
-```
-
-You can also install the three-stage execution bundle:
-
-```powershell
-.\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
-```
-
-macOS or Linux with native shell:
-
-```bash
-sh "<repo-root>/scripts/install-claude-code.sh" --bundle superpowers-openspec-execution --project-root <project-root>
-```
-
-macOS or Linux with PowerShell 7 (`pwsh`) if available:
-
-```bash
-pwsh -File ./scripts/install-claude-code.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
-```
-
-Recommended explicit activation pattern:
-
-```text
-/superpowers-openspec-execution-workflow
-<describe the feature request>
-```
-
-For example:
-
-```text
-/superpowers-openspec-execution-workflow
-Add review store information.
-```
-
-After installation, verify these files exist in the target repository:
-
-```text
-CLAUDE.md
-.claude/commands/superpowers-openspec-execution-workflow.md
-```
-
-Bundles that rely on OpenSpec will install even if `openspec` is missing, but the scripts now warn you before install and can explicitly check dependencies first.
-
-## Bundle Model
-
-This repository distributes user-facing workflow packs as bundles, not as single folders copied from the source tree.
+This repository distributes user-facing workflow packs as bundles, not as single folders copied out of the source tree.
 
 Current bundle families:
 
@@ -534,78 +395,41 @@ Current bundle families:
 - `dist/cursor/bundles/`
 - `dist/claude-code/bundles/`
 
-Each bundle contains only the files that the target tool expects.
+Each bundle contains only the files expected by the target tool.
 
-## Build vs Install
+### Maintainer Context
 
-There are now two different script roles in this repository:
+The source workflows under `team-skills/` are intentionally more modular than the installable bundles.
 
-- `install-*.ps1`: for end users installing a bundle into Codex, Cursor, or Claude Code
-- `build-dist.ps1`: for maintainers refreshing and validating the distributable layer under `dist/`
+That distinction exists because:
 
-Example maintainer command:
+- source workflows are for maintainers
+- bundles are for end users
+
+If you change source workflows, metadata, or bundle structure conventions, rebuild `dist/` with:
 
 ```powershell
 .\scripts\build-dist.ps1
 ```
 
-Use `build-dist.ps1` after changing source workflows in `team-skills/`, metadata in `workflow.yaml`, or bundle structure conventions. It does not install anything into an AI tool. It is part of the release and maintenance workflow.
-
-## Why This Changed
-
-The original source workflows are modular and reusable, but some entry workflows depend on other workflows or external skills. That is good for maintenance, but it is not a good installation experience.
-
-The new structure fixes that by making a clear distinction:
-
-- source workflows are for maintainers
-- bundles are for end users
-
-## Tool Support
-
-### Codex
-
-Codex is the best current fit because it supports skills directly. Use the prebuilt bundle under `dist/codex/bundles/` or the installer script under `scripts/install-codex.ps1`.
-
-### Cursor
-
-Cursor uses repository rules and agent instructions rather than Codex-style skills. Use the bundles under `dist/cursor/bundles/`.
-
-### Claude Code
-
-Claude Code uses command files and project instructions rather than Codex-style skills. Use the bundles under `dist/claude-code/bundles/`.
-
-### Other Tools
-
-The repository is designed so that other agent runtimes can be supported later by adding new bundle adapters under `dist/`.
-
-## Explicit Activation
-
-These workflows should only activate when one of the following is true:
-
-- the user explicitly names the workflow
-- the user explicitly asks for the workflow style
-- the repository policy explicitly requires the workflow
-
-They should not be treated as default background behavior for every coding request.
-
-For Codex users, the safest pattern is:
-
-1. install the bundle
-2. keep normal coding prompts unchanged
-3. explicitly name the workflow only when you want it
-
-For Cursor and Claude Code users, follow the same rule:
-
-1. install the bundle into the project
-2. keep normal prompts unchanged
-3. explicitly ask for the workflow by name only when you want it
-
 ## Documentation
 
+- [English README](README.md)
 - [Chinese README](README.cn.md)
-- [Memory guide](MEMORY.md)
-- [Chinese memory guide](MEMORY.cn.md)
-- [Verification guide](VERIFY.md)
-- [Chinese verification guide](VERIFY.cn.md)
-- [Source workflow overview](team-skills/README.md)
-- [Source workflow installation notes](team-skills/INSTALL.md)
+- [English Memory Guide](MEMORY.md)
+- [Chinese Memory Guide](MEMORY.cn.md)
+- [English Verification Guide](VERIFY.md)
+- [Chinese Verification Guide](VERIFY.cn.md)
+- [English Source Workflow Overview](team-skills/README.md)
+- [Chinese Source Workflow Overview](team-skills/README.cn.md)
+- [English Source Workflow Install Notes](team-skills/INSTALL.md)
+- [Chinese Source Workflow Install Notes](team-skills/INSTALL.cn.md)
+- [English Source Workflow Usage Guide](team-skills/USAGE.md)
+- [Chinese Source Workflow Usage Guide](team-skills/USAGE.cn.md)
+
+## Community
+
+- [CONTRIBUTING.md](CONTRIBUTING.md)
+- [SECURITY.md](SECURITY.md)
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+- [CHANGELOG.md](CHANGELOG.md)

@@ -1,505 +1,353 @@
 # Superpowers + OpenSpec Team Skills
 
-这是一套面向 AI 编程助手的带有记忆和自主学工作流技能库，目标很直接：让智能体按流程做事，而不是一上来就直接写代码。用户可以按需组合Superpowers + OpenSpec使用
+面向 AI 编程助手的结构化工作流技能库，也是一套带有会话记忆、项目记忆和自主学习能力的 AI 协作技能库。
 
-现在仓库分成两层：
+这个仓库的目标很直接：不要让智能体一上来就直接写代码，而是先澄清、再定规格、再实现、再验证，并在需要时沉淀项目记忆，把一次性回答升级成可持续协作的 AI 编程能力。
+
+重要说明：这些 workflow 都是“显式启用型”。只有当用户明确点名 workflow，或仓库策略明确要求时，才应该启用。
+
+English version: [English README](README.md)
+
+## 先看这里
+
+这份 README 建议按三层来读：
+
+1. 先判断这个仓库是不是你要的协作方式。
+2. 再选一条 workflow 和一个目标工具。
+3. 最后按对应的安装和触发方式落地。
+
+如果你只想最快看懂，优先看这几节：
+
+- [这是什么仓库](#这是什么仓库)
+- [包含哪些工作流](#包含哪些工作流)
+- [怎么选择](#怎么选择)
+- [快速开始](#快速开始)
+- [任务确认与续接命令](#任务确认与续接命令)
+- [多 Bundle 安装说明](#多-bundle-安装说明)
+
+## 一眼看懂
+
+| 你的目标 | 推荐使用 |
+| --- | --- |
+| 想要一条完整交付 workflow | `openspec-superpowers` |
+| 想先探索、再锁规格、再实现 | `superpowers-openspec-superpowers` |
+| 只想要 Superpowers 的工程纪律 | `superpowers-feature` |
+| 只想生成 OpenSpec 产物 | `openspec-feature` |
+| 工作结束后想沉淀经验、更新项目记忆、让下次会话直接接上 | `superpowers-learning` |
+
+## 按工具选择
+
+| 工具 | 安装形态 | 推荐触发方式 | 主要注意点 |
+| --- | --- | --- | --- |
+| Codex | `.codex/skills/` | 显式点名 skill，例如 `$openspec-superpowers-workflow` | 多 bundle 共存通常问题不大 |
+| Cursor | 目标仓库里的 `AGENTS.md` + `.cursor/rules/` | 在对话里显式文本触发 | 多 bundle 混装时最容易出现路由歧义 |
+| Claude Code | 目标仓库里的 `CLAUDE.md` + `.claude/commands/` | 显式 slash command | `CLAUDE.md` 以后一次安装为准 |
+
+## 按目标选择
+
+如果你当前最关心的是：
+
+- 用一条 workflow 完成交付：先看 [包含哪些工作流](#包含哪些工作流)
+- 先探索再锁规格：优先看 `superpowers-openspec-superpowers`
+- 想在工作结束后把经验写回项目记忆、让下次会话直接接上：看 [需要跨会话记忆时再安装 memory](#4-需要跨会话记忆时再安装-memory) 和 `superpowers-learning`
+- 想看不同工具安装差异：看 [不同工具的启用方式](#不同工具的启用方式)
+- 想避免 bundle 和 workflow 错配：看 [安装与触发对照](#安装与触发对照) 和 [多 Bundle 安装说明](#多-bundle-安装说明)
+
+## 先避坑
+
+在安装和测试前，先记住这几条：
+
+- 这些 workflow 不是默认常驻流程，必须显式启用。
+- 安装的 bundle 必须和你准备触发的 workflow 对应一致。
+- 对 Cursor 来说，仓库规则本身就是运行时的一部分，安装后最好重新打开项目。
+- 对两个组合 workflow 来说，`tasks.md` 确认后不等于回落到 OpenSpec apply，而是应该按定义进入后续续接阶段。
+
+## 这是什么仓库
+
+这不是一个“只会给提示词模板”的仓库，而是一套面向 AI 编程助手的工作流技能系统。
+
+它的核心价值是把 AI 编程从“临时对话”提升为“可重复、可追踪、可继承”的协作流程：
+
+- 有工作流：让 AI 先理解问题，再进入实现，而不是直接开始改代码
+- 有记忆：让 AI 能跨会话继承项目背景、当前状态、关键决策和已知问题
+- 有学习：让 AI 在任务完成后沉淀经验，把可复用模式保留下来
+- 有协作边界：让个人开发者和项目团队都能更稳定地与 AI 分工合作
+
+如果你希望 AI 不只是“帮你写几段代码”，而是成为能持续参与需求澄清、规格收敛、实现、验证、归档和知识沉淀的工程协作者，这个仓库就是为这类使用方式设计的。
+
+这个项目分成两层：
 
 - `team-skills/`：项目维护的源码级 workflow 定义
-- `dist/`：面向具体工具的可安装 bundle
+- `dist/`：面向 Codex、Cursor、Claude Code 的可安装 bundle
 
-如果你是使用者，请优先使用 `dist/` 和 `scripts/`。不要再像以前那样，直接从 `team-skills/` 里复制单个入口 workflow 到目标工具目录，否则很容易因为依赖不完整而无法使用。
+如果你是使用者，请优先从 `dist/` 和 `scripts/` 开始。
+除非你是在扩展源码 workflow，否则不要直接从 `team-skills/` 复制单个入口流程到目标工具里。
 
-`team-skills/` 下的源码 workflow 和 `dist/` 下的工具分发 bundle，在写法和结构上可以不同，但功能上应该保持一致。前者面向维护者，后者面向具体工具运行时。
+## 适合谁使用
 
-重要说明：这些 workflow 都是“显式启用型”流程，不应该变成 AI 工具的默认后台行为。只有当用户明确要求、明确点名某个 workflow，或者仓库策略明确要求时，才应该启用。
+这个仓库同时适合个人开发者和项目团队：
 
-如果你希望 Codex 默认忽略这些 workflow，那就只安装 bundle，但只有在对话中明确点名 workflow 时才调用它。
+- 个人开发者：希望 AI 记住项目上下文，减少每次重新解释背景的成本
+- 小团队：希望多人和 AI 协作时，有一致的工作流、术语和交付边界
+- 持续演进的项目：希望 AI 不只是当前会话可用，而是能继承历史决策和阶段状态
 
-例如：
+如果你希望 AI 编程工具具备下面这些工作方式，这个仓库就很适合你：
 
-```text
-Use $superpowers-openspec-execution-workflow for this feature.
-```
-
-## 开始前先看
-
-### 这套技能库的价值
-
-这个仓库适合希望 AI 编程工具别一上来就直接写代码，而是按更稳的交付路径做事的团队：
-
-- 先澄清，再实现
-- 先确认行为，再改动代码
+- 先澄清需求，再开始实现
+- 先锁定行为，再进行高风险改动
 - 实现时带上测试和验证
-- 完成后有清晰的归档收尾
-- 把项目上下文持续记在仓库里，让新会话不是从空白开始
+- 完成后有明确的归档或收尾步骤
+- 让跨会话协作可以继承稳定上下文
+- 让 AI 逐步形成对项目的“长期记忆”和“复用经验”
 
-### 项目记忆
+## 典型使用场景
 
-这个仓库现在额外支持一套可选的、持久化到仓库里的 Superpowers 记忆模式。
+- 个人项目开发：希望 AI 能持续记住项目背景、当前阶段和上次做到哪里
+- 新功能交付：希望 AI 先把需求和规格理顺，再开始编码和验证
+- 老项目维护：希望 AI 在复杂仓库里少走弯路，先理解再修改
+- 团队协作开发：希望不同成员调用 AI 时，得到更一致的工作方式和输出结构
+- 知识沉淀：希望把关键决策、经验教训和稳定模式留下，供后续会话复用
 
-当目标项目中存在 `.superpowers-memory/` 时，Superpowers workflow 应该：
+## 包含哪些工作流
 
-- 先读取 `PROJECT_CONTEXT.md`，了解稳定的项目背景
-- 读取 `CURRENT_STATE.md`，了解当前工作状态
-- 阅读 `session-journal/` 里的最近记录
-- 在会话结束前更新 `CURRENT_STATE.md`，并补一条新的 session journal
+仓库当前提供 5 类工作流：
 
-这样不用单独部署记忆服务，也能让 AI 在跨会话时接上之前的上下文。
+- `openspec-superpowers`：一个从澄清到验证的完整统一入口
+- `superpowers-openspec-superpowers`：先用 Superpowers 把问题想透，再用 OpenSpec 把事实锁准，最后回到 Superpowers 把实现、验证和归档做稳
+- `superpowers-feature`：只使用 Superpowers 的设计、计划、TDD、验证纪律
+- `superpowers-learning`：不是主交付流程，而是其他 workflow 完成后的增强收尾层，用来更新项目记忆、沉淀经验，并让下一次会话可以直接接上当前成果
+- `openspec-feature`：先完成 OpenSpec proposal、design、specs、tasks，再进入实现
 
-默认推荐用法很简单：让工具在新会话开始时先读取 repo memory，平时至少保持 `PROJECT_CONTEXT.md` 和 `CURRENT_STATE.md` 基本可用、基本最新；做完一轮有意义的工作后，用 `superpowers-learning` 作为默认记忆收尾入口。不要期待普通聊天自动把内容写回 memory 文件；如果想更轻量一点，可以改用 `scripts/run-superpowers-memory-closeout.ps1`。
-
-### 运行要求
-
-- 使用 OpenSpec 相关 workflow 时，需要安装 OpenSpec CLI
-- 需要一个实际项目仓库来保存设计文档、计划、OpenSpec change、代码、测试和验证结果
-- 如果想启用跨会话记忆，目标项目里还需要有 `.superpowers-memory/` 目录
-
-### 推荐入口
-
-- `openspec-superpowers`：完整功能交付流程
-- `superpowers-openspec-execution`：先 Superpowers 探索，再 OpenSpec 固化，再回到 Superpowers 实现验证，最后归档 OpenSpec change
-- `superpowers-feature`：不生成 OpenSpec 产物，只做设计、计划、TDD、验证
-- `superpowers-learning`：在重要工作结束后沉淀项目记忆、会话结论和可复用经验
-- `openspec-feature`：只做 OpenSpec proposal、design、specs、tasks
-
-### 怎么选择
-
-- `openspec-superpowers`：适合想要一个从需求澄清一路带到实现验证的统一入口，不想自己判断每一步先后顺序的场景。
-- `superpowers-openspec-execution`：适合已经明确要按四步走的场景，也就是先 Superpowers 探索，再 OpenSpec 固化，再回到 Superpowers 执行实现验证，最后归档 OpenSpec change。
-- `superpowers-feature`：适合只想使用 Superpowers 的设计、计划、TDD、验证纪律，不需要 OpenSpec change 产物的场景。
-- `superpowers-learning`：适合重要工作结束后，把经验沉淀到仓库记忆里，并整理出后续可复用方法的场景。
-- `openspec-feature`：适合只想先把 OpenSpec proposal、design、specs、tasks 补齐，再决定后续实现怎么推进的场景。
-
-### 推荐收尾方式
-
-对于持续协作的项目，比较推荐这样串起来：
-
-1. 先用一个交付型 workflow
-2. 完成实现和验证
-3. 再用 `superpowers-learning` 保存稳定经验和当前状态
-
-## 包含内容
-
-源码层 workflow：
+源码层文档入口：
 
 - [OpenSpec + Superpowers Workflow](team-skills/openspec-superpowers-workflow/readme_cn.md)
-- [Superpowers -> OpenSpec -> Superpowers Workflow](team-skills/superpowers-openspec-execution-workflow/readme_cn.md)
+- [Superpowers -> OpenSpec -> Superpowers Workflow](team-skills/superpowers-openspec-superpowers-workflow/readme_cn.md)
 - [Superpowers Feature Workflow](team-skills/superpowers-feature-workflow/readme_cn.md)
 - [Superpowers Learning Workflow](team-skills/superpowers-learning-workflow/readme_cn.md)
 - [OpenSpec Feature Workflow](team-skills/openspec-feature-workflow/readme_cn.md)
 
-每个源码 workflow 现在都额外带有一个 `workflow.yaml`，用于描述依赖、支持的工具和运行要求。
+每个源码 workflow 也都带有一个 `workflow.yaml`，用于描述依赖与工具信息。
 
-## 仓库结构
+## 怎么选择
+
+- 想要一个统一入口处理完整功能交付，用 `openspec-superpowers`
+- 想要“先想透、再锁准、最后做稳”的四阶段节奏，用 `superpowers-openspec-superpowers`
+- 只想要 Superpowers 工程纪律，不需要 OpenSpec change 产物，用 `superpowers-feature`
+- 工作已经做完，想把这次经验、状态和可复用知识沉淀下来，并让下一次会话直接接上，用 `superpowers-learning`
+- 只想先补齐 OpenSpec 变更文档，用 `openspec-feature`
+
+其中 `superpowers-learning` 需要特别注意：它更像其他 workflow 的“增强收尾层”，不是一条替代开发流程的主入口。通常是在 `superpowers-feature`、`superpowers-openspec-superpowers`、`openspec-superpowers` 这类交付型 workflow 完成之后，再用它把本次会话里真正值得长期保留的内容写回 `.superpowers-memory/`，包括稳定项目事实、当前状态、简短会话记录，以及后续可沉淀成 skill、checklist 或知识库条目的经验。
+
+对持续协作的项目，推荐这样串联：
+
+1. 先运行一个交付型 workflow
+2. 完成实现与验证
+3. 再运行 `superpowers-learning`，把这次工作的稳定事实、当前状态、会话记录和可复用经验写回项目记忆
+
+## 显式启用规则
+
+这些 workflow 只应在以下情况启用：
+
+- 用户明确点名某个 workflow
+- 用户明确要求按这种 workflow 风格执行
+- 仓库策略明确要求使用该 workflow
+
+它们不应该成为 AI 工具的默认后台流程。
+
+示例：
 
 ```text
-team-skills/   workflow 源定义
-dist/          面向具体工具的分发包
-scripts/       安装脚本
+请使用 $superpowers-openspec-superpowers-workflow 处理这个功能。
 ```
 
 ## 快速开始
 
-本文里的 `<repo-root>`，指的是你把这个仓库 clone 下来或解压之后，它在你本机上的实际路径。
+### 1. 先选安装目标
 
-例如：
+- Codex：安装到 `.codex/skills/`
+- Cursor：安装到目标项目，写入规则文件和 `AGENTS.md`
+- Claude Code：安装到目标项目，写入命令文件和 `CLAUDE.md`
 
-- macOS：`/Users/alex/projects/superpowers-openspec-team-skills`
-- Linux：`/home/alex/projects/superpowers-openspec-team-skills`
-- Windows：`D:\projects\superpowers-openspec-team-skills`
+### 2. 安装 bundle
 
-所以这条命令：
-
-```bash
-sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"
-```
-
-实际可以写成：
-
-```bash
-sh "/Users/alex/projects/superpowers-openspec-team-skills/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"
-```
-
-在运行安装脚本前，请先满足下面两种方式之一：
-
-- 先切换到仓库根目录再执行
-- 或者直接使用脚本的绝对路径执行
-
-Windows PowerShell：
+Windows PowerShell 示例：
 
 ```powershell
-cd <repo-root>
 .\scripts\install-codex.ps1 -Bundle openspec-superpowers
+.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
+.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
 ```
 
-Windows PowerShell 绝对路径方式：
-
-```powershell
-& "<repo-root>\scripts\install-codex.ps1" -Bundle openspec-superpowers
-```
-
-macOS / Linux 原生 shell 方式：
+macOS / Linux 示例：
 
 ```bash
-cd <repo-root>
-sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"
+sh "./scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"
+sh "./scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root>
+sh "./scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root>
 ```
 
-如果系统里已经安装了 PowerShell 7（`pwsh`），也可以直接运行脚本：
+### 3. 显式启用 workflow
 
-```bash
-cd <repo-root>
-pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex"
+- Codex：
+
+```text
+请使用 $openspec-superpowers-workflow 处理这个功能，从需求澄清一直推进到验证完成。
 ```
 
-### Shell 安装脚本参数
+- Cursor：
 
-原生 shell 安装脚本支持这些参数：
+```text
+请按 superpowers-openspec-superpowers 工作流处理这个功能。
+```
 
-- `--bundle <name>`：选择要安装的 bundle
-- `--project-root <path>`：为 Cursor、Claude Code 或记忆安装指定目标项目根目录
-- `--codex-home <path>`：为 Codex 安装指定 Codex home 目录
-- `--dry-run`：只预览将写入什么，不实际复制
-- `--backup`：覆盖前先备份目标文件
-- `--force`：跳过覆盖确认
-- `--check-dependencies`：只检查运行时依赖，例如 `openspec`，不安装文件
+- Claude Code：
 
-当前可用的 shell 安装脚本：
+```text
+/superpowers-openspec-superpowers-workflow
+<请描述你的功能需求>
+```
 
-- `scripts/install-codex.sh`
-- `scripts/install-cursor.sh`
-- `scripts/install-claude-code.sh`
-- `scripts/install-superpowers-memory.sh`
-- `scripts/install-superpowers-memory-integration.sh`
+### 4. 需要跨会话记忆时再安装 memory
 
-如果你还想给目标项目安装 Superpowers 记忆骨架，可以运行：
+可选记忆骨架：
 
 ```powershell
 .\scripts\install-superpowers-memory.ps1 -ProjectRoot <project-root>
 ```
 
-macOS / Linux 原生 shell 方式：
-
-```bash
-sh "<repo-root>/scripts/install-superpowers-memory.sh" --project-root <project-root>
-```
-
-如果系统里已经安装了 PowerShell 7（`pwsh`），也可以直接运行脚本：
-
-```bash
-pwsh -File ./scripts/install-superpowers-memory.ps1 -ProjectRoot <project-root>
-```
-
-如果你还想把这套记忆接到 Codex、Cursor、Claude Code 的项目级指令里，可以继续运行：
+可选工具级接入：
 
 ```powershell
 .\scripts\install-superpowers-memory-integration.ps1 -Tool all -ProjectRoot <project-root>
 ```
 
-macOS / Linux 原生 shell 方式：
+当目标项目存在 `.superpowers-memory/` 时，workflow 可以读取和更新这些内容：
 
-```bash
-sh "<repo-root>/scripts/install-superpowers-memory-integration.sh" --tool all --project-root <project-root>
-```
+- `PROJECT_CONTEXT.md`
+- `CURRENT_STATE.md`
+- `DECISIONS.md`
+- `KNOWN_FAILURES.md`
+- `session-journal/`
 
-如果系统里已经安装了 PowerShell 7（`pwsh`），也可以直接运行脚本：
+如果你希望在工作结束后把这次会话真正值得保留的内容写回项目记忆，并让下一次会话可以直接接上当前经验与状态，完成后运行 `superpowers-learning`。
 
-```bash
-pwsh -File ./scripts/install-superpowers-memory-integration.ps1 -Tool all -ProjectRoot <project-root>
-```
+## 运行要求
 
-安装完成后，记得重开或刷新项目，再新开一个会话，让工具先读取 repo memory；一轮有意义的工作结束后，优先用 `superpowers-learning` 来沉淀当前状态和可复用经验。
+- 使用会创建或检查 OpenSpec change 的 workflow 时，需要安装 OpenSpec CLI
+- 需要一个真实项目仓库来保存文档、计划、代码、测试和验证结果
+- 可选：若要启用仓库持久化记忆，目标项目需要 `.superpowers-memory/`
 
-### Codex
-
-不要再手动复制源码 workflow，直接安装 Codex bundle。
-
-PowerShell：
-
-```powershell
-.\scripts\install-codex.ps1 -Bundle openspec-superpowers
-```
-
-macOS / Linux 原生 shell 方式：
-
-```bash
-sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"
-```
-
-macOS / Linux 使用 `pwsh`：
-
-```bash
-pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex"
-```
-
-常用参数：
-
-```powershell
-.\scripts\install-codex.ps1 -Bundle openspec-superpowers -DryRun
-.\scripts\install-codex.ps1 -Bundle openspec-superpowers -Backup
-.\scripts\install-codex.ps1 -Bundle openspec-superpowers -Backup -Force
-.\scripts\install-codex.ps1 -Bundle openspec-superpowers -CheckDependencies
-```
-
-macOS / Linux 原生 shell 示例：
-
-```bash
-sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex" --dry-run
-sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex" --backup
-sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex" --backup --force
-sh "<repo-root>/scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex" --check-dependencies
-```
-
-macOS / Linux `pwsh` 示例：
-
-```bash
-pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex" -DryRun
-pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex" -Backup
-pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex" -Backup -Force
-pwsh -File ./scripts/install-codex.ps1 -Bundle openspec-superpowers -CodexHome "$HOME/.codex" -CheckDependencies
-```
-
-- `-DryRun`：只预览将安装什么，不实际复制
-- `-Backup`：覆盖前先备份同名 skill 目录
-- `-Force`：跳过覆盖确认
-- `-CheckDependencies`：只检查运行时依赖，例如 `openspec`，不安装文件
-
-然后重启或刷新 Codex，再调用：
+## 仓库结构
 
 ```text
-Use $openspec-superpowers-workflow to run this feature from clarification through verification.
+team-skills/   workflow 源定义
+dist/          面向具体工具的分发 bundle
+scripts/       安装与维护脚本
+templates/     memory 模板与辅助内容
+docs/          补充文档
 ```
 
-如果用户没有明确要求某个 workflow，Codex 应该保持正常默认行为，而不是自动假设要使用 Superpowers 或 OpenSpec 流程。
+## Build 和 Install 的区别
 
-当前可用的 Codex bundle：
+这个仓库里的脚本分成两类：
 
-- `openspec-superpowers`
-- `superpowers-openspec-execution`
-- `superpowers-feature`
-- `superpowers-learning`
-- `openspec-feature`
+- `install-*`：给最终用户安装 bundle 或 memory
+- `build-dist.ps1`：给维护者刷新并校验 `dist/`
 
-### Cursor
-
-将 Cursor bundle 安装到目标项目根目录：
+如果你修改了 workflow 源码或 bundle 结构，请运行：
 
 ```powershell
-.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
+.\scripts\build-dist.ps1
 ```
 
-macOS / Linux 原生 shell 方式：
+## 工具支持
 
-```bash
-sh "<repo-root>/scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root>
-```
+- Codex：最适合原生 skills 方式
+- Cursor：通过仓库规则和 `AGENTS.md` 使用
+- Claude Code：通过命令文件和 `CLAUDE.md` 使用
+- 其他工具：后续可以在 `dist/` 下继续增加新适配层
 
-macOS / Linux 使用 `pwsh`：
+## 进阶使用
 
-```bash
-pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
-```
+### 安装脚本补充说明
 
-这会写入 `.cursor/rules/` 和 `AGENTS.md`。
+原生 shell 安装脚本支持这些常用参数：
 
-重要说明：对 Cursor 来说，这些 workflow bundle 也应该按“显式启用”来使用。可以安装到项目里，但只有在对话中明确点名 workflow 时，才让 Cursor 按它执行。
+- `--bundle <name>`：选择要安装的 bundle
+- `--project-root <path>`：为 Cursor、Claude Code 或 memory 安装指定目标项目根目录
+- `--codex-home <path>`：为 Codex 安装指定 Codex home 目录
+- `--dry-run`：只预览将写入什么，不实际复制
+- `--backup`：覆盖前先备份目标文件
+- `--force`：跳过覆盖确认
+- `--check-dependencies`：只检查运行时依赖，例如 `openspec`
 
-常用参数：
+PowerShell 版本安装脚本提供同样的能力，对应参数通常是 `-Bundle`、`-ProjectRoot`、`-CodexHome`、`-DryRun`、`-Backup`、`-Force`、`-CheckDependencies`。
 
-```powershell
-.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -DryRun
-.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup
-.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup -Force
-.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
-```
+当前可用安装脚本：
 
-macOS / Linux 原生 shell 示例：
+- `scripts/install-codex.sh`
+- `scripts/install-codex.ps1`
+- `scripts/install-cursor.sh`
+- `scripts/install-cursor.ps1`
+- `scripts/install-claude-code.sh`
+- `scripts/install-claude-code.ps1`
+- `scripts/install-superpowers-memory.sh`
+- `scripts/install-superpowers-memory.ps1`
+- `scripts/install-superpowers-memory-integration.sh`
+- `scripts/install-superpowers-memory-integration.ps1`
 
-```bash
-sh "<repo-root>/scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root> --dry-run
-sh "<repo-root>/scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root> --backup
-sh "<repo-root>/scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root> --backup --force
-sh "<repo-root>/scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root> --check-dependencies
-```
+### 不同工具的启用方式
 
-macOS / Linux `pwsh` 示例：
+- Codex 会把 bundle 安装到 `.codex/skills/`，最接近原生 skill 体验。
+- Cursor 会安装仓库规则和 `AGENTS.md`，因此应在对话里用显式文本请求启用 workflow，而不是期待原生 slash command。
+- Claude Code 会安装 `.claude/commands/` 和 `CLAUDE.md`，推荐优先使用生成的 slash command，确保命令文件被稳定应用。
 
-```bash
-pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -DryRun
-pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup
-pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup -Force
-pwsh -File ./scripts/install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
-```
+推荐启用示例：
 
-如果你想使用“三段式流程 + OpenSpec 归档”，也可以安装：
+- Codex：`请使用 $openspec-superpowers-workflow 处理这个功能，从需求澄清一直推进到验证完成。`
+- Cursor：`请按 superpowers-openspec-superpowers 工作流处理这个功能。`
+- Claude Code：`/superpowers-openspec-superpowers-workflow`
 
-```powershell
-.\scripts\install-cursor.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
-```
+### 任务确认与续接命令
 
-macOS / Linux 原生 shell 方式：
+`openspec-superpowers-workflow` 和 `superpowers-openspec-superpowers-workflow` 这两个组合流程，都支持在 OpenSpec `tasks.md` 生成后进入分阶段续接。
 
-```bash
-sh "<repo-root>/scripts/install-cursor.sh" --bundle superpowers-openspec-execution --project-root <project-root>
-```
+`task_confirmation_mode` 用来控制 `tasks.md` 生成后的行为：
 
-macOS / Linux 使用 `pwsh`：
+- `required`：必须停下并等待用户确认
+- `optional`：默认展示任务清单并等待确认；如果用户明确要求直接执行，也可以继续
+- `off`：不暂停，直接进入实现计划
 
-```bash
-pwsh -File ./scripts/install-cursor.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
-```
+默认模式是 `optional`。
 
-推荐显式启用方式：
+默认流转大致如下：
+
+1. 生成并确认 OpenSpec 产物
+2. 展示 `tasks.md`，等待用户确认
+3. 确认后再次暂停，询问是否继续开发执行
+4. 执行和验证完成后，可再进入审查或归档续接
+
+常用续接命令：
+
+- `continue-dev`
+- `continue-review`
+- `continue-archive`
+
+如果你的环境支持中文触发词，也可能支持对应中文口令；但为了跨环境稳定，README 里保留英文命令作为主示例。
+
+推荐提示语：
 
 ```text
-Use the superpowers-openspec-execution workflow for this feature.
+在 OpenSpec 的 tasks 生成后，先展示给我，并等待我确认后再进入实现。
 ```
-
-### Claude Code
-
-将 Claude Code bundle 安装到目标项目根目录：
-
-```powershell
-.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
-```
-
-macOS / Linux 原生 shell 方式：
-
-```bash
-sh "<repo-root>/scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root>
-```
-
-macOS / Linux 使用 `pwsh`：
-
-```bash
-pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
-```
-
-这会写入 `.claude/commands/` 和 `CLAUDE.md`。
-
-重要说明：对 Claude Code 来说，安装 bundle 以后，请优先用生成的 slash command 启用 workflow，不建议只靠自然语言描述来触发。这样 Claude Code 会读取命令文件，并稳定应用 workflow 门禁。
-
-常用参数：
-
-```powershell
-.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -DryRun
-.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup
-.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup -Force
-.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
-```
-
-macOS / Linux 原生 shell 示例：
-
-```bash
-sh "<repo-root>/scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --dry-run
-sh "<repo-root>/scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --backup
-sh "<repo-root>/scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --backup --force
-sh "<repo-root>/scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --check-dependencies
-```
-
-macOS / Linux `pwsh` 示例：
-
-```bash
-pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -DryRun
-pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup
-pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -Backup -Force
-pwsh -File ./scripts/install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
-```
-
-如果你想使用“三段式流程 + OpenSpec 归档”，也可以安装：
-
-```powershell
-.\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
-```
-
-macOS / Linux 原生 shell 方式：
-
-```bash
-sh "<repo-root>/scripts/install-claude-code.sh" --bundle superpowers-openspec-execution --project-root <project-root>
-```
-
-macOS / Linux 使用 `pwsh`：
-
-```bash
-pwsh -File ./scripts/install-claude-code.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
-```
-
-推荐显式启用方式：
 
 ```text
-Use the superpowers-openspec-execution workflow for this feature.
+在我确认 OpenSpec tasks 之后，再询问我是否继续进入开发执行阶段。
 ```
 
-或
+### Bundle 分发模型
 
-```text
-Use $superpowers-openspec-execution-workflow for this feature.
-```
-
-对 Cursor 来说，请使用这种显式文本请求方式。上面的自然语言写法是主示例。这个 bundle 安装的是仓库规则和 `AGENTS.md` 指引，不会注册原生 slash command。
-
-任务确认控制：
-
-- `task_confirmation_mode` 用来控制 OpenSpec `tasks.md` 生成后，到进入实现计划之前，这个 workflow 应该如何处理任务清单确认。
-- 对 `openspec-superpowers-workflow` 和 `superpowers-openspec-execution-workflow`，在默认的 `optional` 模式下，如果用户在下一轮对已生成的任务清单做确认或修改，同一个 workflow 应继续保持激活，禁止回落到 OpenSpec apply，并先提示用户是否继续执行开发；代码审查应在执行与验证完成后再单独提示。
-- 这两个流转点都提供固定口令：任务确认后可输入 `继续开发` 或 `continue-dev`；执行与验证完成后可输入 `继续审查` 或 `continue-review`。
-- 如果后续进入归档阶段，还可以使用 `继续归档` 或 `continue-archive`。
-- 这些只是更短的继续口令，不会替代原有的 OpenSpec / Superpowers 命令；原命令仍然可以继续使用。
-
-阶段状态机（适用于两个组合 workflow）：
-
-1. OpenSpec 产物阶段
-   先生成并反复修订 `proposal.md`、`design.md`、`spec.md`、`tasks.md`，直到用户确认 `tasks.md`。
-2. 开发续接阶段
-   `tasks.md` 确认后，workflow 暂停并接受 `继续开发` 或 `continue-dev`。
-   这一阶段仍然表示 Superpowers 的实现计划、开发、TDD 和验证。
-3. 审查续接阶段
-   开发和验证完成后，workflow 可以再次暂停，并接受 `继续审查` 或 `continue-review`。
-4. 归档续接阶段
-   如果项目使用 OpenSpec 归档流程，且代码、测试、规范都已对齐，workflow 最后可以接受 `继续归档` 或 `continue-archive`。
-   这里原有的 `$openspec-archive-change` 入口仍然有效。
-- `required`：每次都必须停下来展示任务清单，等待用户确认后才能进入实现阶段。
-- `optional`：默认展示任务清单并等待确认；但如果用户在本次提示词里明确要求“直接执行”，就可以跳过确认暂停。
-- `off`：不等待任务确认，`tasks.md` 生成后直接进入实现计划。
-- 当前默认模式是 `optional`。
-- 在 `optional` 模式下，OpenSpec `tasks.md` 生成后会先展示任务清单，并等待你确认后再进入实现阶段，除非你明确要求直接执行。
-- 如果你想明确要求先确认，再加一句：`OpenSpec tasks 生成后先给我看，我确认后再进入实现。`
-- 如果你想直接执行，再加一句：`OpenSpec tasks 生成后直接进入实现，不用等我确认任务清单。`
-
-例如：
-
-```text
-Use the superpowers-openspec-execution workflow for this feature.
-
-增加点评门店信息
-```
-
-示例：
-
-```text
-Use the superpowers-openspec-execution workflow for this feature.
-
-现在需要根据 2026-06-02_drift-bottle_create-and-audit-rating-full-chain.md 梳理的内容改造漂流瓶审核功能。
-要求：
-1. 目前没有审核人员，去掉人审功能。
-2. 如果自动审核已经支持，则保留，不要退化。
-3. 启用自动审核流程。
-4. 用户最终发布漂流瓶时，如果自动评级没有给出更具体结果，则默认按“优”处理，不需要人为评级。
-请严格按这个 workflow 执行：先做 Superpowers exploration，不要先进入 openspec-propose，不要先枚举 OpenSpec 技能。
-```
-
-安装后请确认目标项目里存在：
-
-```text
-CLAUDE.md
-.claude/commands/superpowers-openspec-execution-workflow.md
-```
-
-如果某个 bundle 依赖 OpenSpec，脚本现在会在安装前做提示；你也可以先用 `-CheckDependencies` 单独检查环境是否满足。
-
-## Bundle 分发模型
-
-这个仓库现在按 bundle 分发，而不是按单个源码目录分发。
+这个仓库现在按 bundle 分发，而不是直接把源码目录复制给最终用户。
 
 当前 bundle 目录：
 
@@ -507,82 +355,79 @@ CLAUDE.md
 - `dist/cursor/bundles/`
 - `dist/claude-code/bundles/`
 
-每个 bundle 只包含目标工具真正需要的文件结构。
+每个 bundle 只包含目标工具真正需要的文件。
 
-## Build 和 Install 的区别
+### 给维护者的说明
 
-现在仓库里的脚本分成两类：
+`team-skills/` 下的源码 workflow 会比可安装 bundle 更模块化。
 
-- `install-*.ps1`：给最终用户安装 bundle 到 Codex、Cursor、Claude Code
-- `build-dist.ps1`：给维护者刷新和校验 `dist/` 分发层
+这样拆分的原因是：
 
-维护者命令示例：
+- 源码 workflow 面向维护者
+- bundle 面向最终使用者
+
+如果你修改了源码 workflow、元数据或 bundle 结构约定，请重新构建 `dist/`：
 
 ```powershell
 .\scripts\build-dist.ps1
 ```
 
-当你修改了 `team-skills/` 下的源码 workflow、`workflow.yaml` 元数据，或者调整了 bundle 结构时，就应该运行 `build-dist.ps1`。它不是给最终用户安装 skill 用的，而是维护和发版流程的一部分。
-
-## 为什么要这样改
-
-原来的 `team-skills/` 适合维护，但不适合直接分发给最终用户。因为部分入口 workflow 本身会依赖其他 workflow 或外部 skills。
-
-所以现在明确区分：
-
-- 源码层：给维护者用
-- bundle 层：给安装和使用者用
-
-## 工具支持
-
-### Codex
-
-Codex 目前是最适合的目标工具，因为它原生支持 skills。推荐使用 `dist/codex/bundles/` 下的 bundle，或者直接运行 `scripts/install-codex.ps1`。
-
-### Cursor
-
-Cursor 更适合使用仓库规则和 agent 指令文件，因此请使用 `dist/cursor/bundles/` 下的适配包。
-
-### Claude Code
-
-Claude Code 更适合使用命令文件和项目说明，因此请使用 `dist/claude-code/bundles/` 下的适配包。
-
-### 其他工具
-
-这个仓库后续可以继续扩展其他适配层，只需要在 `dist/` 下增加新的工具 bundle 即可。
-
-## 显式启用规则
-
-这些 workflow 只应在下面几种情况下启用：
-
-- 用户明确点名某个 workflow
-- 用户明确要求按这种流程来做
-- 仓库策略文件明确要求必须使用该 workflow
-
-它们不应该被当成所有编码任务的默认后台流程。
-
-对于 Codex 用户，最稳妥的使用方式是：
-
-1. 先安装 bundle
-2. 平时保持正常的编码提问方式
-3. 只有在你真的想启用该流程时，才明确点名 workflow
-
-对于 Cursor 和 Claude Code 用户，也建议使用同样的原则：
-
-1. 先把 bundle 安装到项目里
-2. 平时保持正常提问
-3. 只有在你确实想启用该流程时，才明确点名 workflow
-
 ## 相关文档
 
 - [English README](README.md)
-- [记忆指南](MEMORY.cn.md)
-- [English memory guide](MEMORY.md)
-- [验证指南](VERIFY.md)
+- [中文 README](README.cn.md)
+- [English Memory Guide](MEMORY.md)
+- [中文记忆指南](MEMORY.cn.md)
+- [English Verification Guide](VERIFY.md)
 - [中文验证指南](VERIFY.cn.md)
-- [源码层 workflow 总览](team-skills/README.cn.md)
-- [源码层安装说明](team-skills/INSTALL.cn.md)
-## 增强文档
+- [English Source Workflow Overview](team-skills/README.md)
+- [中文源码工作流总览](team-skills/README.cn.md)
+- [English Source Workflow Install Notes](team-skills/INSTALL.md)
+- [中文源码工作流安装说明](team-skills/INSTALL.cn.md)
+- [English Source Workflow Usage Guide](team-skills/USAGE.md)
+- [中文源码工作流使用指南](team-skills/USAGE.cn.md)
 
-- [增强功能总览](docs/enhancement-overview.cn.md)
-- [分层采用模型](docs/layered-adoption-model.cn.md)
+## 社区与维护
+
+- [CONTRIBUTING.md](CONTRIBUTING.md)
+- [SECURITY.md](SECURITY.md)
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+- [CHANGELOG.md](CHANGELOG.md)
+
+## 安装与触发对照
+
+如果你在 Cursor、Codex 或 Claude Code 里要使用某条 workflow，安装的 bundle 和触发的 workflow 名称必须对应一致。
+
+- 想走 `openspec-superpowers-workflow`
+  - 安装：`openspec-superpowers`
+  - 触发：`$openspec-superpowers-workflow`、`Use the openspec-superpowers workflow for this feature.`
+- 想走 `superpowers-openspec-superpowers-workflow`
+  - 安装：`superpowers-openspec-superpowers`
+  - 触发：`$superpowers-openspec-superpowers-workflow`、`Use the superpowers-openspec-superpowers workflow for this feature.`
+
+不要安装 `openspec-superpowers`，却去触发 `superpowers-openspec-superpowers`。这会让工具命中另一套路由规则，常见表现就是：
+
+- 先去列 `openspec-propose`、`opsx:propose` 之类的 OpenSpec 命令
+- `tasks.md` 生成后提示 `/opsx:apply`
+- 没有按组合 workflow 回到 Superpowers 继续执行
+
+对 Cursor 来说，`superpowers-openspec-superpowers` 不是原生 slash command，而是依赖目标项目里的 `AGENTS.md` 和 `.cursor/rules` 生效。所以推荐顺序是：
+
+1. 先安装 `superpowers-openspec-superpowers` bundle
+2. 确认目标项目里的 `AGENTS.md` 和 `.cursor/rules/` 已被覆盖到最新版本
+3. 重新打开项目
+4. 再输入：`请按 superpowers-openspec-superpowers 工作流处理这个功能。`
+
+## 多 Bundle 安装说明
+
+多个 bundle 可以安装，但三种工具的行为不一样。
+
+- Codex：风险最低。bundle 会以独立 skill 目录并存，比如 `openspec-superpowers-workflow` 和 `superpowers-openspec-superpowers-workflow` 可以同时存在。主要要求只是触发时明确点名你要的 workflow。
+- Claude Code：中等风险。`.claude/commands/` 下的命令文件可以并存，但顶层 `CLAUDE.md` 是共享文件，最后一次安装的 bundle 会覆盖它。
+- Cursor：风险最高。安装 bundle 时会把 `AGENTS.md` 和 `.cursor/rules/` 复制到目标项目里。`AGENTS.md` 会被最后一次安装覆盖，而 `.cursor/rules/` 里的规则文件可能会并存叠加，所以最终行为取决于项目里实际落下来的文件组合。
+
+推荐做法：
+
+1. Codex：可以比较放心地安装多个 bundle，但触发时要明确点名 workflow。
+2. Claude Code：可以安装多个 bundle，但最好主要依赖显式 slash command，并接受 `CLAUDE.md` 以后安装者为准。
+3. Cursor：普通用户最好一个项目只保留一套主 workflow bundle；如果要混装，就需要自己确认最终的 `AGENTS.md` 和 `.cursor/rules/` 内容。

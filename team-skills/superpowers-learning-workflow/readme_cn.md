@@ -1,13 +1,13 @@
 # Superpowers Learning Workflow
 
-## 当前工作流做什么？
+## 当前工作流做什么
 
 `superpowers-learning-workflow` 是一个在重要工作结束后使用的反思型 workflow，用来把当前会话真正值得保留下来的内容沉淀到仓库里。
 
 它很适合接在这些 workflow 后面使用：
 
 - `superpowers-feature-workflow`
-- `superpowers-openspec-execution-workflow`
+- `superpowers-openspec-superpowers-workflow`
 - `openspec-superpowers-workflow`
 
 它会帮助团队把最近的工作整理成四类内容：
@@ -17,7 +17,7 @@
 3. 简短的会话记录
 4. 未来可能沉淀成 workflow、skill 或 checklist 的可复用经验
 
-## 什么时候使用？
+## 什么时候使用
 
 - 一次重要任务或会话刚结束。
 - 团队希望下一次会话能直接接上当前上下文。
