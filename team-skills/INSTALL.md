@@ -21,6 +21,7 @@ If you want to install the workflows into a tool, use the prebuilt bundles and i
 - Cursor: `dist/cursor/bundles/` or `scripts/install-cursor.ps1`
   For `superpowers-openspec-superpowers-workflow`, activate it in Cursor with an explicit text request after installation. This workflow is routed by repository rules, not by a native slash command.
 - Claude Code: `dist/claude-code/bundles/` or `scripts/install-claude-code.ps1`
+  If the target project already has a `CLAUDE.md` and you want to merge bundle instructions into it instead of replacing it, use `-MergeClaudeMd` in PowerShell or `--merge-claude-md` in the shell installer.
 
 Optional memory scaffold for Superpowers workflows:
 

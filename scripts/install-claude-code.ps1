@@ -15,6 +15,7 @@ param(
   [string]$ProjectRoot = (Get-Location).Path,
   [switch]$DryRun,
   [switch]$Backup,
+  [switch]$MergeClaudeMd,
   [switch]$Force,
   [switch]$CheckDependencies
 )
@@ -23,6 +24,51 @@ $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 . (Join-Path $PSScriptRoot "common\dependency-check.ps1")
+
+function Merge-ClaudeMdManagedBlock {
+  param(
+    [string]$BundleName,
+    [string]$SourcePath,
+    [string]$TargetPath
+  )
+
+  $startMarker = "<!-- BEGIN superpowers-openspec-team-skills:$BundleName -->"
+  $endMarker = "<!-- END superpowers-openspec-team-skills:$BundleName -->"
+  $sourceContent = Get-Content -LiteralPath $SourcePath -Raw
+  $managedBlock = @(
+    $startMarker
+    $sourceContent.TrimEnd("`r", "`n")
+    $endMarker
+  ) -join "`r`n"
+
+  if (-not (Test-Path -LiteralPath $TargetPath)) {
+    Set-Content -LiteralPath $TargetPath -Value $managedBlock
+    return
+  }
+
+  $targetContent = Get-Content -LiteralPath $TargetPath -Raw
+  $pattern = [regex]::Escape($startMarker) + ".*?" + [regex]::Escape($endMarker)
+  $withoutExistingBlock = [regex]::Replace(
+    $targetContent,
+    $pattern,
+    "",
+    [System.Text.RegularExpressions.RegexOptions]::Singleline
+  ).TrimEnd("`r", "`n")
+
+  if ([string]::IsNullOrWhiteSpace($withoutExistingBlock)) {
+    Set-Content -LiteralPath $TargetPath -Value $managedBlock
+    return
+  }
+
+  $mergedContent = @(
+    $withoutExistingBlock
+    ""
+    $managedBlock
+  ) -join "`r`n"
+
+  Set-Content -LiteralPath $TargetPath -Value $mergedContent
+}
+
 $bundleFolder = switch ($Bundle) {
   "openspec-superpowers-workflow" { "openspec-superpowers" }
   "superpowers-openspec-superpowers-workflow" { "superpowers-openspec-superpowers" }
@@ -72,7 +118,13 @@ Write-Host "Install target: $ProjectRoot"
 Write-Host ""
 Write-Host "Install plan:"
 $installPlan | ForEach-Object {
-  $status = if ($_.Exists) { "overwrite" } else { "new" }
+  $status = if ($MergeClaudeMd -and $_.Name -eq "CLAUDE.md" -and $_.Exists) {
+    "merge"
+  } elseif ($_.Exists) {
+    "overwrite"
+  } else {
+    "new"
+  }
   Write-Host ("- {0} -> {1} [{2}]" -f $_.Name, $_.Target, $status)
 }
 
@@ -89,7 +141,7 @@ if ($missingDependencies.Count -gt 0) {
 }
 
 if (($installPlan | Where-Object { $_.Exists }).Count -gt 0 -and -not $Force) {
-  $answer = Read-Host "One or more target files or directories already exist. Continue and overwrite them? (y/N)"
+  $answer = Read-Host "One or more target files or directories already exist. Continue and apply the planned changes? (y/N)"
   if ($answer -notin @("y", "Y", "yes", "YES")) {
     Write-Host "Install cancelled."
     return
@@ -106,10 +158,21 @@ foreach ($item in $installPlan) {
     Copy-Item -Recurse -Force $item.Target $backupDir
   }
 
-  Copy-Item -Recurse -Force $item.Source $ProjectRoot
+  if ($MergeClaudeMd -and $item.Name -eq "CLAUDE.md") {
+    Merge-ClaudeMdManagedBlock -BundleName $bundleFolder -SourcePath $item.Source -TargetPath $item.Target
+  } else {
+    Copy-Item -Recurse -Force $item.Source $ProjectRoot
+  }
+
   $results += [PSCustomObject]@{
     Name = $item.Name
-    Action = if ($item.Exists) { "overwritten" } else { "installed" }
+    Action = if ($MergeClaudeMd -and $item.Name -eq "CLAUDE.md" -and $item.Exists) {
+      "merged"
+    } elseif ($item.Exists) {
+      "overwritten"
+    } else {
+      "installed"
+    }
   }
 }
 

@@ -190,6 +190,16 @@ sh "./scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <p
 sh "./scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root>
 ```
 
+If the target project already has a `CLAUDE.md` and you want to merge the bundle instructions into it instead of replacing it, use:
+
+```powershell
+.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -MergeClaudeMd
+```
+
+```bash
+sh "./scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --merge-claude-md
+```
+
 If you want the Superpowers -> OpenSpec -> Superpowers workflow, install `superpowers-openspec-superpowers`.
 
 Windows PowerShell examples:
@@ -206,6 +216,16 @@ macOS or Linux examples:
 sh "./scripts/install-codex.sh" --bundle superpowers-openspec-superpowers --codex-home "$HOME/.codex"
 sh "./scripts/install-cursor.sh" --bundle superpowers-openspec-superpowers --project-root <project-root>
 sh "./scripts/install-claude-code.sh" --bundle superpowers-openspec-superpowers --project-root <project-root>
+```
+
+If the target project already has a `CLAUDE.md` and you want to merge the bundle instructions into it instead of replacing it, use:
+
+```powershell
+.\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-superpowers -ProjectRoot <project-root> -MergeClaudeMd
+```
+
+```bash
+sh "./scripts/install-claude-code.sh" --bundle superpowers-openspec-superpowers --project-root <project-root> --merge-claude-md
 ```
 
 ### 3. Activate the workflow explicitly
@@ -304,10 +324,11 @@ Native shell installers support these common flags:
 - `--codex-home <path>`: set the Codex home directory for Codex installs
 - `--dry-run`: preview what would be written without copying files
 - `--backup`: back up existing target files before overwrite
+- `--merge-claude-md`: for Claude Code installs, merge the bundle `CLAUDE.md` into an existing project `CLAUDE.md` instead of replacing it
 - `--force`: skip overwrite confirmation
 - `--check-dependencies`: check runtime requirements such as `openspec` without installing files
 
-PowerShell installers expose the same ideas through parameters such as `-Bundle`, `-ProjectRoot`, `-CodexHome`, `-DryRun`, `-Backup`, `-Force`, and `-CheckDependencies`.
+PowerShell installers expose the same ideas through parameters such as `-Bundle`, `-ProjectRoot`, `-CodexHome`, `-DryRun`, `-Backup`, `-MergeClaudeMd`, `-Force`, and `-CheckDependencies`.
 
 Available installer scripts:
 
@@ -347,6 +368,17 @@ Recommended activation examples:
 - Codex: `Use $openspec-superpowers-workflow to run this feature from clarification through verification.`
 - Cursor: `Use the superpowers-openspec-superpowers workflow for this feature.`
 - Claude Code: `/superpowers-openspec-superpowers-workflow`
+
+For Cursor, if the project has multiple workflow bundles, older rule files, or any routing ambiguity, use this stricter example:
+
+```text
+Use $superpowers-openspec-superpowers-workflow for this feature.
+
+Start with Superpowers exploration first. Do not start with openspec-propose or the default OpenSpec workflow.
+Then move to OpenSpec to generate proposal, design, spec, and tasks.
+After OpenSpec tasks are generated, show them to me and wait for my confirmation before implementation.
+Do not suggest /opsx:apply.
+```
 
 ### Task Confirmation and Continuations
 

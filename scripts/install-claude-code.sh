@@ -6,6 +6,7 @@ BUNDLE="openspec-superpowers"
 PROJECT_ROOT=$(pwd)
 DRY_RUN=0
 BACKUP=0
+MERGE_CLAUDE_MD=0
 FORCE=0
 CHECK_DEPS=0
 
@@ -27,6 +28,10 @@ while [ $# -gt 0 ]; do
       BACKUP=1
       shift
       ;;
+    --merge-claude-md)
+      MERGE_CLAUDE_MD=1
+      shift
+      ;;
     --force)
       FORCE=1
       shift
@@ -36,7 +41,7 @@ while [ $# -gt 0 ]; do
       shift
       ;;
     -h|--help)
-      echo "Usage: sh ./scripts/install-claude-code.sh [--bundle <name>] [--project-root <path>] [--dry-run] [--backup] [--force] [--check-dependencies]"
+      echo "Usage: sh ./scripts/install-claude-code.sh [--bundle <name>] [--project-root <path>] [--dry-run] [--backup] [--merge-claude-md] [--force] [--check-dependencies]"
       exit 0
       ;;
     *)
@@ -49,6 +54,37 @@ done
 SCRIPT_DIR=$(CDPATH= cd -- "$(dirname "$0")" && pwd)
 REPO_ROOT=$(CDPATH= cd -- "$SCRIPT_DIR/.." && pwd)
 . "$SCRIPT_DIR/common/dependency-check.sh"
+
+merge_claude_md_managed_block() {
+  bundle_name=$1
+  source_path=$2
+  target_path=$3
+  start_marker="<!-- BEGIN superpowers-openspec-team-skills:$bundle_name -->"
+  end_marker="<!-- END superpowers-openspec-team-skills:$bundle_name -->"
+  tmp_file=$(mktemp)
+
+  if [ -f "$target_path" ]; then
+    awk -v start="$start_marker" -v end="$end_marker" '
+      $0 == start { skip = 1; next }
+      $0 == end { skip = 0; next }
+      !skip { print }
+    ' "$target_path" >"$tmp_file"
+
+    while [ -s "$tmp_file" ] && [ -z "$(tail -n 1 "$tmp_file")" ]; do
+      awk 'NR == 1 { lines[NR] = $0; count = 1; next } { lines[++count] = $0 } END { for (i = 1; i < count; i++) print lines[i] }' "$tmp_file" >"$tmp_file.trim"
+      mv "$tmp_file.trim" "$tmp_file"
+    done
+
+    if [ -s "$tmp_file" ]; then
+      printf "\n" >>"$tmp_file"
+    fi
+  fi
+
+  printf "%s\n\n" "$start_marker" >>"$tmp_file"
+  cat "$source_path" >>"$tmp_file"
+  printf "\n%s\n" "$end_marker" >>"$tmp_file"
+  mv "$tmp_file" "$target_path"
+}
 
 case "$BUNDLE" in
   openspec-superpowers-workflow) BUNDLE_FOLDER="openspec-superpowers" ;;
@@ -106,7 +142,10 @@ while IFS= read -r SOURCE_PATH; do
   NAME=$(basename "$SOURCE_PATH")
   TARGET_PATH="$PROJECT_ROOT/$NAME"
   STATUS="new"
-  if [ -e "$TARGET_PATH" ]; then
+  if [ "$MERGE_CLAUDE_MD" -eq 1 ] && [ "$NAME" = "CLAUDE.md" ] && [ -e "$TARGET_PATH" ]; then
+    STATUS="merge"
+    EXISTING_COUNT=$((EXISTING_COUNT + 1))
+  elif [ -e "$TARGET_PATH" ]; then
     STATUS="overwrite"
     EXISTING_COUNT=$((EXISTING_COUNT + 1))
   fi
@@ -126,7 +165,7 @@ if [ "$MISSING_DEPS" -ne 0 ]; then
 fi
 
 if [ "$EXISTING_COUNT" -gt 0 ] && [ "$FORCE" -ne 1 ]; then
-  printf "One or more target files or directories already exist. Continue and overwrite them? (y/N) "
+  printf "One or more target files or directories already exist. Continue and apply the planned changes? (y/N) "
   read ANSWER
   case "$ANSWER" in
     y|Y|yes|YES) ;;
@@ -151,12 +190,21 @@ while IFS= read -r SOURCE_PATH; do
       mkdir -p "$BACKUP_ROOT/$TIMESTAMP"
       cp -R "$TARGET_PATH" "$BACKUP_ROOT/$TIMESTAMP/"
     fi
-    rm -rf "$TARGET_PATH"
   fi
 
-  cp -R "$SOURCE_PATH" "$PROJECT_ROOT/"
+  if [ "$MERGE_CLAUDE_MD" -eq 1 ] && [ "$NAME" = "CLAUDE.md" ]; then
+    merge_claude_md_managed_block "$BUNDLE_FOLDER" "$SOURCE_PATH" "$TARGET_PATH"
+  else
+    if [ "$EXISTS_BEFORE" -eq 1 ]; then
+      rm -rf "$TARGET_PATH"
+    fi
+    cp -R "$SOURCE_PATH" "$PROJECT_ROOT/"
+  fi
 
-  if [ "$EXISTS_BEFORE" -eq 1 ]; then
+  if [ "$MERGE_CLAUDE_MD" -eq 1 ] && [ "$NAME" = "CLAUDE.md" ] && [ "$EXISTS_BEFORE" -eq 1 ]; then
+    RESULTS="${RESULTS}- $NAME: merged
+"
+  elif [ "$EXISTS_BEFORE" -eq 1 ]; then
     RESULTS="${RESULTS}- $NAME: overwritten
 "
   else

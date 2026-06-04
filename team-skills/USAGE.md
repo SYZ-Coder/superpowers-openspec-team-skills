@@ -36,6 +36,24 @@ For maintainers or reviewers, a practical order is:
 
 ## Common Tasks
 
+### Install into Claude Code without replacing an existing `CLAUDE.md`
+
+If the target project already has a `CLAUDE.md`, use the merge mode instead of the default replace behavior.
+
+PowerShell:
+
+```powershell
+.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -MergeClaudeMd
+```
+
+shell:
+
+```bash
+sh "./scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --merge-claude-md
+```
+
+This keeps the existing `CLAUDE.md` and adds the bundle instructions as a managed block that can be updated on later installs.
+
 ### Inspect a workflow
 
 - Read the workflow README first.

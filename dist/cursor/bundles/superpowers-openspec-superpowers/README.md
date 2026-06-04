@@ -23,6 +23,17 @@ Use $superpowers-openspec-superpowers-workflow for this feature.
 
 Cursor does not install a native slash command for this workflow. Use an explicit text request so the repository rules can route the conversation into the intended workflow. The natural-language form above is the primary example.
 
+If the target project has mixed workflow bundles, older rule files, or routing ambiguity, use this stricter example:
+
+```text
+Use $superpowers-openspec-superpowers-workflow for this feature.
+
+Start with Superpowers exploration first. Do not start with openspec-propose or the default OpenSpec workflow.
+Then move to OpenSpec to generate proposal, design, spec, and tasks.
+After OpenSpec tasks are generated, show them to me and wait for my confirmation before implementation.
+Do not suggest /opsx:apply.
+```
+
 Task confirmation control:
 
 - The default mode is `optional`.

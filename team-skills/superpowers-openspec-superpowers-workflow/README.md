@@ -38,6 +38,17 @@ Use the superpowers-openspec-superpowers workflow for this feature.
 After OpenSpec tasks are generated, show them to me and wait for my confirmation before implementation.
 ```
 
+Stricter Cursor example for projects with mixed bundles, older rules, or routing ambiguity:
+
+```text
+Use $superpowers-openspec-superpowers-workflow for this feature.
+
+Start with Superpowers exploration first. Do not start with openspec-propose or the default OpenSpec workflow.
+Then move to OpenSpec to generate proposal, design, spec, and tasks.
+After OpenSpec tasks are generated, show them to me and wait for my confirmation before implementation.
+Do not suggest /opsx:apply.
+```
+
 Typical direct-execution example:
 
 ```text

@@ -308,6 +308,17 @@ PowerShell 版本安装脚本提供同样的能力，对应参数通常是 `-Bun
 - Cursor：`请按 superpowers-openspec-superpowers 工作流处理这个功能。`
 - Claude Code：`/superpowers-openspec-superpowers-workflow`
 
+对 Cursor 来说，如果项目里混装过多个 workflow bundle、残留过旧规则，或者你怀疑路由有歧义，可以改用这个“严格版示例”：
+
+```text
+Use $superpowers-openspec-superpowers-workflow for this feature.
+
+先用 Superpowers 做探索，不要先进入 openspec-propose 或默认 OpenSpec workflow。
+然后再进入 OpenSpec，生成 proposal、design、spec、tasks。
+在 OpenSpec tasks 生成后，先展示给我，并等待我确认后再进入实现。
+不要提示 /opsx:apply。
+```
+
 ### 任务确认与续接命令
 
 `openspec-superpowers-workflow` 和 `superpowers-openspec-superpowers-workflow` 这两个组合流程，都支持在 OpenSpec `tasks.md` 生成后进入分阶段续接。
@@ -431,3 +442,28 @@ PowerShell 版本安装脚本提供同样的能力，对应参数通常是 `-Bun
 1. Codex：可以比较放心地安装多个 bundle，但触发时要明确点名 workflow。
 2. Claude Code：可以安装多个 bundle，但最好主要依赖显式 slash command，并接受 `CLAUDE.md` 以后安装者为准。
 3. Cursor：普通用户最好一个项目只保留一套主 workflow bundle；如果要混装，就需要自己确认最终的 `AGENTS.md` 和 `.cursor/rules/` 内容。
+
+## Claude Code 追加合并安装
+
+如果目标项目里已经有 `CLAUDE.md`，并且你不想直接覆盖，而是希望把 bundle 里的说明追加合并进去，可以使用下面这些安装命令：
+
+PowerShell：
+
+```powershell
+.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -MergeClaudeMd
+.\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-superpowers -ProjectRoot <project-root> -MergeClaudeMd
+```
+
+shell：
+
+```bash
+sh "./scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --merge-claude-md
+sh "./scripts/install-claude-code.sh" --bundle superpowers-openspec-superpowers --project-root <project-root> --merge-claude-md
+```
+
+默认安装仍然是覆盖行为。只有显式传入 `-MergeClaudeMd` 或 `--merge-claude-md` 时，脚本才会把 bundle 里的 `CLAUDE.md` 内容以受管区块的方式合并到已有文件里。
+
+在安装参数层面，也可以这样理解：
+
+- `-MergeClaudeMd`：PowerShell 安装时，把 bundle 的 `CLAUDE.md` 合并进已有 `CLAUDE.md`
+- `--merge-claude-md`：shell 安装时，执行同样的追加合并逻辑
