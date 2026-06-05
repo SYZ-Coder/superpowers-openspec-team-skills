@@ -1,0 +1,13 @@
+{
+  "name": "openspec-feature",
+  "tool": "opencode",
+  "type": "bundle",
+  "description": "Standalone OpenCode skill bundle for OpenSpec proposal, design, specs, and tasks.",
+  "installTarget": ".opencode/skills",
+  "contents": [
+    "skills/openspec-feature-workflow"
+  ],
+  "runtimeRequirements": [
+    "openspec-cli"
+  ]
+}

@@ -28,6 +28,8 @@ If you are validating the shell installers on macOS or Linux, use this quick seq
 
 Use the same pattern for other tools:
 
+- OpenCode:
+  `sh "<repo-root>/scripts/install-opencode.sh" --bundle openspec-superpowers --opencode-home "$HOME/.config/opencode" --dry-run`
 - Cursor:
   `sh "<repo-root>/scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root> --dry-run`
 - Claude Code:
@@ -297,7 +299,49 @@ Expected behavior:
 - it can recommend promotion candidates from `LEARNING_BACKLOG.md`
 - it runs memory validation when memory was updated
 
-## 4. Cursor
+## 4. OpenCode
+
+### Step 1: Check runtime dependencies
+
+For bundles that depend on OpenSpec, run:
+
+```powershell
+.\scripts\install-opencode.ps1 -Bundle openspec-superpowers -CheckDependencies
+```
+
+### Step 2: Install the bundle
+
+```powershell
+.\scripts\install-opencode.ps1 -Bundle openspec-superpowers
+```
+
+### Step 3: Verify installed files
+
+```powershell
+Test-Path "$HOME\.config\opencode\skills\openspec-superpowers-workflow\SKILL.md"
+```
+
+### Step 4: Restart or refresh OpenCode
+
+OpenCode must rediscover the installed skill before it can use it.
+
+### Step 5: Verify runtime behavior
+
+In OpenCode, send:
+
+```text
+Use the openspec-superpowers-workflow skill for this feature: create the OpenSpec artifacts first, then hand off to Superpowers for planning, testing, and verification.
+```
+
+Expected behavior:
+
+- OpenCode does not jump straight into code
+- it creates or updates the OpenSpec artifacts before implementation
+- after `tasks.md`, it pauses for confirmation instead of continuing through OpenSpec apply
+- after confirmation, it hands off to implementation, testing, and verification
+- if you confirm or revise the generated `tasks.md` on the next turn, it should keep the same workflow active
+
+## 5. Cursor
 
 ### Step 1: Check runtime dependencies
 
@@ -395,7 +439,7 @@ Expected behavior:
 - it keeps durable facts separate from temporary notes
 - it validates memory when the workflow updated it
 
-## 5. Claude Code
+## 6. Claude Code
 
 ### Step 1: Check runtime dependencies
 

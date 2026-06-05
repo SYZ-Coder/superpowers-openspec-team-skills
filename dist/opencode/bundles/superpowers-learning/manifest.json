@@ -1,0 +1,11 @@
+{
+  "name": "superpowers-learning",
+  "tool": "opencode",
+  "type": "bundle",
+  "description": "Standalone OpenCode skill bundle for capturing project memory and reusable lessons after meaningful work.",
+  "installTarget": ".opencode/skills",
+  "contents": [
+    "skills/superpowers-learning-workflow"
+  ],
+  "runtimeRequirements": []
+}

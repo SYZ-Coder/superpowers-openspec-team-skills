@@ -39,6 +39,7 @@ foreach ($workflow in $requiredWorkflows) {
 Write-Host ""
 Write-Host "Dist bundles remain available under:"
 Write-Host "- dist/codex/bundles"
+Write-Host "- dist/opencode/bundles"
 Write-Host "- dist/cursor/bundles"
 Write-Host "- dist/claude-code/bundles"
 Write-Host ""

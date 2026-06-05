@@ -40,6 +40,7 @@ English version: [English README](README.md)
 | 工具 | 安装形态 | 推荐触发方式 | 主要注意点 |
 | --- | --- | --- | --- |
 | Codex | `.codex/skills/` | 显式点名 skill，例如 `$openspec-superpowers-workflow` | 多 bundle 共存通常问题不大 |
+| OpenCode | `.opencode/skills/` 或 `~/.config/opencode/skills/` | 显式请求 skill，例如 `Use the openspec-superpowers-workflow skill` | 新装 skill 若未立刻出现，刷新一下 OpenCode |
 | Cursor | 目标仓库里的 `AGENTS.md` + `.cursor/rules/` | 在对话里显式文本触发 | 多 bundle 混装时最容易出现路由歧义 |
 | Claude Code | 目标仓库里的 `CLAUDE.md` + `.claude/commands/` | 显式 slash command | `CLAUDE.md` 以后一次安装为准 |
 
@@ -78,7 +79,7 @@ English version: [English README](README.md)
 这个项目分成两层：
 
 - `team-skills/`：项目维护的源码级 workflow 定义
-- `dist/`：面向 Codex、Cursor、Claude Code 的可安装 bundle
+- `dist/`：面向 Codex、OpenCode、Cursor、Claude Code 的可安装 bundle
 
 如果你是使用者，请优先从 `dist/` 和 `scripts/` 开始。
 除非你是在扩展源码 workflow，否则不要直接从 `team-skills/` 复制单个入口流程到目标工具里。
@@ -165,6 +166,7 @@ English version: [English README](README.md)
 ### 1. 先选安装目标
 
 - Codex：安装到 `.codex/skills/`
+- OpenCode：安装到 `.opencode/skills/` 或 OpenCode 配置目录下的 `skills/`
 - Cursor：安装到目标项目，写入规则文件和 `AGENTS.md`
 - Claude Code：安装到目标项目，写入命令文件和 `CLAUDE.md`
 
@@ -174,6 +176,7 @@ Windows PowerShell 示例：
 
 ```powershell
 .\scripts\install-codex.ps1 -Bundle openspec-superpowers
+.\scripts\install-opencode.ps1 -Bundle openspec-superpowers
 .\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
 .\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
 ```
@@ -182,6 +185,7 @@ macOS / Linux 示例：
 
 ```bash
 sh "./scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"
+sh "./scripts/install-opencode.sh" --bundle openspec-superpowers --opencode-home "$HOME/.config/opencode"
 sh "./scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root>
 sh "./scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root>
 ```
@@ -192,6 +196,12 @@ sh "./scripts/install-claude-code.sh" --bundle openspec-superpowers --project-ro
 
 ```text
 请使用 $openspec-superpowers-workflow 处理这个功能，从需求澄清一直推进到验证完成。
+```
+
+- OpenCode：
+
+```text
+Use the openspec-superpowers-workflow skill to run this feature from clarification through verification.
 ```
 
 - Cursor：
@@ -263,6 +273,7 @@ docs/          补充文档
 ## 工具支持
 
 - Codex：最适合原生 skills 方式
+- OpenCode：可通过 `.opencode/skills/` 或配置目录里的 `skills/` 走原生 skill 方式
 - Cursor：通过仓库规则和 `AGENTS.md` 使用
 - Claude Code：通过命令文件和 `CLAUDE.md` 使用
 - 其他工具：后续可以在 `dist/` 下继续增加新适配层
@@ -276,17 +287,20 @@ docs/          补充文档
 - `--bundle <name>`：选择要安装的 bundle
 - `--project-root <path>`：为 Cursor、Claude Code 或 memory 安装指定目标项目根目录
 - `--codex-home <path>`：为 Codex 安装指定 Codex home 目录
+- `--opencode-home <path>`：为 OpenCode 安装指定配置目录
 - `--dry-run`：只预览将写入什么，不实际复制
 - `--backup`：覆盖前先备份目标文件
 - `--force`：跳过覆盖确认
 - `--check-dependencies`：只检查运行时依赖，例如 `openspec`
 
-PowerShell 版本安装脚本提供同样的能力，对应参数通常是 `-Bundle`、`-ProjectRoot`、`-CodexHome`、`-DryRun`、`-Backup`、`-Force`、`-CheckDependencies`。
+PowerShell 版本安装脚本提供同样的能力，对应参数通常是 `-Bundle`、`-ProjectRoot`、`-CodexHome`、`-OpenCodeHome`、`-DryRun`、`-Backup`、`-Force`、`-CheckDependencies`。
 
 当前可用安装脚本：
 
 - `scripts/install-codex.sh`
 - `scripts/install-codex.ps1`
+- `scripts/install-opencode.sh`
+- `scripts/install-opencode.ps1`
 - `scripts/install-cursor.sh`
 - `scripts/install-cursor.ps1`
 - `scripts/install-claude-code.sh`
@@ -299,12 +313,14 @@ PowerShell 版本安装脚本提供同样的能力，对应参数通常是 `-Bun
 ### 不同工具的启用方式
 
 - Codex 会把 bundle 安装到 `.codex/skills/`，最接近原生 skill 体验。
+- OpenCode 会把 bundle 安装到 `.opencode/skills/` 或配置目录里的 `skills/`，同样可以原生读取 `SKILL.md` 包。
 - Cursor 会安装仓库规则和 `AGENTS.md`，因此应在对话里用显式文本请求启用 workflow，而不是期待原生 slash command。
 - Claude Code 会安装 `.claude/commands/` 和 `CLAUDE.md`，推荐优先使用生成的 slash command，确保命令文件被稳定应用。
 
 推荐启用示例：
 
 - Codex：`请使用 $openspec-superpowers-workflow 处理这个功能，从需求澄清一直推进到验证完成。`
+- OpenCode：`Use the openspec-superpowers-workflow skill to run this feature from clarification through verification.`
 - Cursor：`请按 superpowers-openspec-superpowers 工作流处理这个功能。`
 - Claude Code：`/superpowers-openspec-superpowers-workflow`
 

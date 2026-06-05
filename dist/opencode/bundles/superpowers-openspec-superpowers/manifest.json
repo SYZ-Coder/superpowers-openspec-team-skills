@@ -1,0 +1,13 @@
+{
+  "name": "superpowers-openspec-superpowers",
+  "tool": "opencode",
+  "type": "bundle",
+  "description": "Standalone OpenCode skill bundle for thinking with Superpowers first, locking the truth with OpenSpec, then coming back to Superpowers to build, verify, and archive the change.",
+  "installTarget": ".opencode/skills",
+  "contents": [
+    "skills/superpowers-openspec-superpowers-workflow"
+  ],
+  "runtimeRequirements": [
+    "openspec-cli"
+  ]
+}

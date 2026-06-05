@@ -28,6 +28,8 @@
 
 其他工具也可以按同样思路验证：
 
+- OpenCode：  
+  `sh "<repo-root>/scripts/install-opencode.sh" --bundle openspec-superpowers --opencode-home "$HOME/.config/opencode" --dry-run`
 - Cursor：  
   `sh "<repo-root>/scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root> --dry-run`
 - Claude Code：  
@@ -295,7 +297,49 @@ Use $superpowers-learning-workflow to capture what this session taught us and up
 - 会给出 backlog 晋升建议
 - 如果更新了记忆，会运行记忆校验
 
-## 4. Cursor
+## 4. OpenCode
+
+### 第 1 步：检查运行时依赖
+
+对于依赖 OpenSpec 的 bundle，先运行：
+
+```powershell
+.\scripts\install-opencode.ps1 -Bundle openspec-superpowers -CheckDependencies
+```
+
+### 第 2 步：安装 bundle
+
+```powershell
+.\scripts\install-opencode.ps1 -Bundle openspec-superpowers
+```
+
+### 第 3 步：检查已安装文件
+
+```powershell
+Test-Path "$HOME\.config\opencode\skills\openspec-superpowers-workflow\SKILL.md"
+```
+
+### 第 4 步：重启或刷新 OpenCode
+
+OpenCode 需要重新发现刚安装的 skill。
+
+### 第 5 步：验证运行时行为
+
+在 OpenCode 中发送：
+
+```text
+Use the openspec-superpowers-workflow skill for this feature: create the OpenSpec artifacts first, then hand off to Superpowers for planning, testing, and verification.
+```
+
+预期行为：
+
+- OpenCode 不会一上来就直接写代码
+- 它会先创建或更新 OpenSpec 产物，再进入实现
+- 到 `tasks.md` 后会先停下来等待确认，而不是继续走 OpenSpec apply
+- 确认后才会切到实现、测试和验证
+- 如果你下一轮确认或修改了生成的 `tasks.md`，它应继续沿用同一条 workflow
+
+## 5. Cursor
 
 ### 第一步：检查依赖
 
@@ -416,7 +460,7 @@ Use the superpowers-learning workflow to capture what this session taught us and
 - 会把长期事实和临时记录分开
 - 如果更新了记忆，会运行记忆校验
 
-## 5. Claude Code
+## 6. Claude Code
 
 ### 第一步：检查依赖
 

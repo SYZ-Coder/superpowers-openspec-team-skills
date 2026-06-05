@@ -40,6 +40,7 @@ If you only need the fastest orientation, read these sections first:
 | Tool | Install shape | Best activation pattern | Main caveat |
 | --- | --- | --- | --- |
 | Codex | `.codex/skills/` | Explicit skill name such as `$openspec-superpowers-workflow` | Multiple bundles are usually safe |
+| OpenCode | `.opencode/skills/` or `~/.config/opencode/skills/` | Explicit skill request such as `Use the openspec-superpowers-workflow skill` | Refresh OpenCode if newly installed skills do not appear immediately |
 | Cursor | `AGENTS.md` + `.cursor/rules/` in the target repo | Explicit text request in chat | Mixed bundles can create routing ambiguity |
 | Claude Code | `CLAUDE.md` + `.claude/commands/` in the target repo | Explicit slash command | `CLAUDE.md` follows the most recent install |
 
@@ -78,7 +79,7 @@ If you want AI to do more than generate a few code snippets, and instead partici
 This project has two layers:
 
 - `team-skills/`: source workflow definitions maintained by the project
-- `dist/`: installable bundles adapted for Codex, Cursor, and Claude Code
+- `dist/`: installable bundles adapted for Codex, OpenCode, Cursor, and Claude Code
 
 If you are using the project, start with `dist/` and `scripts/`.
 Do not copy a single entry workflow out of `team-skills/` unless you are intentionally extending the source definitions.
@@ -165,6 +166,7 @@ Use $superpowers-openspec-superpowers-workflow for this feature.
 ### 1. Pick the right install target
 
 - Codex: install a bundle into `.codex/skills/`
+- OpenCode: install a bundle into `.opencode/skills/` or your OpenCode config skill directory
 - Cursor: install repository rules and `AGENTS.md` into the target project
 - Claude Code: install command files and `CLAUDE.md` into the target project
 
@@ -178,6 +180,7 @@ Windows PowerShell examples:
 
 ```powershell
 .\scripts\install-codex.ps1 -Bundle openspec-superpowers
+.\scripts\install-opencode.ps1 -Bundle openspec-superpowers
 .\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
 .\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
 ```
@@ -186,6 +189,7 @@ macOS or Linux examples:
 
 ```bash
 sh "./scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"
+sh "./scripts/install-opencode.sh" --bundle openspec-superpowers --opencode-home "$HOME/.config/opencode"
 sh "./scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root>
 sh "./scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root>
 ```
@@ -206,6 +210,7 @@ Windows PowerShell examples:
 
 ```powershell
 .\scripts\install-codex.ps1 -Bundle superpowers-openspec-superpowers
+.\scripts\install-opencode.ps1 -Bundle superpowers-openspec-superpowers
 .\scripts\install-cursor.ps1 -Bundle superpowers-openspec-superpowers -ProjectRoot <project-root>
 .\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-superpowers -ProjectRoot <project-root>
 ```
@@ -214,6 +219,7 @@ macOS or Linux examples:
 
 ```bash
 sh "./scripts/install-codex.sh" --bundle superpowers-openspec-superpowers --codex-home "$HOME/.codex"
+sh "./scripts/install-opencode.sh" --bundle superpowers-openspec-superpowers --opencode-home "$HOME/.config/opencode"
 sh "./scripts/install-cursor.sh" --bundle superpowers-openspec-superpowers --project-root <project-root>
 sh "./scripts/install-claude-code.sh" --bundle superpowers-openspec-superpowers --project-root <project-root>
 ```
@@ -236,6 +242,12 @@ Activate the same workflow family that you installed above.
 
 ```text
 Use $openspec-superpowers-workflow to run this feature from clarification through verification.
+```
+
+- OpenCode:
+
+```text
+Use the openspec-superpowers-workflow skill to run this feature from clarification through verification.
 ```
 
 - Cursor:
@@ -309,6 +321,7 @@ If you change workflow sources or bundle structure, run:
 ## Tool Support
 
 - Codex: best fit for native skill-based usage
+- OpenCode: native skill-style usage through `.opencode/skills/` or the configured OpenCode skills directory
 - Cursor: uses repository rules and `AGENTS.md`
 - Claude Code: uses command files and `CLAUDE.md`
 - Other tools: can be added later by creating new adapters under `dist/`
@@ -322,18 +335,21 @@ Native shell installers support these common flags:
 - `--bundle <name>`: choose which bundle to install
 - `--project-root <path>`: set the target repository root for Cursor, Claude Code, or memory installation
 - `--codex-home <path>`: set the Codex home directory for Codex installs
+- `--opencode-home <path>`: set the OpenCode config directory for OpenCode installs
 - `--dry-run`: preview what would be written without copying files
 - `--backup`: back up existing target files before overwrite
 - `--merge-claude-md`: for Claude Code installs, merge the bundle `CLAUDE.md` into an existing project `CLAUDE.md` instead of replacing it
 - `--force`: skip overwrite confirmation
 - `--check-dependencies`: check runtime requirements such as `openspec` without installing files
 
-PowerShell installers expose the same ideas through parameters such as `-Bundle`, `-ProjectRoot`, `-CodexHome`, `-DryRun`, `-Backup`, `-MergeClaudeMd`, `-Force`, and `-CheckDependencies`.
+PowerShell installers expose the same ideas through parameters such as `-Bundle`, `-ProjectRoot`, `-CodexHome`, `-OpenCodeHome`, `-DryRun`, `-Backup`, `-MergeClaudeMd`, `-Force`, and `-CheckDependencies`.
 
 Available installer scripts:
 
 - `scripts/install-codex.sh`
 - `scripts/install-codex.ps1`
+- `scripts/install-opencode.sh`
+- `scripts/install-opencode.ps1`
 - `scripts/install-cursor.sh`
 - `scripts/install-cursor.ps1`
 - `scripts/install-claude-code.sh`
@@ -346,6 +362,7 @@ Available installer scripts:
 ### Tool-Specific Behavior
 
 - Codex installs bundles into `.codex/skills/` and is the closest fit for native skill-style usage.
+- OpenCode installs bundles into `.opencode/skills/` or the configured OpenCode skills directory and can load the same `SKILL.md` packages natively.
 - Cursor installs repository rules plus `AGENTS.md`. Use explicit text requests in chat instead of expecting a native slash command.
 - Claude Code installs `.claude/commands/` files plus `CLAUDE.md`. Prefer invoking the generated slash command so the command file is applied consistently.
 
@@ -366,6 +383,7 @@ Recommended practice:
 Recommended activation examples:
 
 - Codex: `Use $openspec-superpowers-workflow to run this feature from clarification through verification.`
+- OpenCode: `Use the openspec-superpowers-workflow skill to run this feature from clarification through verification.`
 - Cursor: `Use the superpowers-openspec-superpowers workflow for this feature.`
 - Claude Code: `/superpowers-openspec-superpowers-workflow`
 

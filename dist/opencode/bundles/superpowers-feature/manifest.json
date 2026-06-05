@@ -1,0 +1,11 @@
+{
+  "name": "superpowers-feature",
+  "tool": "opencode",
+  "type": "bundle",
+  "description": "Standalone OpenCode skill bundle for design, planning, TDD, and verification without OpenSpec artifacts.",
+  "installTarget": ".opencode/skills",
+  "contents": [
+    "skills/superpowers-feature-workflow"
+  ],
+  "runtimeRequirements": []
+}
