@@ -236,19 +236,19 @@ Select-String -Path "<project-root>\\CLAUDE.md" -Pattern "superpowers-memory:sta
 对依赖 OpenSpec 的 bundle，运行：
 
 ```powershell
-.\scripts\install-codex.ps1 -Bundle superpowers-openspec-execution -CheckDependencies
+.\scripts\install-codex.ps1 -Bundle superpowers-openspec-superpowers -CheckDependencies
 ```
 
 ### 第二步：安装 bundle
 
 ```powershell
-.\scripts\install-codex.ps1 -Bundle superpowers-openspec-execution
+.\scripts\install-codex.ps1 -Bundle superpowers-openspec-superpowers
 ```
 
 ### 第三步：检查安装结果
 
 ```powershell
-Test-Path "$env:USERPROFILE\.codex\skills\superpowers-openspec-execution-workflow\SKILL.md"
+Test-Path "$env:USERPROFILE\.codex\skills\superpowers-openspec-superpowers-workflow\SKILL.md"
 ```
 
 如果还安装了 Codex 的记忆集成，也检查：
@@ -266,7 +266,7 @@ Codex 需要重新发现刚安装的 skill。
 在 Codex 中发送：
 
 ```text
-Use $superpowers-openspec-execution-workflow for this feature: first explore with Superpowers, then lock the change with OpenSpec, then return to Superpowers for implementation, testing, verification, and archive.
+Use $superpowers-openspec-superpowers-workflow for this feature: first explore with Superpowers, then lock the change with OpenSpec, then return to Superpowers for implementation, testing, verification, and archive.
 ```
 
 预期行为：
@@ -344,19 +344,19 @@ Use the openspec-superpowers-workflow skill for this feature: create the OpenSpe
 ### 第一步：检查依赖
 
 ```powershell
-.\scripts\install-cursor.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root> -CheckDependencies
+.\scripts\install-cursor.ps1 -Bundle superpowers-openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
 ```
 
 ### 第二步：安装 bundle
 
 ```powershell
-.\scripts\install-cursor.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
+.\scripts\install-cursor.ps1 -Bundle superpowers-openspec-superpowers -ProjectRoot <project-root>
 ```
 
 ### 第三步：检查安装结果
 
 ```powershell
-Test-Path "<project-root>\.cursor\rules\superpowers-openspec-execution-workflow.mdc"
+Test-Path "<project-root>\.cursor\rules\superpowers-openspec-superpowers-workflow.mdc"
 Test-Path "<project-root>\AGENTS.md"
 ```
 
@@ -375,19 +375,19 @@ Cursor 应重新加载项目规则。
 在 Cursor 中发送：
 
 ```text
-Use the superpowers-openspec-execution workflow for this feature: first explore, then lock OpenSpec, then implement and verify, then archive the change.
+Use the superpowers-openspec-superpowers workflow for this feature: first explore, then lock OpenSpec, then implement and verify, then archive the change.
 ```
 
 也可以测试补充写法：
 
 ```text
-Use $superpowers-openspec-execution-workflow for this feature: first explore with Superpowers, then lock the change with OpenSpec, then return to Superpowers for implementation, testing, verification, and archive.
+Use $superpowers-openspec-superpowers-workflow for this feature: first explore with Superpowers, then lock the change with OpenSpec, then return to Superpowers for implementation, testing, verification, and archive.
 ```
 
 完整示例：
 
 ```text
-Use the superpowers-openspec-execution workflow for this feature.
+Use the superpowers-openspec-superpowers workflow for this feature.
 
 现在需要根据 2026-06-02_drift-bottle_create-and-audit-rating-full-chain.md 梳理的内容改造漂流瓶审核功能。
 要求：
@@ -420,7 +420,7 @@ Use the superpowers-openspec-execution workflow for this feature.
 先确认再实现：
 
 ```text
-Use the superpowers-openspec-execution workflow for this feature.
+Use the superpowers-openspec-superpowers workflow for this feature.
 
 现在需要根据 2026-06-02_drift-bottle_create-and-audit-rating-full-chain.md 梳理的内容改造漂流瓶审核功能。
 OpenSpec tasks 生成后先给我看，我确认后再进入实现。
@@ -434,7 +434,7 @@ OpenSpec tasks 生成后先给我看，我确认后再进入实现。
 直接执行：
 
 ```text
-Use the superpowers-openspec-execution workflow for this feature.
+Use the superpowers-openspec-superpowers workflow for this feature.
 
 现在需要根据 2026-06-02_drift-bottle_create-and-audit-rating-full-chain.md 梳理的内容改造漂流瓶审核功能。
 OpenSpec tasks 生成后直接进入实现，不用等我确认任务清单。
@@ -465,19 +465,19 @@ Use the superpowers-learning workflow to capture what this session taught us and
 ### 第一步：检查依赖
 
 ```powershell
-.\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root> -CheckDependencies
+.\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
 ```
 
 ### 第二步：安装 bundle
 
 ```powershell
-.\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
+.\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-superpowers -ProjectRoot <project-root>
 ```
 
 ### 第三步：检查安装结果
 
 ```powershell
-Test-Path "<project-root>\.claude\commands\superpowers-openspec-execution-workflow.md"
+Test-Path "<project-root>\.claude\commands\superpowers-openspec-superpowers-workflow.md"
 Test-Path "<project-root>\CLAUDE.md"
 ```
 
@@ -496,7 +496,7 @@ Claude Code 应重新加载命令和项目说明。
 调用：
 
 ```text
-/superpowers-openspec-execution-workflow
+/superpowers-openspec-superpowers-workflow
 ```
 
 然后继续描述你的功能需求。
@@ -576,7 +576,7 @@ Help me make this small change.
 预期行为：
 
 - Claude Code 保持正常行为
-- 不应像 `/superpowers-openspec-execution-workflow` 已被调用一样工作
+- 不应像 `/superpowers-openspec-superpowers-workflow` 已被调用一样工作
 
 ## 8. 推荐验证顺序
 

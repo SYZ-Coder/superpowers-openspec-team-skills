@@ -2,7 +2,7 @@
 
 set -eu
 
-BUNDLE="openspec-superpowers"
+BUNDLE="superpowers-openspec-superpowers"
 PROJECT_ROOT=$(pwd)
 DRY_RUN=0
 BACKUP=0

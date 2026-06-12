@@ -83,7 +83,7 @@
 - [VERIFY.md](/D:/spring_AI/superpowers-openspec-team-skills/VERIFY.md)
 - [VERIFY.cn.md](/D:/spring_AI/superpowers-openspec-team-skills/VERIFY.cn.md)
 - [superpowers-feature-workflow/SKILL.md](/D:/spring_AI/superpowers-openspec-team-skills/team-skills/superpowers-feature-workflow/SKILL.md)
-- [superpowers-openspec-execution-workflow/SKILL.md](/D:/spring_AI/superpowers-openspec-team-skills/team-skills/superpowers-openspec-execution-workflow/SKILL.md)
+- [superpowers-openspec-superpowers-workflow/SKILL.md](/D:/spring_AI/superpowers-openspec-team-skills/team-skills/superpowers-openspec-superpowers-workflow/SKILL.md)
 - [superpowers-learning-workflow/SKILL.md](/D:/spring_AI/superpowers-openspec-team-skills/team-skills/superpowers-learning-workflow/SKILL.md)
 
 以及三套工具集成模板：

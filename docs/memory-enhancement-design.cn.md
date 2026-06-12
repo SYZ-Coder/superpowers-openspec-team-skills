@@ -376,7 +376,7 @@ Adds one validation step before completion claims.
 2. 收尾时优先使用 closeout helper
 3. 声称完成前运行 memory validator
 
-### `superpowers-openspec-execution-workflow`
+### `superpowers-openspec-superpowers-workflow`
 
 建议增强为：
 

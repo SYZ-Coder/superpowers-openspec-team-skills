@@ -148,7 +148,7 @@ When a Superpowers-related workflow sees `.superpowers-memory/`, it should:
 This applies to the Superpowers-related workflows in this repository, including:
 
 - `superpowers-feature`
-- `superpowers-openspec-execution`
+- `superpowers-openspec-superpowers`
 - `openspec-superpowers`
 - `superpowers-learning`
 
@@ -354,7 +354,7 @@ Use the larger workflows only when you also want their full engineering discipli
 
 - `superpowers-feature-workflow`
 - `openspec-superpowers-workflow`
-- `superpowers-openspec-execution-workflow`
+- `superpowers-openspec-superpowers-workflow`
 
 ### Recommended Operating Modes
 
@@ -388,7 +388,7 @@ Typical options:
 
 - `superpowers-feature-workflow`
 - `openspec-superpowers-workflow`
-- `superpowers-openspec-execution-workflow`
+- `superpowers-openspec-superpowers-workflow`
 
 Choose this mode for structured delivery. Do not choose it if your only goal is "please remember what happened this session."
 

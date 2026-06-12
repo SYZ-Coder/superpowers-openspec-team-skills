@@ -43,13 +43,13 @@
 PowerShell：
 
 ```powershell
-.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -MergeClaudeMd
+.\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-superpowers -ProjectRoot <project-root> -MergeClaudeMd
 ```
 
 shell：
 
 ```bash
-sh "./scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --merge-claude-md
+sh "./scripts/install-claude-code.sh" --bundle superpowers-openspec-superpowers --project-root <project-root> --merge-claude-md
 ```
 
 这样会保留原有 `CLAUDE.md`，并把 bundle 里的说明作为一个可更新的受管区块追加进去。

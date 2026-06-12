@@ -21,7 +21,7 @@
 - Cursor：`dist/cursor/bundles/` 或 `scripts/install-cursor.ps1`
   对 `superpowers-openspec-superpowers-workflow` 来说，安装后请在 Cursor 中使用显式文本请求来启用；它是通过仓库规则路由的，不是原生 slash command。
 - Claude Code：`dist/claude-code/bundles/` 或 `scripts/install-claude-code.ps1`
-  如果目标项目已经有 `CLAUDE.md`，并且你不想直接覆盖，而是希望把 bundle 里的说明合并进去，可以在 PowerShell 中使用 `-MergeClaudeMd`，或在 shell 安装脚本中使用 `--merge-claude-md`。
+  对主推荐 workflow 来说，优先使用 `superpowers-openspec-superpowers` bundle。 如果目标项目已经有 `CLAUDE.md`，并且你不想直接覆盖，而是希望把 bundle 里的说明合并进去，可以在 PowerShell 中使用 `-MergeClaudeMd`，或在 shell 安装脚本中使用 `--merge-claude-md`。
 
 可选的 Superpowers 记忆骨架：
 

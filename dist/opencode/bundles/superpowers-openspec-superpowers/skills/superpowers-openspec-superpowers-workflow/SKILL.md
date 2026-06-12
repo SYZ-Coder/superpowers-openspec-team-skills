@@ -1,6 +1,6 @@
 ---
 name: superpowers-openspec-superpowers-workflow
-description: Standalone OpenCode workflow for thinking with Superpowers first, locking the truth with OpenSpec second, then coming back to Superpowers to build, test, verify, and archive the change.
+description: Use when the user explicitly wants this workflow, wants Superpowers exploration before OpenSpec artifacts, or is confirming or continuing tasks that this workflow already generated.
 ---
 
 # Superpowers -> OpenSpec -> Superpowers Workflow
@@ -38,19 +38,24 @@ If `.superpowers-memory/` exists in the repository, read it at the start and upd
 12. Summarize the generated OpenSpec tasks.
 13. By default, ask the user to confirm the OpenSpec task checklist before implementation planning starts.
 14. After the user confirms `tasks.md`, pause again and ask whether to continue execution development.
-15. Do not route the confirmed handoff through OpenSpec apply.
-16. If the user chooses execution development, write the implementation plan to `docs/superpowers/plans/YYYY-MM-DD-<topic>.md`.
-17. Prefer a repo-local worktree when the task is non-trivial or risky.
-18. Implement with TDD.
-19. Run fresh verification commands before any completion claim.
-20. If code, specs, and verification are aligned, archive the change with the OpenSpec archive flow.
-21. If `.superpowers-memory/` exists, update `CURRENT_STATE.md` and add a short session journal entry.
+15. Accept `continue-dev` as the primary continuation command for that handoff.
+16. Do not route the confirmed handoff through OpenSpec apply.
+17. If the user chooses execution development, write the implementation plan to `docs/superpowers/plans/YYYY-MM-DD-<topic>.md`.
+18. Prefer a repo-local worktree when the task is non-trivial or risky.
+19. Implement with TDD.
+20. Run fresh verification commands before any completion claim.
+21. After execution development and verification complete, pause again and ask whether to continue code review.
+22. Accept `continue-review` as the primary continuation command for that later handoff.
+23. If code, specs, and verification are aligned, archive the change with the OpenSpec archive flow.
+24. Accept `continue-archive` as the continuation command when archive is the next aligned step, while `$openspec-archive-change` remains valid.
+25. If `.superpowers-memory/` exists, update `CURRENT_STATE.md` and add a short session journal entry.
 
 ## Guardrails
 
 - When the user names `$superpowers-openspec-superpowers-workflow`, this orchestrator controls routing; do not route first to `$openspec-feature-workflow`, `openspec-propose`, `/opsx:propose`, or any OpenSpec proposal skill.
 - Mentioning OpenSpec in this workflow name is not permission to start OpenSpec proposal generation.
 - Do not invoke OpenSpec artifact generation, `openspec-propose`, or `$openspec-feature-workflow` before Superpowers exploration is complete.
+- Do not begin by listing available OpenSpec skills, proposing `openspec-propose`, or explaining how OpenSpec would usually work. Treat those responses as misroutes for this workflow request.
 - Superpowers exploration is complete only after context review, requirement clarification, approach comparison, user confirmation of the solution shape, and a design draft under `docs/superpowers/specs/`.
 - Do not start implementation before the design is approved.
 - Do not start coding until required OpenSpec artifacts are complete.
@@ -61,6 +66,10 @@ If `.superpowers-memory/` exists in the repository, read it at the start and upd
 - After the user confirms or revises the generated tasks on a follow-up turn, treat that turn as the continuation of this workflow, keep the workflow active, and ask whether to continue execution development.
 - Do not continue directly into Superpowers execution after OpenSpec artifacts until the user has explicitly confirmed the generated `tasks.md` and chosen execution development as the next step.
 - After Superpowers execution and verification complete, ask whether to continue code review.
+- Accept `continue-dev` for the post-task execution handoff.
+- Accept `continue-review` for the post-execution code-review handoff.
+- If archive is the next aligned step, accept `continue-archive`, while `$openspec-archive-change` remains usable.
+- After code review is complete and archive is not the next step, keep the workflow paused instead of silently finishing.
 - Treat OpenSpec tasks as constraints and checklist input for the Superpowers implementation plan.
 - Do not report success without fresh verification evidence.
 - Do not archive the change until code, tests, and specs are aligned.

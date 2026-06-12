@@ -235,19 +235,19 @@ Expected behavior:
 For bundles that depend on OpenSpec, run:
 
 ```powershell
-.\scripts\install-codex.ps1 -Bundle superpowers-openspec-execution -CheckDependencies
+.\scripts\install-codex.ps1 -Bundle superpowers-openspec-superpowers -CheckDependencies
 ```
 
 ### Step 2: Install the bundle
 
 ```powershell
-.\scripts\install-codex.ps1 -Bundle superpowers-openspec-execution
+.\scripts\install-codex.ps1 -Bundle superpowers-openspec-superpowers
 ```
 
 ### Step 3: Verify installed files
 
 ```powershell
-Test-Path "$env:USERPROFILE\.codex\skills\superpowers-openspec-execution-workflow\SKILL.md"
+Test-Path "$env:USERPROFILE\.codex\skills\superpowers-openspec-superpowers-workflow\SKILL.md"
 ```
 
 If you installed memory integration for Codex, also verify:
@@ -265,7 +265,7 @@ Codex must rediscover the installed skill before it can use it.
 In Codex, send:
 
 ```text
-Use $superpowers-openspec-execution-workflow for this feature: first explore with Superpowers, then lock the change with OpenSpec, then return to Superpowers for implementation, testing, verification, and archive.
+Use $superpowers-openspec-superpowers-workflow for this feature: first explore with Superpowers, then lock the change with OpenSpec, then return to Superpowers for implementation, testing, verification, and archive.
 ```
 
 Expected behavior:
@@ -346,19 +346,19 @@ Expected behavior:
 ### Step 1: Check runtime dependencies
 
 ```powershell
-.\scripts\install-cursor.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root> -CheckDependencies
+.\scripts\install-cursor.ps1 -Bundle superpowers-openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
 ```
 
 ### Step 2: Install the bundle
 
 ```powershell
-.\scripts\install-cursor.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
+.\scripts\install-cursor.ps1 -Bundle superpowers-openspec-superpowers -ProjectRoot <project-root>
 ```
 
 ### Step 3: Verify installed files
 
 ```powershell
-Test-Path "<project-root>\.cursor\rules\superpowers-openspec-execution-workflow.mdc"
+Test-Path "<project-root>\.cursor\rules\superpowers-openspec-superpowers-workflow.mdc"
 Test-Path "<project-root>\AGENTS.md"
 ```
 
@@ -377,7 +377,7 @@ Cursor should reload the project rules after the files are written.
 In Cursor, send:
 
 ```text
-Use the superpowers-openspec-execution workflow for this feature: first explore, then lock OpenSpec, then implement and verify, then archive the change.
+Use the superpowers-openspec-superpowers workflow for this feature: first explore, then lock OpenSpec, then implement and verify, then archive the change.
 ```
 
 Expected behavior:
@@ -394,7 +394,7 @@ The default mode is `task_confirmation_mode: optional`, so it is worth testing b
 Confirm before implementation:
 
 ```text
-Use the superpowers-openspec-execution workflow for this feature.
+Use the superpowers-openspec-superpowers workflow for this feature.
 
 Now update the drift-bottle review flow based on 2026-06-02_drift-bottle_create-and-audit-rating-full-chain.md.
 After OpenSpec tasks are generated, show them to me and wait for my confirmation before implementation.
@@ -410,7 +410,7 @@ Expected behavior:
 Post-task pause:
 
 ```text
-Use the superpowers-openspec-execution workflow for this feature.
+Use the superpowers-openspec-superpowers workflow for this feature.
 
 Now update the drift-bottle review flow based on 2026-06-02_drift-bottle_create-and-audit-rating-full-chain.md.
 After OpenSpec tasks are generated, show them to me first. After I confirm them, ask whether to continue execution development.
@@ -444,19 +444,19 @@ Expected behavior:
 ### Step 1: Check runtime dependencies
 
 ```powershell
-.\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root> -CheckDependencies
+.\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-superpowers -ProjectRoot <project-root> -CheckDependencies
 ```
 
 ### Step 2: Install the bundle
 
 ```powershell
-.\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-execution -ProjectRoot <project-root>
+.\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-superpowers -ProjectRoot <project-root>
 ```
 
 ### Step 3: Verify installed files
 
 ```powershell
-Test-Path "<project-root>\.claude\commands\superpowers-openspec-execution-workflow.md"
+Test-Path "<project-root>\.claude\commands\superpowers-openspec-superpowers-workflow.md"
 Test-Path "<project-root>\CLAUDE.md"
 ```
 
@@ -475,7 +475,7 @@ Claude Code should reload commands and project instructions after installation.
 Invoke:
 
 ```text
-/superpowers-openspec-execution-workflow
+/superpowers-openspec-superpowers-workflow
 ```
 
 Then provide the feature request.
@@ -557,7 +557,7 @@ Help me make this small change.
 Expected behavior:
 
 - Claude Code behaves normally
-- it does not automatically act as if `/superpowers-openspec-execution-workflow` had been invoked
+- it does not automatically act as if `/superpowers-openspec-superpowers-workflow` had been invoked
 
 ## 8. Recommended Verification Sequence
 
@@ -570,13 +570,13 @@ For any tool:
 5. run one explicit workflow invocation
 
    Cursor primary text form:
-   `Use the superpowers-openspec-execution workflow for this feature.`
+   `Use the superpowers-openspec-superpowers workflow for this feature.`
 
    Cursor alternate text form:
-   `Use $superpowers-openspec-execution-workflow for this feature: first explore with Superpowers, then lock the change with OpenSpec, then return to Superpowers for implementation, testing, verification, and archive.`
+   `Use $superpowers-openspec-superpowers-workflow for this feature: first explore with Superpowers, then lock the change with OpenSpec, then return to Superpowers for implementation, testing, verification, and archive.`
 
    Cursor full example:
-   `Use the superpowers-openspec-execution workflow for this feature. Now update the drift-bottle review flow based on 2026-06-02_drift-bottle_create-and-audit-rating-full-chain.md. Requirements: remove manual review because there are no reviewers; keep automatic review if it already exists; enable the automatic audit flow; when the user finally publishes a drift bottle, default the rating to excellent unless the automatic rating determines otherwise. Do not start by listing OpenSpec skills or jumping to openspec-propose.`
+   `Use the superpowers-openspec-superpowers workflow for this feature. Now update the drift-bottle review flow based on 2026-06-02_drift-bottle_create-and-audit-rating-full-chain.md. Requirements: remove manual review because there are no reviewers; keep automatic review if it already exists; enable the automatic audit flow; when the user finally publishes a drift bottle, default the rating to excellent unless the automatic rating determines otherwise. Do not start by listing OpenSpec skills or jumping to openspec-propose.`
 6. if memory is enabled, run `validate-superpowers-memory.ps1`
 7. confirm behavior follows the intended workflow stages
 8. if the workflow pauses for task confirmation, reply once with a confirmation or task edit and confirm it stays inside the same workflow, does not fall back to generic OpenSpec apply guidance, and asks whether to continue execution development

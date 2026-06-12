@@ -29,8 +29,8 @@ English version: [English README](README.md)
 
 | 你的目标 | 推荐使用 |
 | --- | --- |
-| 想要一条完整交付 workflow | `openspec-superpowers` |
-| 想先探索、再锁规格、再实现 | `superpowers-openspec-superpowers` |
+| Superpowers -> OpenSpec -> Superpowers workflow | `superpowers-openspec-superpowers` |
+| OpenSpec -> Superpowers workflow | `openspec-superpowers` |
 | 只想要 Superpowers 的工程纪律 | `superpowers-feature` |
 | 只想生成 OpenSpec 产物 | `openspec-feature` |
 | 工作结束后想沉淀经验、更新项目记忆、让下次会话直接接上 | `superpowers-learning` |
@@ -39,8 +39,8 @@ English version: [English README](README.md)
 
 | 工具 | 安装形态 | 推荐触发方式 | 主要注意点 |
 | --- | --- | --- | --- |
-| Codex | `.codex/skills/` | 显式点名 skill，例如 `$openspec-superpowers-workflow` | 多 bundle 共存通常问题不大 |
-| OpenCode | `.opencode/skills/` 或 `~/.config/opencode/skills/` | 显式请求 skill，例如 `Use the openspec-superpowers-workflow skill` | 新装 skill 若未立刻出现，刷新一下 OpenCode |
+| Codex | `.codex/skills/` | 显式点名 skill，例如 `$superpowers-openspec-superpowers-workflow` | 多 bundle 共存通常问题不大 |
+| OpenCode | `.opencode/skills/` 或 `~/.config/opencode/skills/` | 显式请求 skill，例如 `Use the superpowers-openspec-superpowers-workflow skill` | 新装 skill 若未立刻出现，刷新一下 OpenCode |
 | Cursor | 目标仓库里的 `AGENTS.md` + `.cursor/rules/` | 在对话里显式文本触发 | 多 bundle 混装时最容易出现路由歧义 |
 | Claude Code | 目标仓库里的 `CLAUDE.md` + `.claude/commands/` | 显式 slash command | `CLAUDE.md` 以后一次安装为准 |
 
@@ -49,7 +49,7 @@ English version: [English README](README.md)
 如果你当前最关心的是：
 
 - 用一条 workflow 完成交付：先看 [包含哪些工作流](#包含哪些工作流)
-- 先探索再锁规格：优先看 `superpowers-openspec-superpowers`
+- 先探索再锁规格：看“包含哪些工作流”
 - 想在工作结束后把经验写回项目记忆、让下次会话直接接上：看 [需要跨会话记忆时再安装 memory](#4-需要跨会话记忆时再安装-memory) 和 `superpowers-learning`
 - 想看不同工具安装差异：看 [不同工具的启用方式](#不同工具的启用方式)
 - 想避免 bundle 和 workflow 错配：看 [安装与触发对照](#安装与触发对照) 和 [多 Bundle 安装说明](#多-bundle-安装说明)
@@ -113,8 +113,8 @@ English version: [English README](README.md)
 
 仓库当前提供 5 类工作流：
 
-- `openspec-superpowers`：一个从澄清到验证的完整统一入口
 - `superpowers-openspec-superpowers`：先用 Superpowers 把问题想透，再用 OpenSpec 把事实锁准，最后回到 Superpowers 把实现、验证和归档做稳
+- `openspec-superpowers`：先完成 OpenSpec 变更产物，再交给 Superpowers 继续实现、验证和归档
 - `superpowers-feature`：只使用 Superpowers 的设计、计划、TDD、验证纪律
 - `superpowers-learning`：不是主交付流程，而是其他 workflow 完成后的增强收尾层，用来更新项目记忆、沉淀经验，并让下一次会话可以直接接上当前成果
 - `openspec-feature`：先完成 OpenSpec proposal、design、specs、tasks，再进入实现
@@ -131,8 +131,8 @@ English version: [English README](README.md)
 
 ## 怎么选择
 
-- 想要一个统一入口处理完整功能交付，用 `openspec-superpowers`
-- 想要“先想透、再锁准、最后做稳”的四阶段节奏，用 `superpowers-openspec-superpowers`
+- 想先用 Superpowers 做探索、再用 OpenSpec 锁定、最后回到 Superpowers 执行，用 `superpowers-openspec-superpowers`
+- 想先从 OpenSpec 产物起步，再交给 Superpowers 继续交付，用 `openspec-superpowers`
 - 只想要 Superpowers 工程纪律，不需要 OpenSpec change 产物，用 `superpowers-feature`
 - 工作已经做完，想把这次经验、状态和可复用知识沉淀下来，并让下一次会话直接接上，用 `superpowers-learning`
 - 只想先补齐 OpenSpec 变更文档，用 `openspec-feature`
@@ -175,19 +175,19 @@ English version: [English README](README.md)
 Windows PowerShell 示例：
 
 ```powershell
-.\scripts\install-codex.ps1 -Bundle openspec-superpowers
-.\scripts\install-opencode.ps1 -Bundle openspec-superpowers
-.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
-.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
+.\scripts\install-codex.ps1 -Bundle superpowers-openspec-superpowers
+.\scripts\install-opencode.ps1 -Bundle superpowers-openspec-superpowers
+.\scripts\install-cursor.ps1 -Bundle superpowers-openspec-superpowers -ProjectRoot <project-root>
+.\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-superpowers -ProjectRoot <project-root>
 ```
 
 macOS / Linux 示例：
 
 ```bash
-sh "./scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"
-sh "./scripts/install-opencode.sh" --bundle openspec-superpowers --opencode-home "$HOME/.config/opencode"
-sh "./scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root>
-sh "./scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root>
+sh "./scripts/install-codex.sh" --bundle superpowers-openspec-superpowers --codex-home "$HOME/.codex"
+sh "./scripts/install-opencode.sh" --bundle superpowers-openspec-superpowers --opencode-home "$HOME/.config/opencode"
+sh "./scripts/install-cursor.sh" --bundle superpowers-openspec-superpowers --project-root <project-root>
+sh "./scripts/install-claude-code.sh" --bundle superpowers-openspec-superpowers --project-root <project-root>
 ```
 
 ### 3. 显式启用 workflow
@@ -195,13 +195,13 @@ sh "./scripts/install-claude-code.sh" --bundle openspec-superpowers --project-ro
 - Codex：
 
 ```text
-请使用 $openspec-superpowers-workflow 处理这个功能，从需求澄清一直推进到验证完成。
+请使用 $superpowers-openspec-superpowers-workflow 处理这个功能。
 ```
 
 - OpenCode：
 
 ```text
-Use the openspec-superpowers-workflow skill to run this feature from clarification through verification.
+Use the superpowers-openspec-superpowers-workflow skill for this feature.
 ```
 
 - Cursor：
@@ -319,8 +319,8 @@ PowerShell 版本安装脚本提供同样的能力，对应参数通常是 `-Bun
 
 推荐启用示例：
 
-- Codex：`请使用 $openspec-superpowers-workflow 处理这个功能，从需求澄清一直推进到验证完成。`
-- OpenCode：`Use the openspec-superpowers-workflow skill to run this feature from clarification through verification.`
+- Codex：`请使用 $superpowers-openspec-superpowers-workflow 处理这个功能。`
+- OpenCode：`Use the superpowers-openspec-superpowers-workflow skill for this feature.`
 - Cursor：`请按 superpowers-openspec-superpowers 工作流处理这个功能。`
 - Claude Code：`/superpowers-openspec-superpowers-workflow`
 
@@ -466,15 +466,15 @@ Use $superpowers-openspec-superpowers-workflow for this feature.
 PowerShell：
 
 ```powershell
-.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -MergeClaudeMd
 .\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-superpowers -ProjectRoot <project-root> -MergeClaudeMd
+.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -MergeClaudeMd
 ```
 
 shell：
 
 ```bash
-sh "./scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --merge-claude-md
 sh "./scripts/install-claude-code.sh" --bundle superpowers-openspec-superpowers --project-root <project-root> --merge-claude-md
+sh "./scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --merge-claude-md
 ```
 
 默认安装仍然是覆盖行为。只有显式传入 `-MergeClaudeMd` 或 `--merge-claude-md` 时，脚本才会把 bundle 里的 `CLAUDE.md` 内容以受管区块的方式合并到已有文件里。

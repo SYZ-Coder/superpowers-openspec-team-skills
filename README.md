@@ -29,8 +29,8 @@ If you only need the fastest orientation, read these sections first:
 
 | Need | Use |
 | --- | --- |
-| One end-to-end delivery workflow | `openspec-superpowers` |
-| Explore first, spec second, build third | `superpowers-openspec-superpowers` |
+| Superpowers -> OpenSpec -> Superpowers workflow | `superpowers-openspec-superpowers` |
+| OpenSpec -> Superpowers workflow | `openspec-superpowers` |
 | Superpowers-only implementation discipline | `superpowers-feature` |
 | OpenSpec artifacts only | `openspec-feature` |
 | After delivery, preserve lessons, update project memory, and help the next session resume cleanly | `superpowers-learning` |
@@ -39,8 +39,8 @@ If you only need the fastest orientation, read these sections first:
 
 | Tool | Install shape | Best activation pattern | Main caveat |
 | --- | --- | --- | --- |
-| Codex | `.codex/skills/` | Explicit skill name such as `$openspec-superpowers-workflow` | Multiple bundles are usually safe |
-| OpenCode | `.opencode/skills/` or `~/.config/opencode/skills/` | Explicit skill request such as `Use the openspec-superpowers-workflow skill` | Refresh OpenCode if newly installed skills do not appear immediately |
+| Codex | `.codex/skills/` | Explicit skill name such as `$superpowers-openspec-superpowers-workflow` | Multiple bundles are usually safe |
+| OpenCode | `.opencode/skills/` or `~/.config/opencode/skills/` | Explicit skill request such as `Use the superpowers-openspec-superpowers-workflow skill` | Refresh OpenCode if newly installed skills do not appear immediately |
 | Cursor | `AGENTS.md` + `.cursor/rules/` in the target repo | Explicit text request in chat | Mixed bundles can create routing ambiguity |
 | Claude Code | `CLAUDE.md` + `.claude/commands/` in the target repo | Explicit slash command | `CLAUDE.md` follows the most recent install |
 
@@ -48,8 +48,8 @@ If you only need the fastest orientation, read these sections first:
 
 If your goal is primarily:
 
-- shipping a feature with one workflow: go to [openspec-superpowers](#workflow-packs)
-- exploring before locking requirements: go to [superpowers-openspec-superpowers](#workflow-packs)
+- shipping a feature with one workflow: go to [Workflow Packs](#workflow-packs)
+- exploring before locking requirements: go to [Workflow Packs](#workflow-packs)
 - preserving session outcomes after delivery so the next session can resume with the right context: go to [Use memory when you need cross-session continuity](#4-use-memory-when-you-need-cross-session-continuity) and `superpowers-learning`
 - understanding installation differences by tool: go to [Tool-Specific Behavior](#tool-specific-behavior)
 - avoiding wrong bundle and workflow combinations: go to [Installing Multiple Bundles](#installing-multiple-bundles)
@@ -113,8 +113,8 @@ Use this repository if you want your AI coding tool to:
 
 Five workflow families are included:
 
-- `openspec-superpowers`: one end-to-end flow from clarification through verification
 - `superpowers-openspec-superpowers`: start wide with Superpowers, lock the agreed truth with OpenSpec, then come back to Superpowers to build, verify, and archive with confidence
+- `openspec-superpowers`: start with OpenSpec artifacts, then continue with Superpowers for implementation, verification, and archive
 - `superpowers-feature`: Superpowers-only design, planning, TDD, and verification
 - `superpowers-learning`: not a primary delivery workflow, but a post-delivery enhancement layer used after other workflows to update project memory, preserve durable lessons, and help the next session pick up from the right state
 - `openspec-feature`: create OpenSpec proposal, design, specs, and tasks before implementation
@@ -131,8 +131,8 @@ Each source workflow also includes a machine-readable `workflow.yaml`.
 
 ## How To Choose
 
-- Choose `openspec-superpowers` when you want one general workflow for non-trivial feature delivery.
-- Choose `superpowers-openspec-superpowers` when you want to explore first, lock the truth second, then come back and build the change with more confidence and less chaos.
+- Choose `superpowers-openspec-superpowers` when you want Superpowers exploration first, OpenSpec locking second, and Superpowers execution last.
+- Choose `openspec-superpowers` when you want OpenSpec artifacts first, then Superpowers delivery steps.
 - Choose `superpowers-feature` when you want disciplined engineering without OpenSpec change artifacts.
 - Choose `superpowers-learning` when delivery is already done and you want to write back the durable outcomes of this session so the next session can resume with the right context.
 - Choose `openspec-feature` when you only want change artifacts before implementation begins.
@@ -174,37 +174,7 @@ Use $superpowers-openspec-superpowers-workflow for this feature.
 
 Match the installed bundle to the workflow you plan to activate. Do not install `openspec-superpowers` and then try to trigger `superpowers-openspec-superpowers`, or the runtime rules may not match the prompt.
 
-If you want the single combined OpenSpec-first workflow, install `openspec-superpowers`.
-
-Windows PowerShell examples:
-
-```powershell
-.\scripts\install-codex.ps1 -Bundle openspec-superpowers
-.\scripts\install-opencode.ps1 -Bundle openspec-superpowers
-.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
-.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
-```
-
-macOS or Linux examples:
-
-```bash
-sh "./scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"
-sh "./scripts/install-opencode.sh" --bundle openspec-superpowers --opencode-home "$HOME/.config/opencode"
-sh "./scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root>
-sh "./scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root>
-```
-
-If the target project already has a `CLAUDE.md` and you want to merge the bundle instructions into it instead of replacing it, use:
-
-```powershell
-.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -MergeClaudeMd
-```
-
-```bash
-sh "./scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --merge-claude-md
-```
-
-If you want the Superpowers -> OpenSpec -> Superpowers workflow, install `superpowers-openspec-superpowers`.
+If you want the recommended workflow, install `superpowers-openspec-superpowers`.
 
 Windows PowerShell examples:
 
@@ -234,6 +204,36 @@ If the target project already has a `CLAUDE.md` and you want to merge the bundle
 sh "./scripts/install-claude-code.sh" --bundle superpowers-openspec-superpowers --project-root <project-root> --merge-claude-md
 ```
 
+If you want the OpenSpec -> Superpowers workflow, install `openspec-superpowers`.
+
+Windows PowerShell examples:
+
+```powershell
+.\scripts\install-codex.ps1 -Bundle openspec-superpowers
+.\scripts\install-opencode.ps1 -Bundle openspec-superpowers
+.\scripts\install-cursor.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
+.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root>
+```
+
+macOS or Linux examples:
+
+```bash
+sh "./scripts/install-codex.sh" --bundle openspec-superpowers --codex-home "$HOME/.codex"
+sh "./scripts/install-opencode.sh" --bundle openspec-superpowers --opencode-home "$HOME/.config/opencode"
+sh "./scripts/install-cursor.sh" --bundle openspec-superpowers --project-root <project-root>
+sh "./scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root>
+```
+
+If the target project already has a `CLAUDE.md` and you want to merge the bundle instructions into it instead of replacing it, use:
+
+```powershell
+.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -MergeClaudeMd
+```
+
+```bash
+sh "./scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --merge-claude-md
+```
+
 ### 3. Activate the workflow explicitly
 
 Activate the same workflow family that you installed above.
@@ -241,13 +241,13 @@ Activate the same workflow family that you installed above.
 - Codex:
 
 ```text
-Use $openspec-superpowers-workflow to run this feature from clarification through verification.
+Use $superpowers-openspec-superpowers-workflow for this feature.
 ```
 
 - OpenCode:
 
 ```text
-Use the openspec-superpowers-workflow skill to run this feature from clarification through verification.
+Use the superpowers-openspec-superpowers-workflow skill for this feature.
 ```
 
 - Cursor:
@@ -382,8 +382,8 @@ Recommended practice:
 
 Recommended activation examples:
 
-- Codex: `Use $openspec-superpowers-workflow to run this feature from clarification through verification.`
-- OpenCode: `Use the openspec-superpowers-workflow skill to run this feature from clarification through verification.`
+- Codex: `Use $superpowers-openspec-superpowers-workflow for this feature.`
+- OpenCode: `Use the superpowers-openspec-superpowers-workflow skill for this feature.`
 - Cursor: `Use the superpowers-openspec-superpowers workflow for this feature.`
 - Claude Code: `/superpowers-openspec-superpowers-workflow`
 

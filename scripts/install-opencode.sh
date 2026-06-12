@@ -2,7 +2,7 @@
 
 set -eu
 
-BUNDLE="openspec-superpowers"
+BUNDLE="superpowers-openspec-superpowers"
 OPENCODE_HOME="${OPENCODE_HOME:-$HOME/.config/opencode}"
 DRY_RUN=0
 BACKUP=0

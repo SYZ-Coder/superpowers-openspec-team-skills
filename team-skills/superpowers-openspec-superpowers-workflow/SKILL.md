@@ -1,6 +1,6 @@
 ---
 name: superpowers-openspec-superpowers-workflow
-description: Use when the team wants to think with Superpowers first, lock the truth with OpenSpec second, then come back to Superpowers to build, test, verify, and archive the change with confidence.
+description: Use when the user explicitly wants this workflow, wants Superpowers exploration before OpenSpec artifacts, or is confirming or continuing tasks that this workflow already generated.
 ---
 
 # Superpowers -> OpenSpec -> Superpowers Workflow

@@ -11,7 +11,7 @@ param(
     "superpowers-learning",
     "superpowers-learning-workflow"
   )]
-  [string]$Bundle = "openspec-superpowers",
+  [string]$Bundle = "superpowers-openspec-superpowers",
   [string]$OpenCodeHome = (Join-Path $HOME ".config\opencode"),
   [Alias("?")]
   [switch]$Help,

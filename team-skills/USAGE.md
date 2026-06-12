@@ -43,13 +43,13 @@ If the target project already has a `CLAUDE.md`, use the merge mode instead of t
 PowerShell:
 
 ```powershell
-.\scripts\install-claude-code.ps1 -Bundle openspec-superpowers -ProjectRoot <project-root> -MergeClaudeMd
+.\scripts\install-claude-code.ps1 -Bundle superpowers-openspec-superpowers -ProjectRoot <project-root> -MergeClaudeMd
 ```
 
 shell:
 
 ```bash
-sh "./scripts/install-claude-code.sh" --bundle openspec-superpowers --project-root <project-root> --merge-claude-md
+sh "./scripts/install-claude-code.sh" --bundle superpowers-openspec-superpowers --project-root <project-root> --merge-claude-md
 ```
 
 This keeps the existing `CLAUDE.md` and adds the bundle instructions as a managed block that can be updated on later installs.

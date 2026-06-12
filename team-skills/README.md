@@ -40,8 +40,8 @@ If your goal is installation into a tool, this section is not the primary entry 
 
 ## How To Choose
 
-- Choose `openspec-superpowers-workflow` when you want one full-flow entry from clarification through verified delivery.
-- Choose `superpowers-openspec-superpowers-workflow` when you want to explore first, lock the truth second, then come back and build the change with more confidence and less chaos.
+- Choose `superpowers-openspec-superpowers-workflow` when you want Superpowers exploration first, OpenSpec locking second, and Superpowers execution last.
+- Choose `openspec-superpowers-workflow` when you want OpenSpec artifacts first, then Superpowers delivery steps.
 - Choose `superpowers-feature-workflow` when you want Superpowers engineering discipline without OpenSpec change artifacts.
 - Choose `superpowers-learning-workflow` when meaningful work is done and you want to preserve reusable lessons and current state.
 - Choose `openspec-feature-workflow` when you only want proposal, design, specs, and tasks before implementation.

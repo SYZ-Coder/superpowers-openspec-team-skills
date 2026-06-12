@@ -2,7 +2,7 @@
 
 set -eu
 
-BUNDLE="openspec-superpowers"
+BUNDLE="superpowers-openspec-superpowers"
 CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
 DRY_RUN=0
 BACKUP=0

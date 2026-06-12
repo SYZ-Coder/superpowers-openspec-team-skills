@@ -148,7 +148,7 @@ Superpowers 记忆是一层持久化到仓库中的上下文机制，服务于 S
 这适用于本仓库里的 Superpowers 相关 workflow，包括：
 
 - `superpowers-feature`
-- `superpowers-openspec-execution`
+- `superpowers-openspec-superpowers`
 - `openspec-superpowers`
 - `superpowers-learning`
 
@@ -354,7 +354,7 @@ Use $superpowers-learning-workflow to capture what this session taught us and up
 
 - `superpowers-feature-workflow`
 - `openspec-superpowers-workflow`
-- `superpowers-openspec-execution-workflow`
+- `superpowers-openspec-superpowers-workflow`
 
 ### 推荐的三种使用模式
 
@@ -388,7 +388,7 @@ Use $superpowers-learning-workflow to capture what this session taught us and up
 
 - `superpowers-feature-workflow`
 - `openspec-superpowers-workflow`
-- `superpowers-openspec-execution-workflow`
+- `superpowers-openspec-superpowers-workflow`
 
 如果你的目标只是“让工具记住这次会话发生了什么”，不建议默认上这一档。
 
